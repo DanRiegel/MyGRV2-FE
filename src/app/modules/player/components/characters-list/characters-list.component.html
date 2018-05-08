@@ -1,0 +1,58 @@
+<app-container-page [menuEntries]="playerCommonService.menuEntries">
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-12">
+        <h1>Gestione Personaggi</h1>
+      </div>
+    </div>
+    <div class="row mt-2">
+
+      <!-- Elenco Personaggi -->
+      <div class="col-md-4 col-lg-3 mb-2" *ngFor="let character of charactersList">
+        <div class="card">
+          <div class="card-body text-center">
+
+            <div class="character-icon-container">
+              <div class="character-icon">
+                <i class="fa fa-user"></i>
+              </div>
+            </div>
+
+            <div class="mt-2">
+              <h4 class="card-title">{{ character.nome }}</h4>
+              <p class="card-text">{{ character.experiencePoints }} px</p>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-block mt-2" (click)="openCharacter(character.id)">
+              Apri scheda e BG
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pulsante nuovo personaggio -->
+      <div class="col-md-4 col-lg-3 mb-2" *ngIf="charactersList.length < 3">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="character-icon-container">
+              <div class="character-icon">
+                <i class="fa fa-plus"></i>
+              </div>
+            </div>
+
+            <div class="mt-2">
+              <h4 class="card-title">Nuovo personaggio</h4>
+              <p class="card-text">&nbsp;</p>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-block mt-2" (click)="openCharacter(0)">
+              Crea nuovo PG
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</app-container-page>

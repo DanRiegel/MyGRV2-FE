@@ -1,0 +1,253 @@
+<app-container-page [menuEntries]="playerCommonService.menuEntries" *ngIf="!!character">
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-12">
+        <h1>Scheda {{ !!character.nome ? 'di ' + character.nome : '' }}</h1>
+      </div>
+    </div>
+
+    <form name="characterForm" #characterForm="ngForm" (ngSubmit)="saveCharacter()">
+
+      <div class="row">
+        <div class="col-md-6 mt-2">
+          <div class="form-group">
+            <label for="characterName">Nome del personaggio</label>
+            <input type="text" id="characterName" name="characterName" class="form-control" [(ngModel)]="character.nome">
+          </div>
+        </div>
+      </div>
+
+      <!-- Pulsanti Switching BG / Scheda -->
+      <div class="row">
+        <div class="col-sm-4 mt-2">
+          <button type="button" class="btn btn-lg btn-block" [class.btn-primary]="activeSection !== 'bg'" [disabled]="activeSection === 'bg'"
+            (click)="activeSection = 'bg'">
+            <i class="fa fa-user"></i>
+            Background
+          </button>
+        </div>
+        <div class="col-sm-4 mt-2">
+          <button type="button" class="btn btn-lg btn-block" [class.btn-primary]="activeSection !== 'sc'" [disabled]="activeSection === 'sc'"
+            (click)="activeSection = 'sc'">
+            <i class="fa fa-file"></i>
+            Informazioni Generali
+          </button>
+        </div>
+        <div class="col-sm-4 mt-2" *ngIf="character.id > 0">
+          <button type="button" class="btn btn-lg btn-block" [class.btn-primary]="activeSection !== 'ab'" [disabled]="activeSection === 'ab'"
+            (click)="activeSection = 'ab'">
+            <i class="fa fa-list"></i>
+            Abilità
+          </button>
+        </div>
+      </div>
+
+      <!-- Sezione BG -->
+      <div class="row" *ngIf="activeSection === 'bg'">
+        <div class="col-12 mt-2">
+          <div class="form-group">
+            <label for="background">Background del personaggio</label>
+            <quill-editor *ngIf="character.approvationStatus === 0" id="background" name="background" [(ngModel)]="character.background"
+              [style]="{ height: '300px' }"></quill-editor>
+            <div *ngIf="character.approvationStatus > 0" class="form-control" [innerHTML]="character.background"></div>
+          </div>
+        </div>
+
+        <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && character.approvationStatus === 0">
+          <button type="button" class="btn btn-primary btn-block" (click)="requestBackgroundApprovation()">
+            Richiedi Approvazione BG
+          </button>
+        </div>
+
+        <div class="col-12 mt-2" *ngIf="character.id > 0 && character.approvationStatus > 0">
+          <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.approvationStatus === 1">
+            <i class="fa fa-pause"></i>
+            Il tuo background è in attesa di approvazione da parte dei master
+          </div>
+          <div class="col-12 pt-1 pb-1 bg-success text-light" *ngIf="character.approvationStatus === 2">
+            <i class="fa fa-thumbs-up"></i>
+            Il tuo background è stato approvato
+          </div>
+          <div class="col-12 pt-1 pb-1 bg-danger text-light" *ngIf="character.approvationStatus === 3">
+            <i class="fa fa-thumbs-down"></i>
+            Il tuo background non è stato approvato. Controlla le note di seguito per correggerlo
+          </div>
+        </div>
+
+        <div class="col-12 mt-2" *ngIf="!!character.playerNotes && character.playerNotes.trim() !==''">
+          <div class="form-group">
+            <label>Note dai master</label>
+            <div class="form-control" [innerHTML]="character.playerNotes"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sezione Scheda -->
+      <div class="row" *ngIf="activeSection==='sc'">
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label for="raceId">Razza</label>
+            <select id="raceId" name="raceId" class="form-control" [(ngModel)]="character.raceId">
+              <option [value]="entry.key" *ngFor="let entry of races">{{ entry.value }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label for="divinityId">Divinità</label>
+            <select id="divinityId" name="divinityId" class="form-control" [(ngModel)]="character.divinityId">
+              <option [value]="entry.key" *ngFor="let entry of divinities">{{ entry.value }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label for="indoleId">Indole</label>
+            <select id="indoleId" name="indoleId" class="form-control" [(ngModel)]="character.indoleId">
+              <option [value]="entry.key" *ngFor="let entry of indoles">{{ entry.value }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label for="provenanceId">Provenienza</label>
+            <select id="provenanceId" name="provenanceId" class="form-control" [(ngModel)]="character.provenanceId">
+              <option [value]="entry.key" *ngFor="let entry of provenances">{{ entry.value }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label for="focusId">Focus</label>
+            <select id="focusId" name="focusId" class="form-control" [(ngModel)]="character.focusId">
+              <option [value]="entry.key" *ngFor="let entry of focuses">{{ entry.value }}</option>
+            </select>
+          </div>
+        </div>
+        <!--
+      <div class="col-md-3 mt-2">
+        <div class="form-group">
+          <label for="playedDays">Giorni Giocati</label>
+          <input type="number" id="playedDays" name="playedDays" class="form-control" [(ngModel)]="character.playedDays">
+        </div>
+      </div>
+      -->
+      </div>
+
+      <!-- Sezione Abilità -->
+      <div class="row" *ngIf="activeSection === 'ab'">
+        <!-- Abilità base -->
+        <div class="col-md-4">
+          <div class="scrollable mt-2">
+            <table class="table table-striped table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th class="text-center">Abilità selezionabili</th>
+                  <th class="text-center" style="width: 80px;">Costo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let skill of baseSkills | FilterSkills : characterSkills">
+                  <td>
+                    <button type="button" class="btn btn-link btn-sm" (click)="toggleSkill(skill)" [disabled]="characterSkills.indexOf(skill.id) > -1">
+                      <i class="fa fa-plus"></i>
+                      {{ skill.nome }}
+                    </button>
+                    <button type="button" class="btn btn-link btn-sm">
+                      <span class="fa-stack">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-info fa-inverse fa-stack-1x"></i>
+                      </span>
+                    </button>
+                  </td>
+                  <td class="text-right">
+                    {{ skill.costopx }} px
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Abilità con dipendenze -->
+        <div class="col-md-4">
+          <div class="scrollable mt-2">
+            <table class="table table-striped table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th class="text-center">Abilità sbloccate</th>
+                  <th class="text-center" style="width: 80px;">Costo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let skill of unlockedSkills | FilterSkills : characterSkills">
+                  <td>
+                    <button type="button" class="btn btn-link btn-sm" (click)="toggleSkill(skill)">
+                      <i class="fa fa-plus"></i>
+                      {{ skill.nome }}
+                    </button>
+                    <button type="button" class="btn btn-link btn-sm">
+                      <span class="fa-stack">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-info fa-inverse fa-stack-1x"></i>
+                      </span>
+                    </button>
+                  </td>
+                  <td class="text-right">
+                    {{ skill.costopx }} px
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Abilità selezionate -->
+        <div class="col-md-4">
+          <div class="scrollable mt-2">
+            <table class="table table-striped table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th class="text-center">Abilità selezionate</th>
+                  <th class="text-center" style="width: 80px;">Costo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let skill of characterSkills">
+                  <td>
+                    <button type="button" class="btn btn-link btn-sm" (click)="toggleSkill(skill)">
+                      <i class="fa fa-minus"></i>
+                      {{ skill.nome }}
+                    </button>
+                    <button type="button" class="btn btn-link btn-sm">
+                      <span class="fa-stack">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-info fa-inverse fa-stack-1x"></i>
+                      </span>
+                    </button>
+                  </td>
+                  <td class="text-right">
+                    {{ skill.costopx }} px
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Operazioni -->
+      <div class="row">
+        <div class="col-md-3 offset-md-6 mt-2">
+          <button type="button" class="btn btn-default btn-block" (click)="goToList()">
+            Indietro
+          </button>
+        </div>
+        <div class="col-md-3 mt-2">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!characterForm.valid">
+            Salva
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</app-container-page>

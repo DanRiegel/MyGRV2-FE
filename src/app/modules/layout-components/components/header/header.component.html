@@ -1,0 +1,19 @@
+<div class="bg-primary text-primary">
+  <div class="container">
+
+    <nav class="navbar navbar-expand-md Header__Navbar__NoPadding">
+      <a class="navbar-brand text-white" href="/">MyGRV v2</a>
+      <button class="navbar-toggler hidden-lg-up" type="button" (click)="expanded = !expanded">
+        <span class="fas fa-bars"></span>
+      </button>
+      <div class="collapse navbar-collapse" [class.show]="expanded">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item" *ngFor="let entry of menuEntries">
+            <a class="nav-link text-white" [routerLink]="entry.route" [routerLinkActive]="'active'">{{ entry.label }}</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="container Login__Container">
+  <div class="row">
+    <!-- Box Esterno -->
+    <div class="col-md-6 offset-md-3 Login__Box">
+
+      <!-- Restringimento Form -->
+      <div class="row">
+        <div class="col-md-10 offset-md-1">
+
+          <!-- Form -->
+          <form #loginForm="ngForm" (submit)="doLogin()">
+
+            <!-- Username -->
+            <div class="form-group">
+              <label for="username">Username</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="username" [(ngModel)]="username" required>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="password">Password</label>
+              <div class="input-group">
+                <input type="password" class="form-control" name="password" [(ngModel)]="password" required>
+              </div>
+            </div>
+
+            <!-- Accesso -->
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.valid">
+              Accedi
+            </button>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

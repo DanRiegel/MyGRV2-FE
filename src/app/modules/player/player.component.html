@@ -1,0 +1,71 @@
+<app-container-page [menuEntries]="playerCommonService.menuEntries">
+  <div class="container pt-4">
+    <div class="row">
+
+      <!-- Personaggi Creati-->
+      <div class="col-md-4 mb-2">
+        <div class="card text-white bg-success">
+          <div class="card-body">
+            <h4 class="card-title">
+              <i class="fa fa-user"></i>
+              Personaggi creati
+            </h4>
+            <h4 class="card-text">{{ playerCharacters.length }}</h4>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block mt-2" (click)="openCharactersList()">
+          Vai alla gestione personaggi
+        </button>
+      </div>
+
+      <!-- Live Giocati -->
+      <div class="col-md-4 mb-2">
+        <div class="card text-white bg-danger">
+          <div class="card-body">
+            <h4 class="card-title">
+              <i class="fa fa-calendar"></i>
+              Live Giocati
+            </h4>
+            <h4 class="card-text">0</h4>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block mt-2" [disabled]="true">
+          Iscriviti al prossimo LIVE
+        </button>
+      </div>
+
+      <!-- Comunicazioni -->
+      <div class="col-md-4 mb-2">
+        <div class="card text-white bg-primary">
+          <div class="card-body">
+            <h4 class="card-title">
+              <i class="fa fa-bell"></i>
+              Nuove comunicazioni
+            </h4>
+            <h4 class="card-text">0</h4>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block mt-2" [disabled]="true">
+          Vedi tutte le comunicazioni
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Presentazione -->
+    <div class="row mt-2">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">
+              Descrizione di MyGRV v2
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-container-page>
