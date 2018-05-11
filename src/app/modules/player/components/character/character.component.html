@@ -20,24 +20,20 @@
       <!-- Pulsanti Switching BG / Scheda -->
       <div class="row">
         <div class="col-sm-4 mt-2">
-          <button type="button" class="btn btn-lg btn-block" [class.btn-primary]="activeSection !== 'bg'" [disabled]="activeSection === 'bg'"
-            (click)="activeSection = 'bg'">
+          <button type="button" class="btn btn-lg btn-round" [class.btn-primary]="activeSection !== 'bg'" [disabled]="activeSection === 'bg'"
+            container="body" [tooltip]="'Background del personaggio'" (click)="activeSection = 'bg'">
             <i class="fa fa-user"></i>
-            Background
+            <!-- Background -->
           </button>
-        </div>
-        <div class="col-sm-4 mt-2">
-          <button type="button" class="btn btn-lg btn-block" [class.btn-primary]="activeSection !== 'sc'" [disabled]="activeSection === 'sc'"
-            (click)="activeSection = 'sc'">
+          <button type="button" class="btn btn-lg btn-round" [class.btn-primary]="activeSection !== 'sc'" [disabled]="activeSection === 'sc'"
+            container="body" [tooltip]="'Informazioni generali'" (click)="activeSection = 'sc'">
             <i class="fa fa-file"></i>
-            Informazioni Generali
+            <!-- Informazioni Generali -->
           </button>
-        </div>
-        <div class="col-sm-4 mt-2" *ngIf="character.id > 0">
-          <button type="button" class="btn btn-lg btn-block" [class.btn-primary]="activeSection !== 'ab'" [disabled]="activeSection === 'ab'"
-            (click)="activeSection = 'ab'">
+          <button type="button" class="btn btn-lg btn-round" [class.btn-primary]="activeSection !== 'ab'" [disabled]="activeSection === 'ab' || !(character.id > 0)"
+            container="body" [tooltip]="'Abilità'" (click)="activeSection = 'ab'">
             <i class="fa fa-list"></i>
-            Abilità
+            <!-- Abilità -->
           </button>
         </div>
       </div>
@@ -48,7 +44,7 @@
           <div class="form-group">
             <label for="background">Background del personaggio</label>
             <quill-editor *ngIf="character.approvationStatus === 0" id="background" name="background" [(ngModel)]="character.background"
-              [style]="{ height: '300px' }"></quill-editor>
+              [style]="{ height: '300px' }" [modules]="{ toolbar: [['bold', 'italic', 'underline']] }"></quill-editor>
             <div *ngIf="character.approvationStatus > 0" class="form-control" [innerHTML]="character.background"></div>
           </div>
         </div>
@@ -142,7 +138,7 @@
             <table class="table table-striped table-bordered table-sm">
               <thead>
                 <tr>
-                  <th class="text-center">Abilità selezionabili</th>
+                  <th class="text-center">Abilità di partenza</th>
                   <th class="text-center" style="width: 80px;">Costo</th>
                 </tr>
               </thead>
@@ -153,7 +149,7 @@
                       <i class="fa fa-plus"></i>
                       {{ skill.nome }}
                     </button>
-                    <button type="button" class="btn btn-link btn-sm">
+                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome" (click)="openSkillDetail(skill)">
                       <span class="fa-stack">
                         <i class="fa fa-circle fa-stack-2x"></i>
                         <i class="fa fa-info fa-inverse fa-stack-1x"></i>
@@ -185,7 +181,7 @@
                       <i class="fa fa-plus"></i>
                       {{ skill.nome }}
                     </button>
-                    <button type="button" class="btn btn-link btn-sm">
+                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome" (click)="openSkillDetail(skill)">
                       <span class="fa-stack">
                         <i class="fa fa-circle fa-stack-2x"></i>
                         <i class="fa fa-info fa-inverse fa-stack-1x"></i>
@@ -218,7 +214,7 @@
                       <i class="fa fa-minus"></i>
                       {{ skill.nome }}
                     </button>
-                    <button type="button" class="btn btn-link btn-sm">
+                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome" (click)="openSkillDetail(skill)">
                       <span class="fa-stack">
                         <i class="fa fa-circle fa-stack-2x"></i>
                         <i class="fa fa-info fa-inverse fa-stack-1x"></i>

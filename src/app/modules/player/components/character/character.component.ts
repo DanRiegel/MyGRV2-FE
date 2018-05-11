@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 
+// Componenti
+import { SkillDetailComponent } from '../../../../components';
+
+// Moduli Esterni
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+
 // Servizi
 import { PlayerCommonService } from '../../services/player-common.service';
 import { CommonService } from '../../../../services';
@@ -34,7 +41,8 @@ export class CharacterComponent implements OnInit {
     public playerCommonService: PlayerCommonService,
     private commonService: CommonService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private bsModalService: BsModalService
   ) {}
 
   ngOnInit() {
@@ -128,6 +136,11 @@ export class CharacterComponent implements OnInit {
           this.character = res.payload;
         }
       });
+  }
+
+  public openSkillDetail(skill: Skill) {
+    const modalRef = this.bsModalService.show(SkillDetailComponent);
+    modalRef.content.skill = skill;
   }
 
   public toggleSkill(skill: Skill): void {

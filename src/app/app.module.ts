@@ -4,12 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+// Moduli Esterni
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 // Moduli
 import { LayoutComponentsModule } from './modules/layout-components/layout-components.module';
 
 // Componenti
 import { AppComponent } from './app.component';
-import { LandingComponent, LoginComponent } from './components/';
+import {
+  LandingComponent,
+  LoginComponent,
+  SkillDetailComponent,
+  ConfirmModalComponent
+} from './components/';
 
 // Servizi
 import {
@@ -37,9 +46,17 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
-    LayoutComponentsModule
+    LayoutComponentsModule,
+    TooltipModule.forRoot(),
+    ModalModule.forRoot()
   ],
-  declarations: [AppComponent, LandingComponent, LoginComponent],
+  declarations: [
+    AppComponent,
+    LandingComponent,
+    LoginComponent,
+    SkillDetailComponent,
+    ConfirmModalComponent
+  ],
   providers: [
     CommonService,
     GuardService,
@@ -52,6 +69,7 @@ import { environment } from '../environments/environment';
       multi: true
     }
   ],
+  entryComponents: [SkillDetailComponent, ConfirmModalComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
