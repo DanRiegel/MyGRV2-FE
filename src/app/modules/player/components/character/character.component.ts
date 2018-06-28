@@ -32,10 +32,10 @@ export class CharacterComponent implements OnInit {
   public focuses: KeyValue[] = [];
   public baseSkills: Skill[] = [];
   public unlockedSkills: Skill[] = [];
-  public characterSkills: Skill[] = [];
 
   // Dati Personaggio
   public character: Character;
+  public usedPx = 0;
 
   constructor(
     public playerCommonService: PlayerCommonService,
@@ -101,20 +101,16 @@ export class CharacterComponent implements OnInit {
   }
 
   private loadCharacter(characterId: number): void {
-    if (!characterId || characterId === 0) {
-      this.character = <Character>{ id: 0, approvationStatus: 0 };
-      return;
-    }
-
     this.commonService.GetCharacter(characterId).subscribe(res => {
       if (!!res.payload) {
         this.character = res.payload;
+        this.calcUsedPX();
       }
     });
   }
 
   private getUnlockedSkills(): void {
-    const selectedSkills = this.characterSkills.map(skill => skill.id);
+    const selectedSkills = this.character.selectedSkills.map(skill => skill.id);
 
     if (selectedSkills.length === 0) {
       this.unlockedSkills = [];
@@ -129,13 +125,63 @@ export class CharacterComponent implements OnInit {
   }
 
   public requestBackgroundApprovation(): void {
-    this.commonService
-      .RequestCharacterBackgroundApproval(this.character.id)
-      .subscribe(res => {
-        if (!!res.payload) {
-          this.character = res.payload;
-        }
-      });
+    this.commonService.SaveCharacter(this.character).subscribe(characterRes => {
+      if (!!characterRes.payload) {
+        this.commonService
+          .RequestCharacterBackgroundApprovation(this.character.id)
+          .subscribe(res => {
+            if (!!res.payload) {
+              this.character = res.payload;
+
+              if (this.character.id === 0) {
+                this.router.navigate(['..', res.payload.id], {
+                  relativeTo: this.activatedRoute
+                });
+              }
+            }
+          });
+      }
+    });
+  }
+
+  public requestCharacterApprovation(): void {
+    this.commonService.SaveCharacter(this.character).subscribe(characterRes => {
+      if (!!characterRes.payload) {
+        this.commonService
+          .RequestCharacterApprovation(this.character.id)
+          .subscribe(res => {
+            if (!!res.payload) {
+              this.character = res.payload;
+
+              if (this.character.id === 0) {
+                this.router.navigate(['..', res.payload.id], {
+                  relativeTo: this.activatedRoute
+                });
+              }
+            }
+          });
+      }
+    });
+  }
+
+  public requestSkillsApprovation(): void {
+    this.commonService.SaveCharacter(this.character).subscribe(characterRes => {
+      if (!!characterRes.payload) {
+        this.commonService
+          .RequestSkillsApprovation(this.character.id)
+          .subscribe(res => {
+            if (!!res.payload) {
+              this.character = res.payload;
+
+              if (this.character.id === 0) {
+                this.router.navigate(['..', res.payload.id], {
+                  relativeTo: this.activatedRoute
+                });
+              }
+            }
+          });
+      }
+    });
   }
 
   public openSkillDetail(skill: Skill) {
@@ -144,16 +190,48 @@ export class CharacterComponent implements OnInit {
   }
 
   public toggleSkill(skill: Skill): void {
-    const hasSkill = !!this.characterSkills.find(item => item.id === skill.id);
+    const hasSkill = !!this.character.selectedSkills.find(
+      item => item.id === skill.id
+    );
     if (hasSkill) {
-      this.characterSkills = this.characterSkills.filter(
+      this.character.selectedSkills = this.character.selectedSkills.filter(
         item => item.id !== skill.id
       );
-    } else {
-      this.characterSkills = [...this.characterSkills, skill];
-    }
 
-    this.getUnlockedSkills();
+      // Verifico se l'abilità che sto togliendo è prerequisito di un'altra abilità. In quel caso tolgo anche l'altra
+      const childrenSkills: Skill[] = this.character.selectedSkills.filter(
+        item =>
+          item.prereq1_id === skill.id ||
+          item.prereq2_id === skill.id ||
+          item.prereq3_id === skill.id
+      );
+
+      childrenSkills.forEach(item => this.toggleSkill(item));
+
+      this.calcUsedPX();
+      this.getUnlockedSkills();
+    } else {
+      // Verifico di poter acquisire l'abilità con i PX a disposizione
+      if (
+        this.character.experiencePoints - this.usedPx >= skill.costopx &&
+        this.character.skillsApprovationStatus === 0
+      ) {
+        this.character.selectedSkills = [
+          ...this.character.selectedSkills,
+          skill
+        ];
+
+        this.calcUsedPX();
+        this.getUnlockedSkills();
+      }
+    }
+  }
+
+  private calcUsedPX(): void {
+    let px = 0;
+    this.character.selectedSkills.forEach(skill => (px += skill.costopx));
+
+    this.usedPx = px;
   }
 
   public saveCharacter(): void {

@@ -45,11 +45,27 @@ export class CommonService {
       .map((res: RestResponse<Character>) => res);
   }
 
-  public RequestCharacterBackgroundApproval(
+  public RequestCharacterBackgroundApprovation(
     characterId: number
   ): Observable<RestResponse<Character>> {
     return this.httpClient
-      .put(`${environment.apiUrl}/characters/${characterId}/`, {})
+      .put(`${environment.apiUrl}/characters/${characterId}/bg/`, {})
+      .map((res: RestResponse<Character>) => res);
+  }
+
+  public RequestCharacterApprovation(
+    characterId: number
+  ): Observable<RestResponse<Character>> {
+    return this.httpClient
+      .put(`${environment.apiUrl}/characters/${characterId}/pg/`, {})
+      .map((res: RestResponse<Character>) => res);
+  }
+
+  public RequestSkillsApprovation(
+    characterId: number
+  ): Observable<RestResponse<Character>> {
+    return this.httpClient
+      .put(`${environment.apiUrl}/characters/${characterId}/skills/`, {})
       .map((res: RestResponse<Character>) => res);
   }
 

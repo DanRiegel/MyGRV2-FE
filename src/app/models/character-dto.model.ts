@@ -7,5 +7,4 @@ export class CharacterDTO extends Character {
   public indoleName: string;
   public originName: string;
   public focusName: string;
-  public experiencePoints: number;
 }

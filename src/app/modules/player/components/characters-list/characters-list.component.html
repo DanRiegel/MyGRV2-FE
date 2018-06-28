@@ -20,7 +20,7 @@
 
             <div class="mt-2">
               <h4 class="card-title">{{ character.nome }}</h4>
-              <p class="card-text">{{ character.experiencePoints }} px</p>
+              <p class="card-text">{{ character.experiencePoints - character.usedPoints }} px</p>
             </div>
 
             <button type="button" class="btn btn-primary btn-block mt-2" (click)="openCharacter(character.id)">
