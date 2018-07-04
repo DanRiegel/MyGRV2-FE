@@ -1,3 +1,85 @@
-<p>
-  player-data works!
-</p>
+<app-container-page [menuEntries]="playerCommonService.menuEntries" *ngIf="!!player">
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-12">
+        <h1>Il tuo profilo</h1>
+      </div>
+    </div>
+
+    <form name="playerForm" #playerForm="ngForm" (ngSubmit)="savePlayer()">
+
+      <div class="row">
+        <div class="col-md-4 mt-2">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" class="form-control" [(ngModel)]="player.username" [required]="true">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 mt-2">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="player.nome" [required]="true">
+          </div>
+        </div>
+        <div class="col-md-4 mt-2">
+          <div class="form-group">
+            <label for="cognome">Cognome</label>
+            <input type="text" id="cognome" name="cognome" class="form-control" [(ngModel)]="player.cognome" [required]="true">
+          </div>
+        </div>
+        <div class="col-md-4 mt-2">
+          <div class="form-group">
+            <label for="recapito">Recapito (Mail o telefono)</label>
+            <input type="text" id="recapito" name="recapito" class="form-control" [(ngModel)]="player.recapito" [required]="true">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 mt-2">
+          <div class="form-group">
+            <label for="nome">Data Firma Scarico Responsabilità</label>
+            <div class="form-control">
+              {{ !!player.dataScaricoResponsabilita ? (player.dataScaricoResponsabilita | date : 'dd/MM/yyyy') : 'Non firmato' }}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 mt-2">
+          <div class="form-group">
+            <label for="nome">Abilitazioni</label>
+
+            <div class="row">
+              <div class="col-md-4">
+                <i class="fa" [class.fa-square]="!player.giocatore" [class.fa-check-square]="player.giocatore"></i>
+                Giocatore
+              </div>
+              <div class="col-md-4">
+                <i class="fa" [class.fa-square]="!player.segreteria" [class.fa-check-square]="player.segreteria"></i>
+                Segreteria
+              </div>
+              <div class="col-md-4">
+                <i class="fa" [class.fa-square]="!player.master" [class.fa-check-square]="player.master"></i>
+                Master
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Operazioni -->
+      <div class="row">
+        <div class="col-md-3 mt-2">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!playerForm.valid">
+            Salva
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</app-container-page>

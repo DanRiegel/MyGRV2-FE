@@ -37,6 +37,11 @@ export class CharacterComponent implements OnInit {
   public character: Character;
   public usedPx = 0;
 
+  // Filtri
+  public searchBaseSkillTerm: string;
+  public searchUnlockedSkillTerm: string;
+  public searchSelectedSkillTerm: string;
+
   constructor(
     public playerCommonService: PlayerCommonService,
     private commonService: CommonService,
@@ -105,6 +110,7 @@ export class CharacterComponent implements OnInit {
       if (!!res.payload) {
         this.character = res.payload;
         this.calcUsedPX();
+        this.getUnlockedSkills();
       }
     });
   }

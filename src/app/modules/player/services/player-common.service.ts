@@ -10,7 +10,8 @@ export class PlayerCommonService {
     <MenuEntry>{ label: 'I tuoi dati', route: '/player/data' },
     <MenuEntry>{ label: 'Personaggi', route: '/player/characters' },
     <MenuEntry>{ label: 'Iscrizioni LIVE', route: '/player/lives' },
-    <MenuEntry>{ label: 'Comunicazioni', route: '/player/notifications' }
+    <MenuEntry>{ label: 'Comunicazioni', route: '/player/notifications' },
+    <MenuEntry>{ label: 'Logout', route: '/logout' }
   ];
 
   constructor() {}

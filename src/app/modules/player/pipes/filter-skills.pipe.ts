@@ -7,18 +7,32 @@ import { Skill } from '../../../models';
   name: 'FilterSkills'
 })
 export class FilterSkillsPipe implements PipeTransform {
-  transform(value: Skill[], selectedSkills: Skill[]): Skill[] {
+  transform(
+    value: Skill[],
+    selectedSkills: Skill[],
+    filterText: string
+  ): Skill[] {
     if (!value) {
       return null;
     }
 
-    if (!selectedSkills) {
-      return value;
+    let skillsList = value;
+
+    if (!!filterText && filterText !== '') {
+      skillsList = skillsList.filter(
+        skill =>
+          skill.nome.toLowerCase().indexOf(filterText.toLowerCase()) > -1 ||
+          skill.descrizione.toLowerCase().indexOf(filterText.toLowerCase()) > -1
+      );
     }
 
-    return value.filter(
-      skill =>
-        !selectedSkills.find(selectedSkill => selectedSkill.id === skill.id)
-    );
+    if (!!selectedSkills) {
+      skillsList = skillsList.filter(
+        skill =>
+          !selectedSkills.find(selectedSkill => selectedSkill.id === skill.id)
+      );
+    }
+
+    return skillsList;
   }
 }

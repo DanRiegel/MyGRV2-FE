@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 // Modelli
-import { RestResponse, User } from '../models';
+import { RestResponse, User, Player } from '../models';
 
 // Costanti
 import * as CONSTANTS from '../constants';
@@ -15,6 +15,7 @@ import { environment } from 'app/../environments/environment';
 
 @Injectable()
 export class UserService {
+  /** Token accesso */
   private _LoggedUserToken: string;
   public get LoggedUserToken(): string {
     if (!!this._LoggedUserToken) {
@@ -27,6 +28,8 @@ export class UserService {
       this._LoggedUserToken = userData;
       return this._LoggedUserToken;
     }
+
+    return null;
   }
   public set LoggedUserToken(value: string) {
     this._LoggedUserToken = value;
@@ -37,6 +40,38 @@ export class UserService {
     }
 
     localStorage.setItem(CONSTANTS.LOCALSTORAGE_USER_KEY, value);
+  }
+
+  /** Dati utente */
+  private _PlayerData: Player;
+  public get PlayerData(): Player {
+    if (!!this._PlayerData) {
+      return this._PlayerData;
+    }
+
+    const playerData = localStorage.getItem(
+      CONSTANTS.LOCALSTORAGE_PLAYERDATA_KEY
+    );
+
+    if (!!playerData) {
+      this._PlayerData = JSON.parse(playerData);
+      return this._PlayerData;
+    }
+
+    return null;
+  }
+  public set PlayerData(value: Player) {
+    this._PlayerData = value;
+
+    if (!value) {
+      localStorage.removeItem(CONSTANTS.LOCALSTORAGE_PLAYERDATA_KEY);
+      return;
+    }
+
+    localStorage.setItem(
+      CONSTANTS.LOCALSTORAGE_PLAYERDATA_KEY,
+      JSON.stringify(value)
+    );
   }
 
   constructor(private httpClient: HttpClient) {}

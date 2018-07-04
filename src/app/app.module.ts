@@ -24,6 +24,7 @@ import {
 import {
   CommonService,
   GuardService,
+  UserGuardService,
   HttpInterceptorService,
   LoaderService,
   MenuService,
@@ -38,6 +39,7 @@ import * as CONST from './constants';
 
 // Ambiente
 import { environment } from '../environments/environment';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   imports: [
@@ -55,11 +57,13 @@ import { environment } from '../environments/environment';
     LandingComponent,
     LoginComponent,
     SkillDetailComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    LogoutComponent
   ],
   providers: [
     CommonService,
     GuardService,
+    UserGuardService,
     LoaderService,
     MenuService,
     UserService,

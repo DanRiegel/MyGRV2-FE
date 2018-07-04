@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Componenti
-import { LandingComponent, LoginComponent } from './components/';
+import {
+  LandingComponent,
+  LoginComponent,
+  LogoutComponent
+} from './components/';
 
 // Servizi
 import { GuardService } from './services/guard.service';
@@ -20,6 +24,7 @@ const routes: Routes = [
     canActivate: [GuardService]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: '**', redirectTo: '' }
 ];
 

@@ -9,11 +9,22 @@ import {
   PlayerDataComponent
 } from './components/';
 
+// Guards
+import { UserGuardService } from '../../services';
+
 const routes: Routes = [
-  { path: '', component: PlayerComponent },
+  { path: '', component: PlayerComponent, canActivate: [UserGuardService] },
   { path: 'data', component: PlayerDataComponent },
-  { path: 'characters', component: CharactersListComponent },
-  { path: 'characters/:characterId', component: CharacterComponent }
+  {
+    path: 'characters',
+    component: CharactersListComponent,
+    canActivate: [UserGuardService]
+  },
+  {
+    path: 'characters/:characterId',
+    component: CharacterComponent,
+    canActivate: [UserGuardService]
+  }
 ];
 
 @NgModule({
