@@ -2,19 +2,19 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Componenti
-import { PlayerComponent } from './player.component';
 import {
   CharactersListComponent,
   CharacterComponent,
-  PlayerDataComponent
+  EventsListComponent,
+  EventSubscriptionComponent,
+  EventSubscriptionSuccessComponent
 } from './components/';
 
 // Guards
 import { UserGuardService } from '../../services';
 
 const routes: Routes = [
-  { path: '', component: PlayerComponent, canActivate: [UserGuardService] },
-  { path: 'data', component: PlayerDataComponent },
+  { path: '', redirectTo: 'characters', pathMatch: 'full' },
   {
     path: 'characters',
     component: CharactersListComponent,
@@ -23,6 +23,21 @@ const routes: Routes = [
   {
     path: 'characters/:characterId',
     component: CharacterComponent,
+    canActivate: [UserGuardService]
+  },
+  {
+    path: 'events',
+    component: EventsListComponent,
+    canActivate: [UserGuardService]
+  },
+  {
+    path: 'events/:eventId/subscription',
+    component: EventSubscriptionComponent,
+    canActivate: [UserGuardService]
+  },
+  {
+    path: 'events/:eventId/subscription/success',
+    component: EventSubscriptionSuccessComponent,
     canActivate: [UserGuardService]
   }
 ];

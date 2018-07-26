@@ -8,14 +8,14 @@ import {
 import { Observable } from 'rxjs/Observable';
 
 // Servizi
-import { CommonService } from './common.service';
+import { PlayerService } from './player.service';
 import { UserService } from './user.service';
 import { Player, RestResponse } from '../models';
 
 @Injectable()
 export class UserGuardService implements CanActivate {
   constructor(
-    private commonService: CommonService,
+    private playerService: PlayerService,
     private userService: UserService,
     private router: Router
   ) {}
@@ -30,13 +30,13 @@ export class UserGuardService implements CanActivate {
       );
 
       if (!giocatoreValido) {
-        this.router.navigateByUrl('/player/data');
+        this.router.navigateByUrl('/mygrv/data');
       }
 
       return giocatoreValido;
     }
 
-    return this.commonService
+    return this.playerService
       .GetCurrentPlayer()
       .map((res: RestResponse<Player>) => {
         this.userService.PlayerData = res.payload;
@@ -44,7 +44,7 @@ export class UserGuardService implements CanActivate {
           res && res.payload && this.giocatoreHaDatiObbligatori(res.payload);
 
         if (!giocatoreValido) {
-          this.router.navigateByUrl('/player/data');
+          this.router.navigateByUrl('/mygrv/data');
         }
 
         return giocatoreValido;

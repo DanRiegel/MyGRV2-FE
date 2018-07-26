@@ -1,0 +1,36 @@
+<app-container-page>
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-12">
+        <h1>Iscrizione Eventi</h1>
+      </div>
+    </div>
+    <div class="row">
+
+      <!-- Elenco Personaggi -->
+      <div class="col-12 mt-2" *ngFor="let event of eventsList">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <h2>{{ event.nome }}</h2>
+                <p class="font-weight-bold">{{ (event.datainizio | date: 'dd/MM/yyyy') + (event.datafine !== event.datainizio ? ' - ' + (event.datafine
+                  | date: 'dd/MM/yyyy') : '') }}</p>
+                <p class="text-justify">{{ event.descrizione }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 offset-sm-9">
+                <button type="button" class="btn btn-primary btn-block" (click)="subscribeEvent(event.id)">
+                  <i class="fa fa-calendar"></i>
+                  Iscriviti all'evento
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</app-container-page>

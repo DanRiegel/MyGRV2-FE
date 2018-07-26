@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 // Models
 import { MenuEntry } from '../../../../models/';
+import { CommonService } from '../../../../services';
 
 @Component({
   selector: 'app-container-page',
@@ -9,9 +10,7 @@ import { MenuEntry } from '../../../../models/';
   styleUrls: ['./container-page.component.sass']
 })
 export class ContainerPageComponent implements OnInit {
-  @Input() menuEntries: MenuEntry[] = [];
-
-  constructor() {}
+  constructor(public commonService: CommonService) {}
 
   ngOnInit() {}
 }

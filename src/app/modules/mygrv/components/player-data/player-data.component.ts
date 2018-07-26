@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // Servizi
-import { PlayerCommonService } from '../../services/player-common.service';
-import { CommonService } from '../../../../services';
+import { PlayerService } from '../../../../services';
 
 // Modelli
 import { Player } from '../../../../models';
@@ -16,17 +15,14 @@ export class PlayerDataComponent implements OnInit {
   // Dati Giocatore
   public player: Player;
 
-  constructor(
-    public playerCommonService: PlayerCommonService,
-    private commonService: CommonService
-  ) {}
+  constructor(private playerService: PlayerService) {}
 
   ngOnInit() {
     this.loadCurrentPlayerData();
   }
 
   private loadCurrentPlayerData(): void {
-    this.commonService.GetCurrentPlayer().subscribe(res => {
+    this.playerService.GetCurrentPlayer().subscribe(res => {
       if (!!res.payload) {
         this.player = res.payload;
       }
@@ -34,7 +30,7 @@ export class PlayerDataComponent implements OnInit {
   }
 
   public savePlayer(): void {
-    this.commonService.SavePlayer(this.player).subscribe(res => {
+    this.playerService.SavePlayer(this.player).subscribe(res => {
       if (!!res.payload) {
         this.player = res.payload;
       }

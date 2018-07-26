@@ -5,6 +5,7 @@ export class Player {
   public cognome: string;
   public dataScaricoResponsabilita: string;
   public recapito: string;
+  public recapitomail: string;
   public giocatore: boolean;
   public segreteria: boolean;
   public master: boolean;

@@ -11,11 +11,12 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { LayoutComponentsModule } from '../layout-components/layout-components.module';
 
 // Componenti
-import { PlayerComponent } from './player.component';
 import {
   CharactersListComponent,
   CharacterComponent,
-  PlayerDataComponent
+  EventsListComponent,
+  EventSubscriptionComponent,
+  EventSubscriptionSuccessComponent
 } from './components/';
 
 // Servizi
@@ -38,11 +39,12 @@ import { PlayerRoutingModule } from './player.routing';
     ModalModule
   ],
   declarations: [
-    PlayerComponent,
     CharactersListComponent,
     CharacterComponent,
-    PlayerDataComponent,
-    FilterSkillsPipe
+    FilterSkillsPipe,
+    EventsListComponent,
+    EventSubscriptionComponent,
+    EventSubscriptionSuccessComponent
   ],
   providers: [PlayerCommonService]
 })

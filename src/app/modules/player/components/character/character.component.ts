@@ -10,8 +10,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 // Servizi
-import { PlayerCommonService } from '../../services/player-common.service';
-import { CommonService } from '../../../../services';
+import { CommonService, CharacterService } from '../../../../services';
 
 // Modelli
 import { Character, KeyValue, Skill } from '../../../../models';
@@ -43,8 +42,8 @@ export class CharacterComponent implements OnInit {
   public searchSelectedSkillTerm: string;
 
   constructor(
-    public playerCommonService: PlayerCommonService,
     private commonService: CommonService,
+    private characterService: CharacterService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private bsModalService: BsModalService
@@ -106,7 +105,7 @@ export class CharacterComponent implements OnInit {
   }
 
   private loadCharacter(characterId: number): void {
-    this.commonService.GetCharacter(characterId).subscribe(res => {
+    this.characterService.GetCharacter(characterId).subscribe(res => {
       if (!!res.payload) {
         this.character = res.payload;
         this.calcUsedPX();
@@ -131,63 +130,69 @@ export class CharacterComponent implements OnInit {
   }
 
   public requestBackgroundApprovation(): void {
-    this.commonService.SaveCharacter(this.character).subscribe(characterRes => {
-      if (!!characterRes.payload) {
-        this.commonService
-          .RequestCharacterBackgroundApprovation(this.character.id)
-          .subscribe(res => {
-            if (!!res.payload) {
-              this.character = res.payload;
+    this.characterService
+      .SaveCharacter(this.character)
+      .subscribe(characterRes => {
+        if (!!characterRes.payload) {
+          this.characterService
+            .RequestCharacterBackgroundApprovation(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
 
-              if (this.character.id === 0) {
-                this.router.navigate(['..', res.payload.id], {
-                  relativeTo: this.activatedRoute
-                });
+                if (this.character.id === 0) {
+                  this.router.navigate(['..', res.payload.id], {
+                    relativeTo: this.activatedRoute
+                  });
+                }
               }
-            }
-          });
-      }
-    });
+            });
+        }
+      });
   }
 
   public requestCharacterApprovation(): void {
-    this.commonService.SaveCharacter(this.character).subscribe(characterRes => {
-      if (!!characterRes.payload) {
-        this.commonService
-          .RequestCharacterApprovation(this.character.id)
-          .subscribe(res => {
-            if (!!res.payload) {
-              this.character = res.payload;
+    this.characterService
+      .SaveCharacter(this.character)
+      .subscribe(characterRes => {
+        if (!!characterRes.payload) {
+          this.characterService
+            .RequestCharacterApprovation(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
 
-              if (this.character.id === 0) {
-                this.router.navigate(['..', res.payload.id], {
-                  relativeTo: this.activatedRoute
-                });
+                if (this.character.id === 0) {
+                  this.router.navigate(['..', res.payload.id], {
+                    relativeTo: this.activatedRoute
+                  });
+                }
               }
-            }
-          });
-      }
-    });
+            });
+        }
+      });
   }
 
   public requestSkillsApprovation(): void {
-    this.commonService.SaveCharacter(this.character).subscribe(characterRes => {
-      if (!!characterRes.payload) {
-        this.commonService
-          .RequestSkillsApprovation(this.character.id)
-          .subscribe(res => {
-            if (!!res.payload) {
-              this.character = res.payload;
+    this.characterService
+      .SaveCharacter(this.character)
+      .subscribe(characterRes => {
+        if (!!characterRes.payload) {
+          this.characterService
+            .RequestSkillsApprovation(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
 
-              if (this.character.id === 0) {
-                this.router.navigate(['..', res.payload.id], {
-                  relativeTo: this.activatedRoute
-                });
+                if (this.character.id === 0) {
+                  this.router.navigate(['..', res.payload.id], {
+                    relativeTo: this.activatedRoute
+                  });
+                }
               }
-            }
-          });
-      }
-    });
+            });
+        }
+      });
   }
 
   public openSkillDetail(skill: Skill) {
@@ -241,7 +246,7 @@ export class CharacterComponent implements OnInit {
   }
 
   public saveCharacter(): void {
-    this.commonService.SaveCharacter(this.character).subscribe(res => {
+    this.characterService.SaveCharacter(this.character).subscribe(res => {
       if (!!res.payload) {
         // Se sto salvando un nuovo personaggio, ridireziono alla scheda appena salvata
         if (this.character.id === 0) {

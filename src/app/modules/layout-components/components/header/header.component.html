@@ -8,8 +8,13 @@
       </button>
       <div class="collapse navbar-collapse" [class.show]="expanded">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item" *ngFor="let entry of menuEntries">
-            <a class="nav-link text-white" [routerLink]="entry.route" [routerLinkActive]="'active'">{{ entry.label }}</a>
+          <li class="nav-item" *ngFor="let entry of menuEntries; let i = index" [ngClass]="{ 'dropdown': entry.subEntries && entry.subEntries.length > 0 }">
+            <a class="nav-link text-white" [routerLink]="entry.route" [routerLinkActive]="'active'" *ngIf="!entry.subEntries || (entry.subEntries && entry.subEntries.length === 0)">{{ entry.label }}</a>
+            <a class="nav-link text-white dropdown-toggle" href="javascript:;" (click)="toggleEntry(i)" data-toggle="dropdown" role="button"
+              aria-haspopup="true" aria-expanded="false" *ngIf="entry.subEntries && entry.subEntries.length > 0">{{ entry.label }}</a>
+            <div class="dropdown-menu" [class.show]="i === openedEntry" *ngIf="entry.subEntries && entry.subEntries.length > 0">
+              <a class="dropdown-item" *ngFor="let subEntry of entry.subEntries" [routerLink]="subEntry.route" [routerLinkActive]="'active'">{{ subEntry.label }}</a>
+            </div>
           </li>
         </ul>
       </div>

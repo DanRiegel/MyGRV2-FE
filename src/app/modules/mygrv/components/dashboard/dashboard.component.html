@@ -1,4 +1,4 @@
-<app-container-page [menuEntries]="playerCommonService.menuEntries">
+<app-container-page>
   <div class="container pt-4">
     <!-- Presentazione -->
     <div class="row">
@@ -16,7 +16,7 @@
     <div class="row mt-2">
 
       <!-- Personaggi Creati-->
-      <div class="col-md-4 mb-2">
+      <div class="col-md-4 mb-2" *ngIf="userService.PlayerData && userService.PlayerData.giocatore">
         <div class="card text-white bg-success">
           <div class="card-body">
 
@@ -43,7 +43,7 @@
       </div>
 
       <!-- Live Giocati -->
-      <div class="col-md-4 mb-2">
+      <div class="col-md-4 mb-2" *ngIf="userService.PlayerData && userService.PlayerData.giocatore">
         <div class="card text-white bg-danger">
           <div class="card-body">
 
@@ -64,7 +64,7 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary btn-block mt-2" [disabled]="true">
+        <button type="button" class="btn btn-primary btn-block mt-2" (click)="openEventsList()">
           Iscriviti al prossimo LIVE
         </button>
       </div>

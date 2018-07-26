@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Servizi
-import { UserService } from '../../services/user.service';
+import { UserService, PlayerService } from '../../services/';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,11 @@ export class LoginComponent implements OnInit {
   public username: string;
   public password: string;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private playerService: PlayerService,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
@@ -26,7 +30,12 @@ export class LoginComponent implements OnInit {
       if (!res.error && !!res.payload) {
         this.userService.LoggedUserToken = res.payload;
 
-        this.router.navigateByUrl('/');
+        this.playerService.GetCurrentPlayer().subscribe(playerRes => {
+          if (!playerRes.error && !!playerRes.payload) {
+            this.userService.PlayerData = playerRes.payload;
+            this.router.navigateByUrl('/');
+          }
+        });
       }
     });
   }

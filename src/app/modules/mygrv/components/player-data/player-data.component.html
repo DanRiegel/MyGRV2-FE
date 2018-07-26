@@ -1,4 +1,4 @@
-<app-container-page [menuEntries]="playerCommonService.menuEntries" *ngIf="!!player">
+<app-container-page *ngIf="!!player">
   <div class="container pt-4">
     <div class="row">
       <div class="col-12">
@@ -12,12 +12,11 @@
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" class="form-control" [(ngModel)]="player.username" [required]="true">
+            <div class="form-control">
+              {{ player.username }}
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="row">
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="nome">Nome</label>
@@ -30,10 +29,19 @@
             <input type="text" id="cognome" name="cognome" class="form-control" [(ngModel)]="player.cognome" [required]="true">
           </div>
         </div>
+      </div>
+
+      <div class="row">
         <div class="col-md-4 mt-2">
           <div class="form-group">
-            <label for="recapito">Recapito (Mail o telefono)</label>
-            <input type="text" id="recapito" name="recapito" class="form-control" [(ngModel)]="player.recapito" [required]="true">
+            <label for="recapito">Telefono</label>
+            <input type="text" id="recapito" name="recapito" class="form-control" [(ngModel)]="player.recapito" [required]="!player.recapitomail || (!!player.recapitomail && player.recapitomail.trim() === '')">
+          </div>
+        </div>
+        <div class="col-md-4 mt-2">
+          <div class="form-group">
+            <label for="recapitomail">Email</label>
+            <input type="text" id="recapitomail" name="recapitomail" class="form-control" [(ngModel)]="player.recapitomail" [required]="!player.recapito || (!!player.recapito && player.recapito.trim() === '')">
           </div>
         </div>
       </div>

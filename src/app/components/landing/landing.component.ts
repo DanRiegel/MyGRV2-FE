@@ -22,11 +22,8 @@ export class LandingComponent implements OnInit {
   ngOnInit() {
     switch (this.userService.GetUserRole()) {
       case CONSTANTS.ROLE_PLAYER:
-        this.router.navigateByUrl('/player');
-        break;
       case CONSTANTS.ROLE_MASTER:
-        // this.router.navigateByUrl('/master');
-        this.router.navigateByUrl('/player');
+        this.router.navigateByUrl('/mygrv');
         break;
       default:
         this.router.navigateByUrl('/login');

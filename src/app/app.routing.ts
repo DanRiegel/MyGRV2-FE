@@ -14,6 +14,11 @@ import { GuardService } from './services/guard.service';
 const routes: Routes = [
   { path: '', component: LandingComponent, canActivate: [GuardService] },
   {
+    path: 'mygrv',
+    loadChildren: './modules/mygrv/mygrv.module#MygrvModule',
+    canActivate: [GuardService]
+  },
+  {
     path: 'player',
     loadChildren: './modules/player/player.module#PlayerModule',
     canActivate: [GuardService]

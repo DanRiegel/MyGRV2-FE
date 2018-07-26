@@ -28,7 +28,12 @@ import {
   HttpInterceptorService,
   LoaderService,
   MenuService,
-  UserService
+  UserService,
+  PlayerService,
+  CharacterService,
+  EventService,
+  SubscriptionModesService,
+  PaymentMethodsService
 } from './services/';
 
 // Routing
@@ -67,6 +72,11 @@ import { LogoutComponent } from './components/logout/logout.component';
     LoaderService,
     MenuService,
     UserService,
+    PlayerService,
+    CharacterService,
+    EventService,
+    SubscriptionModesService,
+    PaymentMethodsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
