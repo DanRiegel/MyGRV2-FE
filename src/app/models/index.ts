@@ -1,6 +1,7 @@
 export * from './character-dto.model';
 export * from './character.model';
 export * from './game-event-subscription-character.model';
+export * from './game-event-subscription-DTO.model';
 export * from './game-event-subscription.model';
 export * from './game-event.model';
 export * from './key-value.model';

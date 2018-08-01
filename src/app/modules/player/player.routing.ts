@@ -36,7 +36,7 @@ const routes: Routes = [
     canActivate: [UserGuardService]
   },
   {
-    path: 'events/:eventId/subscription/success',
+    path: 'events/:eventId/subscription/success/:subscriptionId',
     component: EventSubscriptionSuccessComponent,
     canActivate: [UserGuardService]
   }

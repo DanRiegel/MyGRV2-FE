@@ -9,7 +9,8 @@ import {
   RestResponse,
   GameEvent,
   GameEventSubscription,
-  GameEventSubscriptionCharacter
+  GameEventSubscriptionCharacter,
+  GameEventSubscriptionDTO
 } from '../models';
 
 // Variabili d'ambiente
@@ -34,12 +35,20 @@ export class EventService {
   public SubscribeToEvent(
     subscription: GameEventSubscription,
     subscriptionCharacters: GameEventSubscriptionCharacter[]
-  ): Observable<RestResponse<boolean>> {
+  ): Observable<RestResponse<number>> {
     return this.httpClient
       .post(`${environment.apiUrl}/event-subscription/`, {
         subscription: subscription,
         characters: subscriptionCharacters
       })
-      .map((res: RestResponse<boolean>) => res);
+      .map((res: RestResponse<number>) => res);
+  }
+
+  public GetSubscription(
+    subscriptionId: number
+  ): Observable<RestResponse<GameEventSubscriptionDTO>> {
+    return this.httpClient
+      .get(`${environment.apiUrl}/event-subscription/${subscriptionId}/`)
+      .map((res: RestResponse<GameEventSubscriptionDTO>) => res);
   }
 }

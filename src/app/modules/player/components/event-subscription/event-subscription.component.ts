@@ -170,7 +170,7 @@ export class EventSubscriptionComponent implements OnInit {
       .SubscribeToEvent(this.subscriptionData, daysConfiguration)
       .subscribe(res => {
         if (res.payload) {
-          this.router.navigate(['success'], {
+          this.router.navigate(['success', res.payload], {
             relativeTo: this.activatedRoute
           });
         } else {
