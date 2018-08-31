@@ -19,4 +19,5 @@ export class Character {
   public experiencePoints: number;
   public usedPoints: number;
   public selectedSkills: Skill[];
+  public active: boolean;
 }

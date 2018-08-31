@@ -14,9 +14,20 @@ import { environment } from 'app/../environments/environment';
 export class CharacterService {
   constructor(private httpClient: HttpClient) {}
 
+  public CanCreateCharacters(): Observable<RestResponse<boolean>> {
+    return this.httpClient
+      .get(`${environment.apiUrl}/characters/can-create/`)
+      .map((res: RestResponse<boolean>) => res);
+  }
+
   public GetCharacters(): Observable<RestResponse<CharacterDTO[]>> {
     return this.httpClient
       .get(`${environment.apiUrl}/characters/`)
+      .map((res: RestResponse<CharacterDTO[]>) => res);
+  }
+  public GetAllCharacters(): Observable<RestResponse<CharacterDTO[]>> {
+    return this.httpClient
+      .get(`${environment.apiUrl}/characters/all/`)
       .map((res: RestResponse<CharacterDTO[]>) => res);
   }
 

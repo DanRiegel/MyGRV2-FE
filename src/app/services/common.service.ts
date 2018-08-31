@@ -34,6 +34,15 @@ export class CommonService {
     }
   ];
 
+  public masterEntries: MenuEntry[] = [
+    <MenuEntry>{
+      label: 'Master',
+      subEntries: [
+        <MenuEntry>{ label: 'Gestione personaggi', route: '/master/characters' }
+      ]
+    }
+  ];
+
   public messagesEntry = <MenuEntry>{
     label: 'Comunicazioni',
     route: '/player/notifications'
@@ -55,6 +64,11 @@ export class CommonService {
     const playerData = this.userService.PlayerData;
     if (playerData.giocatore) {
       entries = entries.concat(this.playerEntries);
+    }
+
+    // Check master
+    if (playerData.master) {
+      entries = entries.concat(this.masterEntries);
     }
 
     entries.push(this.messagesEntry);

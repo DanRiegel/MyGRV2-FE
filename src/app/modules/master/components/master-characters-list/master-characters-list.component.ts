@@ -8,13 +8,13 @@ import { CharacterService } from '../../../../services';
 import { CharacterDTO } from '../../../../models';
 
 @Component({
-  selector: 'app-characters-list',
-  templateUrl: './characters-list.component.html',
-  styleUrls: ['./characters-list.component.sass']
+  selector: 'app-master-characters-list',
+  templateUrl: './master-characters-list.component.html',
+  styleUrls: ['./master-characters-list.component.sass']
 })
-export class CharactersListComponent implements OnInit {
+export class MasterCharactersListComponent implements OnInit {
   public charactersList: CharacterDTO[] = [];
-  public canCreateCharacters = false;
+  public filters: CharacterDTO = new CharacterDTO();
 
   constructor(
     private characterService: CharacterService,
@@ -23,20 +23,12 @@ export class CharactersListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.characterService.GetCharacters().subscribe(res => {
+    this.characterService.GetAllCharacters().subscribe(res => {
       if (!res.payload) {
         return;
       }
 
       this.charactersList = res.payload;
-    });
-
-    this.characterService.CanCreateCharacters().subscribe(res => {
-      if (!res.payload) {
-        return;
-      }
-
-      this.canCreateCharacters = res.payload;
     });
   }
 

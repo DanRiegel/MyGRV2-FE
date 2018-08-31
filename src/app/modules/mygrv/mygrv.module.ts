@@ -9,6 +9,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 // Moduli
 import { LayoutComponentsModule } from '../layout-components/layout-components.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 // Componenti
 import { DashboardComponent, PlayerDataComponent } from './components/';
@@ -24,6 +25,7 @@ import { MygrvRoutingModule } from './mygrv.routing';
     TooltipModule,
     ModalModule,
     LayoutComponentsModule,
+    PipesModule,
     MygrvRoutingModule
   ],
   declarations: [DashboardComponent, PlayerDataComponent]

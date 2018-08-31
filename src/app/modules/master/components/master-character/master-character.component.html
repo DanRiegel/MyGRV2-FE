@@ -1,0 +1,358 @@
+<app-container-page *ngIf="!!character">
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-12">
+        <h1>Scheda {{ !!character.nome ? 'di ' + character.nome : '' }}</h1>
+      </div>
+    </div>
+
+    <form name="characterForm" #characterForm="ngForm" (ngSubmit)="saveCharacter()">
+
+      <div class="row">
+        <div class="col-md-8 mt-2">
+          <div class="form-group">
+            <label for="characterName">Nome del personaggio</label>
+            <input type="text" id="characterName" name="characterName" class="form-control" [(ngModel)]="character.nome">
+          </div>
+        </div>
+        <div class="col-md-4 mt-2">
+          <div class="form-group">
+            <label>PX Usati / Totali</label>
+            <div class="form-control text-center">
+              {{ usedPx }} / {{ character.experiencePoints }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pulsanti Switching BG / Scheda -->
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="button" class="btn btn-lg btn-round mt-2" [class.btn-primary]="activeSection !== 'bg'" [class.btn-default]="activeSection === 'bg'"
+            container="body" [tooltip]="'Background del personaggio'" (click)="activeSection = 'bg'">
+            <i class="fa fa-user"></i>
+            <span *ngIf="activeSection === 'bg'">Background del personaggio</span>
+            <!-- Background -->
+          </button>
+          <button type="button" class="btn btn-lg btn-round mt-2" [class.btn-primary]="activeSection !== 'sc'" [class.btn-default]="activeSection === 'sc'"
+            container="body" [tooltip]="'Informazioni generali'" (click)="activeSection = 'sc'">
+            <i class="fa fa-file"></i>
+            <span *ngIf="activeSection === 'sc'">Informazioni generali</span>
+            <!-- Informazioni Generali -->
+          </button>
+          <button type="button" class="btn btn-lg btn-round mt-2" [class.btn-primary]="activeSection !== 'ab'" [class.btn-default]="activeSection === 'ab' || !(character.id > 0)"
+            container="body" [tooltip]="'Abilità'" (click)="activeSection = 'ab'">
+            <i class="fa fa-list"></i>
+            <span *ngIf="activeSection === 'ab'">Abilità</span>
+            <!-- Abilità -->
+          </button>
+        </div>
+      </div>
+
+      <!-- Sezione BG -->
+      <div class="row" *ngIf="activeSection === 'bg'">
+        <div class="col-12 mt-2">
+          <div class="form-group">
+            <label for="background">Background del personaggio</label>
+            <quill-editor id="background" name="background" [(ngModel)]="character.background" [style]="{ height: '300px' }" [modules]="{ toolbar: [['bold', 'italic', 'underline']] }"></quill-editor>
+          </div>
+        </div>
+
+        <!-- Pulsanti approvazione -->
+        <div class="col-md-3 offset-sm-6 mt-2" *ngIf="character.id > 0 && character.approvationStatus !== 2">
+          <button type="button" class="btn btn-success btn-block" (click)="approveBackground()">
+            <i class="fa fa-thumbs-up"></i>
+            Approva BG
+          </button>
+        </div>
+
+        <div class="col-md-3 mt-2" *ngIf="character.id > 0 && character.approvationStatus !== 3">
+          <button type="button" class="btn btn-danger btn-block" (click)="disapproveBAckground()">
+            <i class="fa fa-thumbs-down"></i>
+            Rifiuta BG
+          </button>
+        </div>
+
+        <!-- Stato approvazione -->
+        <div class="col-12 mt-2" *ngIf="character.id > 0 && character.approvationStatus > 0">
+          <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.approvationStatus === 1">
+            <i class="fa fa-pause"></i>
+            Il background è in attesa di approvazione
+          </div>
+          <div class="col-12 pt-1 pb-1 bg-success text-light" *ngIf="character.approvationStatus === 2">
+            <i class="fa fa-thumbs-up"></i>
+            Il background è stato approvato
+          </div>
+          <div class="col-12 pt-1 pb-1 bg-danger text-light" *ngIf="character.approvationStatus === 3">
+            <i class="fa fa-thumbs-down"></i>
+            Il background non è stato approvato
+          </div>
+        </div>
+
+        <div class="col-12 mt-2">
+          <div class="form-group">
+            <label>Note visibili al giocatore</label>
+            <quill-editor id="playerNotes" name="playerNotes" [(ngModel)]="character.playerNotes" [style]="{ height: '300px' }" [modules]="{ toolbar: [['bold', 'italic', 'underline']] }"></quill-editor>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sezione Scheda -->
+      <div class="row" *ngIf="activeSection==='sc'">
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label for="raceId">Razza</label>
+            <select id="raceId" name="raceId" class="form-control" [(ngModel)]="character.raceId" [disabled]="character.characterApprovationStatus > 0">
+              <option [value]="entry.key" *ngFor="let entry of races">{{ entry.value }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label for="divinityId">Divinità</label>
+            <select id="divinityId" name="divinityId" class="form-control" [(ngModel)]="character.divinityId" [disabled]="character.characterApprovationStatus > 0">
+              <option [value]="entry.key" *ngFor="let entry of divinities">{{ entry.value }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label for="indoleId">Indole</label>
+            <select id="indoleId" name="indoleId" class="form-control" [(ngModel)]="character.indoleId" [disabled]="character.characterApprovationStatus > 0">
+              <option [value]="entry.key" *ngFor="let entry of indoles">{{ entry.value }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label for="provenanceId">Provenienza</label>
+            <select id="provenanceId" name="provenanceId" class="form-control" [(ngModel)]="character.provenanceId" [disabled]="character.characterApprovationStatus > 0">
+              <option [value]="entry.key" *ngFor="let entry of provenances">{{ entry.value }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label for="focusId">Focus</label>
+            <select id="focusId" name="focusId" class="form-control" [(ngModel)]="character.focusId" [disabled]="character.characterApprovationStatus > 0">
+              <option [value]="entry.key" *ngFor="let entry of focuses">{{ entry.value }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && character.characterApprovationStatus === 0">
+          <button type="button" class="btn btn-primary btn-block" (click)="requestCharacterApprovation()">
+            Richiedi Approvazione PG
+          </button>
+        </div>
+
+        <div class="col-12 mt-2" *ngIf="character.id > 0 && character.characterApprovationStatus > 0">
+          <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.characterApprovationStatus === 1">
+            <i class="fa fa-pause"></i>
+            Il tuo personaggio è in attesa di approvazione da parte dei master
+          </div>
+          <div class="col-12 pt-1 pb-1 bg-success text-light" *ngIf="character.characterApprovationStatus === 2">
+            <i class="fa fa-thumbs-up"></i>
+            Il tuo personaggio è stato approvato
+          </div>
+          <div class="col-12 pt-1 pb-1 bg-danger text-light" *ngIf="character.characterApprovationStatus === 3">
+            <i class="fa fa-thumbs-down"></i>
+            Il tuo personaggio non è stato approvato. Sarai contattato a breve da un master
+          </div>
+        </div>
+        <!--
+      <div class="col-md-3 mt-2">
+        <div class="form-group">
+          <label for="playedDays">Giorni Giocati</label>
+          <input type="number" id="playedDays" name="playedDays" class="form-control" [(ngModel)]="character.playedDays">
+        </div>
+      </div>
+      -->
+      </div>
+
+      <!-- Sezione Abilità -->
+      <div class="row" *ngIf="activeSection === 'ab'">
+
+        <!-- Abilità base -->
+        <div class="col-md-4 mt-2">
+          <div class="form-group">
+            <label for="searchBaseSkill">Ricerca Abilità</label>
+            <div class="input-group">
+              <input type="text" class="form-control" name="searchBaseSkill" id="searchBaseSkill" [(ngModel)]="searchBaseSkillTerm">
+              <div class="intput-group-btn">
+                <button type="button" class="btn btn-default">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="scrollable">
+            <table class="table table-striped table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th class="text-center">Abilità di partenza</th>
+                  <th>&nbsp;</th>
+                  <th class="text-center" style="width: 80px;">Costo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let skill of baseSkills | FilterSkills : character.selectedSkills : searchBaseSkillTerm">
+                  <td>
+                    <button type="button" class="btn btn-link btn-sm" (click)="toggleSkill(skill)">
+                      <i class="fa fa-plus" *ngIf="(character.experiencePoints - usedPx) >= skill.costopx && character.skillsApprovationStatus === 0"></i>
+                      {{ skill.nome }}
+                    </button>
+                  </td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome" (click)="openSkillDetail(skill)">
+                      <span class="fa-stack">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-info fa-inverse fa-stack-1x"></i>
+                      </span>
+                    </button>
+                  </td>
+                  <td class="text-right">
+                    {{ skill.costopx }} px
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Abilità con dipendenze -->
+        <div class="col-md-4 mt-2">
+          <div class="form-group">
+            <label for="searchUnlockedSkill">Ricerca Abilità</label>
+            <div class="input-group">
+              <input type="text" class="form-control" name="searchUnlockedSkill" id="searchUnlockedSkill" [(ngModel)]="searchUnlockedSkillTerm">
+              <div class="intput-group-btn">
+                <button type="button" class="btn btn-default">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="scrollable">
+            <table class="table table-striped table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th class="text-center">Abilità sbloccate</th>
+                  <th>&nbsp;</th>
+                  <th class="text-center" style="width: 80px;">Costo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let skill of unlockedSkills | FilterSkills : character.selectedSkills : searchUnlockedSkillTerm">
+                  <td>
+                    <button type="button" class="btn btn-link btn-sm" (click)="toggleSkill(skill)">
+                      <i class="fa fa-plus" *ngIf="(character.experiencePoints - usedPx) >= skill.costopx && character.skillsApprovationStatus === 0"></i>
+                      {{ skill.nome }}
+                    </button>
+                  </td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome" (click)="openSkillDetail(skill)">
+                      <span class="fa-stack">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-info fa-inverse fa-stack-1x"></i>
+                      </span>
+                    </button>
+                  </td>
+                  <td class="text-right">
+                    {{ skill.costopx }} px
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Abilità selezionate -->
+        <div class="col-md-4 mt-2">
+          <div class="form-group">
+            <label for="searchSelectedSkill">Ricerca Abilità</label>
+            <div class="input-group">
+              <input type="text" class="form-control" name="searchSelectedSkill" id="searchSelectedSkill" [(ngModel)]="searchSelectedSkillTerm">
+              <div class="intput-group-btn">
+                <button type="button" class="btn btn-default">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="scrollable">
+            <table class="table table-striped table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th class="text-center">Abilità selezionate</th>
+                  <th>&nbsp;</th>
+                  <th class="text-center" style="width: 80px;">Costo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let skill of character.selectedSkills | FilterSkills : null : searchSelectedSkillTerm">
+                  <td>
+                    <button type="button" class="btn btn-link btn-sm" (click)="toggleSkill(skill)">
+                      <i class="fa fa-minus" *ngIf="character.skillsApprovationStatus === 0"></i>
+                      {{ skill.nome }}
+                    </button>
+                  </td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome" (click)="openSkillDetail(skill)">
+                      <span class="fa-stack">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-info fa-inverse fa-stack-1x"></i>
+                      </span>
+                    </button>
+                  </td>
+                  <td class="text-right">
+                    {{ skill.costopx }} px
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && character.skillsApprovationStatus === 0">
+          <button type="button" class="btn btn-primary btn-block" (click)="requestSkillsApprovation()">
+            Richiedi Revisione Abilità
+          </button>
+        </div>
+
+        <div class="col-12 mt-2" *ngIf="character.id > 0 && character.skillsApprovationStatus > 0">
+          <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.skillsApprovationStatus === 1">
+            <i class="fa fa-pause"></i>
+            Le tue abilità sono in attesa di revisione
+          </div>
+          <div class="col-12 pt-1 pb-1 bg-success text-light" *ngIf="character.skillsApprovationStatus === 2">
+            <i class="fa fa-thumbs-up"></i>
+            Le tue abilità sono state revisionate e validate
+          </div>
+          <div class="col-12 pt-1 pb-1 bg-danger text-light" *ngIf="character.skillsApprovationStatus === 3">
+            <i class="fa fa-thumbs-down"></i>
+            Le tue abilità non hanno superato la revisione. Sarai presto contattato da un master
+          </div>
+        </div>
+
+      </div>
+      <!-- Operazioni -->
+      <div class="row">
+        <div class="col-md-3 offset-md-6 mt-2">
+          <button type="button" class="btn btn-default btn-block" (click)="goToList()">
+            Indietro
+          </button>
+        </div>
+        <div class="col-md-3 mt-2">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!characterForm.valid">
+            Salva
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</app-container-page>

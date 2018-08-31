@@ -9,6 +9,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 // Moduli
 import { LayoutComponentsModule } from '../layout-components/layout-components.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 // Componenti
 import {
@@ -22,9 +23,6 @@ import {
 // Servizi
 import { PlayerCommonService } from './services/player-common.service';
 
-// Pipes
-import { FilterSkillsPipe } from './pipes/filter-skills.pipe';
-
 // Routing
 import { PlayerRoutingModule } from './player.routing';
 
@@ -34,6 +32,7 @@ import { PlayerRoutingModule } from './player.routing';
     FormsModule,
     PlayerRoutingModule,
     LayoutComponentsModule,
+    PipesModule,
     QuillModule,
     TooltipModule,
     ModalModule
@@ -41,7 +40,6 @@ import { PlayerRoutingModule } from './player.routing';
   declarations: [
     CharactersListComponent,
     CharacterComponent,
-    FilterSkillsPipe,
     EventsListComponent,
     EventSubscriptionComponent,
     EventSubscriptionSuccessComponent

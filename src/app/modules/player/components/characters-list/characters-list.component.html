@@ -20,7 +20,11 @@
 
             <div class="mt-2">
               <h4 class="card-title">{{ character.nome }}</h4>
-              <p class="card-text">{{ character.experiencePoints - character.usedPoints }} px</p>
+              <p class="card-text" *ngIf="character.active">{{ character.usedPoints }} / {{ character.experiencePoints }}
+                px</p>
+              <p class="card-text" *ngIf="!character.active">
+                <i class="fa fa-bolt"></i> Inattivo
+              </p>
             </div>
 
             <button type="button" class="btn btn-primary btn-block mt-2" (click)="openCharacter(character.id)">
@@ -31,7 +35,7 @@
       </div>
 
       <!-- Pulsante nuovo personaggio -->
-      <div class="col-md-4 col-lg-3 mb-2" *ngIf="charactersList.length < 3">
+      <div class="col-md-4 col-lg-3 mb-2" *ngIf="canCreateCharacters">
         <div class="card">
           <div class="card-body">
 

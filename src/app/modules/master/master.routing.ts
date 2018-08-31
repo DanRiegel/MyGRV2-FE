@@ -1,9 +1,28 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { MasterComponent } from './master.component';
+// Componenti
+import {
+  MasterCharactersListComponent,
+  MasterCharacterComponent
+} from './components/';
 
-const routes: Routes = [{ path: '', component: MasterComponent }];
+// Guards
+import { UserGuardService } from '../../services';
+
+const routes: Routes = [
+  { path: '', redirectTo: 'characters', pathMatch: 'full' },
+  {
+    path: 'characters',
+    component: MasterCharactersListComponent,
+    canActivate: [UserGuardService]
+  },
+  {
+    path: 'characters/:characterId',
+    component: MasterCharacterComponent,
+    canActivate: [UserGuardService]
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
