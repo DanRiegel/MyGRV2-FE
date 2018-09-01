@@ -151,46 +151,46 @@ export class MasterCharacterComponent implements OnInit {
       });
   }
 
-  public requestCharacterApprovation(): void {
+  public approveCharacter(): void {
+    this.character.characterApprovationStatus = 2;
     this.characterService
       .SaveCharacter(this.character)
       .subscribe(characterRes => {
         if (!!characterRes.payload) {
-          this.characterService
-            .RequestCharacterApprovation(this.character.id)
-            .subscribe(res => {
-              if (!!res.payload) {
-                this.character = res.payload;
-
-                if (this.character.id === 0) {
-                  this.router.navigate(['..', res.payload.id], {
-                    relativeTo: this.activatedRoute
-                  });
-                }
-              }
-            });
+          this.character = characterRes.payload;
         }
       });
   }
 
-  public requestSkillsApprovation(): void {
+  public disapproveCharacter(): void {
+    this.character.characterApprovationStatus = 3;
     this.characterService
       .SaveCharacter(this.character)
       .subscribe(characterRes => {
         if (!!characterRes.payload) {
-          this.characterService
-            .RequestSkillsApprovation(this.character.id)
-            .subscribe(res => {
-              if (!!res.payload) {
-                this.character = res.payload;
+          this.character = characterRes.payload;
+        }
+      });
+  }
 
-                if (this.character.id === 0) {
-                  this.router.navigate(['..', res.payload.id], {
-                    relativeTo: this.activatedRoute
-                  });
-                }
-              }
-            });
+  public approveSkills(): void {
+    this.character.skillsApprovationStatus = 2;
+    this.characterService
+      .SaveCharacter(this.character)
+      .subscribe(characterRes => {
+        if (!!characterRes.payload) {
+          this.character = characterRes.payload;
+        }
+      });
+  }
+
+  public disapproveSkills(): void {
+    this.character.skillsApprovationStatus = 3;
+    this.characterService
+      .SaveCharacter(this.character)
+      .subscribe(characterRes => {
+        if (!!characterRes.payload) {
+          this.character = characterRes.payload;
         }
       });
   }
@@ -223,10 +223,7 @@ export class MasterCharacterComponent implements OnInit {
       this.getUnlockedSkills();
     } else {
       // Verifico di poter acquisire l'abilità con i PX a disposizione
-      if (
-        this.character.experiencePoints - this.usedPx >= skill.costopx &&
-        this.character.skillsApprovationStatus === 0
-      ) {
+      if (this.character.experiencePoints - this.usedPx >= skill.costopx) {
         this.character.selectedSkills = [
           ...this.character.selectedSkills,
           skill

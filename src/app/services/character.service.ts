@@ -70,4 +70,20 @@ export class CharacterService {
       .put(`${environment.apiUrl}/characters/${characterId}/skills/`, {})
       .map((res: RestResponse<Character>) => res);
   }
+
+  public RemovePlayedDay(
+    characterId: number
+  ): Observable<RestResponse<Character>> {
+    return this.httpClient
+      .put(`${environment.apiUrl}/characters/${characterId}/removeday/`, {})
+      .map((res: RestResponse<Character>) => res);
+  }
+
+  public AddPlayedDay(
+    characterId: number
+  ): Observable<RestResponse<Character>> {
+    return this.httpClient
+      .put(`${environment.apiUrl}/characters/${characterId}/addday/`, {})
+      .map((res: RestResponse<Character>) => res);
+  }
 }

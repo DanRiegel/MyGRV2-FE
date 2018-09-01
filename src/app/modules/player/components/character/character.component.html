@@ -54,13 +54,13 @@
         <div class="col-12 mt-2">
           <div class="form-group">
             <label for="background">Background del personaggio</label>
-            <quill-editor *ngIf="character.approvationStatus === 0" id="background" name="background" [(ngModel)]="character.background"
-              [style]="{ height: '300px' }" [modules]="{ toolbar: [['bold', 'italic', 'underline']] }"></quill-editor>
-            <div *ngIf="character.approvationStatus > 0" class="form-control" [innerHTML]="character.background"></div>
+            <quill-editor *ngIf="character.approvationStatus === 0 || character.approvationStatus === 3" id="background" name="background"
+              [(ngModel)]="character.background" [style]="{ height: '300px' }" [modules]="{ toolbar: [['bold', 'italic', 'underline']] }"></quill-editor>
+            <div *ngIf="character.approvationStatus > 0 && character.approvationStatus !== 3" class="form-control" [innerHTML]="character.background"></div>
           </div>
         </div>
 
-        <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && character.approvationStatus === 0">
+        <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && (character.approvationStatus === 0 || character.approvationStatus === 3)">
           <button type="button" class="btn btn-primary btn-block" (click)="requestBackgroundApprovation()">
             Richiedi Approvazione BG
           </button>

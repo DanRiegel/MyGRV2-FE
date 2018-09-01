@@ -60,13 +60,13 @@
                   <i class="fa fa-list text-danger" *ngIf="character.skillsApprovationStatus === 3" [tooltip]="'Abilità non approvate'"></i>
                 </td>
                 <td class="text-center">
-                  <button type="button" class="btn btn-default btn-sm" [tooltip]="'Diminuisci giorni giocati'">
+                  <button type="button" class="btn btn-default btn-sm" [tooltip]="'Diminuisci giorni giocati'" (click)="removePlayedDay(character.id)">
                     <i class="fa fa-minus"></i>
                   </button>
                   <div class="d-inline-block ml-1 mr-1">
                     {{ character.playedDays }}
                   </div>
-                  <button type="button" class="btn btn-default btn-sm" [tooltip]="'Aumenta giorni giocati'">
+                  <button type="button" class="btn btn-default btn-sm" [tooltip]="'Aumenta giorni giocati'" (click)="addPlayedDay(character.id)">
                     <i class="fa fa-plus"></i>
                   </button>
                 </td>

@@ -14,6 +14,7 @@ import { Character } from '../../../../models';
 })
 export class DashboardComponent implements OnInit {
   public playerCharacters: Character[] = [];
+  public playedDays = 0;
 
   constructor(
     private characterService: CharacterService,
@@ -30,6 +31,13 @@ export class DashboardComponent implements OnInit {
     this.characterService.GetCharacters().subscribe(res => {
       if (!!res.payload) {
         this.playerCharacters = res.payload;
+
+        let days = 0;
+        this.playerCharacters.forEach(
+          character => (days += character.playedDays)
+        );
+
+        this.playedDays = days;
       }
     });
   }

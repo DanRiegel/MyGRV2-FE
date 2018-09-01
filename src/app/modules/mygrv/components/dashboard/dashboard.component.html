@@ -38,7 +38,7 @@
         </div>
 
         <button type="button" class="btn btn-primary btn-block mt-2" (click)="openCharactersList()">
-          Vai alla gestione personaggi
+          Gestisci i tuoi personaggi
         </button>
       </div>
 
@@ -51,12 +51,12 @@
               <div class="col-8 align-self-center">
                 <h5 class="card-title mb-0">
                   <i class="fa fa-calendar"></i>
-                  Live Giocati
+                  Giorni Giocati
                 </h5>
               </div>
               <div class="col-4 text-right">
                 <div class="btn btn-light btn-lg btn-round text-danger">
-                  0
+                  {{ playedDays }}
                 </div>
               </div>
             </div>

@@ -28,8 +28,8 @@ export class CommonService {
     <MenuEntry>{
       label: 'Giocatore',
       subEntries: [
-        <MenuEntry>{ label: 'Personaggi', route: '/player/characters' },
-        <MenuEntry>{ label: 'Iscrizioni LIVE', route: '/player/events' }
+        <MenuEntry>{ label: 'I tuoi personaggi', route: '/player/characters' },
+        <MenuEntry>{ label: 'Iscrizione eventi', route: '/player/events' }
       ]
     }
   ];

@@ -23,12 +23,36 @@ export class MasterCharactersListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadCharacters();
+  }
+
+  private loadCharacters(): void {
     this.characterService.GetAllCharacters().subscribe(res => {
       if (!res.payload) {
         return;
       }
 
       this.charactersList = res.payload;
+    });
+  }
+
+  public removePlayedDay(characterId: number): void {
+    this.characterService.RemovePlayedDay(characterId).subscribe(res => {
+      if (!res.payload) {
+        return;
+      }
+
+      this.loadCharacters();
+    });
+  }
+
+  public addPlayedDay(characterId: number): void {
+    this.characterService.AddPlayedDay(characterId).subscribe(res => {
+      if (!res.payload) {
+        return;
+      }
+
+      this.loadCharacters();
     });
   }
 

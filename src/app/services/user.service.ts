@@ -89,25 +89,13 @@ export class UserService {
     return <User>{
       id: +userData.userid,
       name: userData.nickname,
-      role: +userData.role
+      role: userData.role
     };
   }
 
-  public GetUserRole(): string {
+  public HasRole(roleCod: string): boolean {
     const userData = this.getUserData();
-
-    if (!userData) {
-      return null;
-    }
-
-    switch (userData.role) {
-      case CONSTANTS.ROLE_MASTER_CODE:
-        return CONSTANTS.ROLE_MASTER;
-      case CONSTANTS.ROLE_PLAYER_CODE:
-        return CONSTANTS.ROLE_PLAYER;
-      default:
-        return null;
-    }
+    return userData && userData.role && userData.role.indexOf(roleCod) > -1;
   }
 
   public Login(

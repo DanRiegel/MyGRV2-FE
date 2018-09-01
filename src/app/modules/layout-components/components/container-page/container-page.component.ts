@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 // Models
-import { MenuEntry } from '../../../../models/';
 import { CommonService } from '../../../../services';
 
 @Component({

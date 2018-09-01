@@ -58,21 +58,6 @@
           </div>
         </div>
 
-        <!-- Pulsanti approvazione -->
-        <div class="col-md-3 offset-sm-6 mt-2" *ngIf="character.id > 0 && character.approvationStatus !== 2">
-          <button type="button" class="btn btn-success btn-block" (click)="approveBackground()">
-            <i class="fa fa-thumbs-up"></i>
-            Approva BG
-          </button>
-        </div>
-
-        <div class="col-md-3 mt-2" *ngIf="character.id > 0 && character.approvationStatus !== 3">
-          <button type="button" class="btn btn-danger btn-block" (click)="disapproveBAckground()">
-            <i class="fa fa-thumbs-down"></i>
-            Rifiuta BG
-          </button>
-        </div>
-
         <!-- Stato approvazione -->
         <div class="col-12 mt-2" *ngIf="character.id > 0 && character.approvationStatus > 0">
           <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.approvationStatus === 1">
@@ -89,6 +74,25 @@
           </div>
         </div>
 
+        <!-- Pulsanti approvazione -->
+        <div class="col-12 mt-2">
+          <div class="row">
+            <div class="col-md-3" *ngIf="character.id > 0 && character.approvationStatus !== 2">
+              <button type="button" class="btn btn-success btn-block" (click)="approveBackground()">
+                <i class="fa fa-thumbs-up"></i>
+                Approva BG
+              </button>
+            </div>
+
+            <div class="col-md-3" *ngIf="character.id > 0 && character.approvationStatus !== 3">
+              <button type="button" class="btn btn-danger btn-block" (click)="disapproveBackground()">
+                <i class="fa fa-thumbs-down"></i>
+                Rifiuta BG
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="col-12 mt-2">
           <div class="form-group">
             <label>Note visibili al giocatore</label>
@@ -102,7 +106,7 @@
         <div class="col-md-3 mt-2">
           <div class="form-group">
             <label for="raceId">Razza</label>
-            <select id="raceId" name="raceId" class="form-control" [(ngModel)]="character.raceId" [disabled]="character.characterApprovationStatus > 0">
+            <select id="raceId" name="raceId" class="form-control" [(ngModel)]="character.raceId">
               <option [value]="entry.key" *ngFor="let entry of races">{{ entry.value }}</option>
             </select>
           </div>
@@ -110,7 +114,7 @@
         <div class="col-md-3 mt-2">
           <div class="form-group">
             <label for="divinityId">Divinità</label>
-            <select id="divinityId" name="divinityId" class="form-control" [(ngModel)]="character.divinityId" [disabled]="character.characterApprovationStatus > 0">
+            <select id="divinityId" name="divinityId" class="form-control" [(ngModel)]="character.divinityId">
               <option [value]="entry.key" *ngFor="let entry of divinities">{{ entry.value }}</option>
             </select>
           </div>
@@ -118,7 +122,7 @@
         <div class="col-md-3 mt-2">
           <div class="form-group">
             <label for="indoleId">Indole</label>
-            <select id="indoleId" name="indoleId" class="form-control" [(ngModel)]="character.indoleId" [disabled]="character.characterApprovationStatus > 0">
+            <select id="indoleId" name="indoleId" class="form-control" [(ngModel)]="character.indoleId">
               <option [value]="entry.key" *ngFor="let entry of indoles">{{ entry.value }}</option>
             </select>
           </div>
@@ -126,7 +130,7 @@
         <div class="col-md-3 mt-2">
           <div class="form-group">
             <label for="provenanceId">Provenienza</label>
-            <select id="provenanceId" name="provenanceId" class="form-control" [(ngModel)]="character.provenanceId" [disabled]="character.characterApprovationStatus > 0">
+            <select id="provenanceId" name="provenanceId" class="form-control" [(ngModel)]="character.provenanceId">
               <option [value]="entry.key" *ngFor="let entry of provenances">{{ entry.value }}</option>
             </select>
           </div>
@@ -134,40 +138,61 @@
         <div class="col-md-3 mt-2">
           <div class="form-group">
             <label for="focusId">Focus</label>
-            <select id="focusId" name="focusId" class="form-control" [(ngModel)]="character.focusId" [disabled]="character.characterApprovationStatus > 0">
+            <select id="focusId" name="focusId" class="form-control" [(ngModel)]="character.focusId">
               <option [value]="entry.key" *ngFor="let entry of focuses">{{ entry.value }}</option>
             </select>
           </div>
         </div>
-
-        <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && character.characterApprovationStatus === 0">
-          <button type="button" class="btn btn-primary btn-block" (click)="requestCharacterApprovation()">
-            Richiedi Approvazione PG
-          </button>
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label for="playedDays">Giorni Giocati</label>
+            <input type="number" id="playedDays" name="playedDays" class="form-control" [(ngModel)]="character.playedDays">
+          </div>
+        </div>
+        <div class="col-md-3 mt-2">
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button type="button" class="btn btn-link btn-block text-left" (click)="character.active = !character.active">
+              <i class="fa" [class.fa-square]="!character.active" [class.fa-check-square]="character.active"></i>
+              Personaggio Attivo
+            </button>
+          </div>
         </div>
 
+        <!-- Stato approvazione -->
         <div class="col-12 mt-2" *ngIf="character.id > 0 && character.characterApprovationStatus > 0">
           <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.characterApprovationStatus === 1">
             <i class="fa fa-pause"></i>
-            Il tuo personaggio è in attesa di approvazione da parte dei master
+            Il personaggio è in attesa di approvazione
           </div>
           <div class="col-12 pt-1 pb-1 bg-success text-light" *ngIf="character.characterApprovationStatus === 2">
             <i class="fa fa-thumbs-up"></i>
-            Il tuo personaggio è stato approvato
+            Il personaggio è stato approvato
           </div>
           <div class="col-12 pt-1 pb-1 bg-danger text-light" *ngIf="character.characterApprovationStatus === 3">
             <i class="fa fa-thumbs-down"></i>
-            Il tuo personaggio non è stato approvato. Sarai contattato a breve da un master
+            Il personaggio non è stato approvato
           </div>
         </div>
-        <!--
-      <div class="col-md-3 mt-2">
-        <div class="form-group">
-          <label for="playedDays">Giorni Giocati</label>
-          <input type="number" id="playedDays" name="playedDays" class="form-control" [(ngModel)]="character.playedDays">
+
+        <!-- Pulsanti approvazione -->
+        <div class="col-12 mt-2">
+          <div class="row">
+            <div class="col-md-3" *ngIf="character.id > 0 && character.characterApprovationStatus !== 2">
+              <button type="button" class="btn btn-success btn-block" (click)="approveCharacter()">
+                <i class="fa fa-thumbs-up"></i>
+                Approva Personaggio
+              </button>
+            </div>
+
+            <div class="col-md-3" *ngIf="character.id > 0 && character.characterApprovationStatus !== 3">
+              <button type="button" class="btn btn-danger btn-block" (click)="disapproveCharacter()">
+                <i class="fa fa-thumbs-down"></i>
+                Rifiuta Personaggio
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-      -->
       </div>
 
       <!-- Sezione Abilità -->
@@ -200,7 +225,7 @@
                 <tr *ngFor="let skill of baseSkills | FilterSkills : character.selectedSkills : searchBaseSkillTerm">
                   <td>
                     <button type="button" class="btn btn-link btn-sm" (click)="toggleSkill(skill)">
-                      <i class="fa fa-plus" *ngIf="(character.experiencePoints - usedPx) >= skill.costopx && character.skillsApprovationStatus === 0"></i>
+                      <i class="fa fa-plus" *ngIf="(character.experiencePoints - usedPx) >= skill.costopx"></i>
                       {{ skill.nome }}
                     </button>
                   </td>
@@ -248,7 +273,7 @@
                 <tr *ngFor="let skill of unlockedSkills | FilterSkills : character.selectedSkills : searchUnlockedSkillTerm">
                   <td>
                     <button type="button" class="btn btn-link btn-sm" (click)="toggleSkill(skill)">
-                      <i class="fa fa-plus" *ngIf="(character.experiencePoints - usedPx) >= skill.costopx && character.skillsApprovationStatus === 0"></i>
+                      <i class="fa fa-plus" *ngIf="(character.experiencePoints - usedPx) >= skill.costopx"></i>
                       {{ skill.nome }}
                     </button>
                   </td>
@@ -296,7 +321,7 @@
                 <tr *ngFor="let skill of character.selectedSkills | FilterSkills : null : searchSelectedSkillTerm">
                   <td>
                     <button type="button" class="btn btn-link btn-sm" (click)="toggleSkill(skill)">
-                      <i class="fa fa-minus" *ngIf="character.skillsApprovationStatus === 0"></i>
+                      <i class="fa fa-minus"></i>
                       {{ skill.nome }}
                     </button>
                   </td>
@@ -317,28 +342,42 @@
           </div>
         </div>
 
-        <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && character.skillsApprovationStatus === 0">
-          <button type="button" class="btn btn-primary btn-block" (click)="requestSkillsApprovation()">
-            Richiedi Revisione Abilità
-          </button>
-        </div>
-
+        <!-- Stato Approvazione -->
         <div class="col-12 mt-2" *ngIf="character.id > 0 && character.skillsApprovationStatus > 0">
           <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.skillsApprovationStatus === 1">
             <i class="fa fa-pause"></i>
-            Le tue abilità sono in attesa di revisione
+            Le abilità sono in attesa di revisione
           </div>
           <div class="col-12 pt-1 pb-1 bg-success text-light" *ngIf="character.skillsApprovationStatus === 2">
             <i class="fa fa-thumbs-up"></i>
-            Le tue abilità sono state revisionate e validate
+            Le abilità sono state revisionate e validate
           </div>
           <div class="col-12 pt-1 pb-1 bg-danger text-light" *ngIf="character.skillsApprovationStatus === 3">
             <i class="fa fa-thumbs-down"></i>
-            Le tue abilità non hanno superato la revisione. Sarai presto contattato da un master
+            Le abilità non hanno superato la revisione
           </div>
         </div>
 
+        <!-- Pulsanti approvazione -->
+        <div class="col-12 mt-2">
+          <div class="row">
+            <div class="col-md-3" *ngIf="character.id > 0 && character.skillsApprovationStatus !== 2">
+              <button type="button" class="btn btn-success btn-block" (click)="approveSkills()">
+                <i class="fa fa-thumbs-up"></i>
+                Approva Abilità
+              </button>
+            </div>
+
+            <div class="col-md-3" *ngIf="character.id > 0 && character.skillsApprovationStatus !== 3">
+              <button type="button" class="btn btn-danger btn-block" (click)="disapproveSkills()">
+                <i class="fa fa-thumbs-down"></i>
+                Rifiuta Abilità
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+
       <!-- Operazioni -->
       <div class="row">
         <div class="col-md-3 offset-md-6 mt-2">
