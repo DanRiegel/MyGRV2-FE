@@ -34,6 +34,22 @@ export class CommonService {
     }
   ];
 
+  public accountantEntries: MenuEntry[] = [
+    <MenuEntry>{
+      label: 'Segreteria',
+      subEntries: [
+        <MenuEntry>{
+          label: 'Gestione iscritti',
+          route: '/accountant/players'
+        },
+        <MenuEntry>{
+          label: 'Gestione personaggi',
+          route: '/accountant/characters'
+        }
+      ]
+    }
+  ];
+
   public masterEntries: MenuEntry[] = [
     <MenuEntry>{
       label: 'Master',
@@ -64,6 +80,11 @@ export class CommonService {
     const playerData = this.userService.PlayerData;
     if (playerData.giocatore) {
       entries = entries.concat(this.playerEntries);
+    }
+
+    // Check segreteria
+    if (playerData.segreteria) {
+      entries = entries.concat(this.accountantEntries);
     }
 
     // Check master

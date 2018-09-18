@@ -28,6 +28,11 @@ const routes: Routes = [
     loadChildren: './modules/master/master.module#MasterModule',
     canActivate: [GuardService]
   },
+  {
+    path: 'accountant',
+    loadChildren: './modules/accountant/accountant.module#AccountantModule',
+    canActivate: [GuardService]
+  },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: '**', redirectTo: '' }

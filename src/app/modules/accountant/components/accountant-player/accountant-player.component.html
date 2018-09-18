@@ -52,18 +52,15 @@
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="nome">Data Firma Scarico Responsabilità</label>
-            <div class="form-control">
-              {{ !!player.dataScaricoResponsabilita ? (player.dataScaricoResponsabilita | date : 'dd/MM/yyyy') : 'Non
-              firmato' }}
-            </div>
+            <input type="text" bsDatepicker id="dataScaricoResponsabilita" name="dataScaricoResponsabilita" class="form-control"
+              [(ngModel)]="dataScaricoResponsabilita">
           </div>
         </div>
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="nome">Data Pagamento Quota Associativa</label>
-            <div class="form-control">
-              {{ !!player.dataQuotaAssociativa ? (player.dataQuotaAssociativa | date : 'dd/MM/yyyy') : '&nbsp;' }}
-            </div>
+            <input type="text" bsDatepicker id="dataQuotaAssociativa" name="dataQuotaAssociativa" class="form-control"
+              [(ngModel)]="dataQuotaAssociativa">
           </div>
         </div>
         <div class="col-md-4 mt-2">
@@ -72,16 +69,22 @@
 
             <div class="row">
               <div class="col-md-4">
-                <i class="fa" [class.fa-square]="!player.giocatore" [class.fa-check-square]="player.giocatore"></i>
-                Giocatore
+                <button type="button" class="btn btn-link btn-block" (click)="player.giocatore = !player.giocatore">
+                  <i class="fa" [class.fa-square]="!player.giocatore" [class.fa-check-square]="player.giocatore"></i>
+                  Giocatore
+                </button>
               </div>
               <div class="col-md-4">
-                <i class="fa" [class.fa-square]="!player.segreteria" [class.fa-check-square]="player.segreteria"></i>
-                Segreteria
+                <button type="button" class="btn btn-link btn-block" (click)="player.giocatore = !player.giocatore">
+                  <i class="fa" [class.fa-square]="!player.segreteria" [class.fa-check-square]="player.segreteria"></i>
+                  Segreteria
+                </button>
               </div>
               <div class="col-md-4">
-                <i class="fa" [class.fa-square]="!player.master" [class.fa-check-square]="player.master"></i>
-                Master
+                <button type="button" class="btn btn-link btn-block" (click)="player.giocatore = !player.giocatore">
+                  <i class="fa" [class.fa-square]="!player.master" [class.fa-check-square]="player.master"></i>
+                  Master
+                </button>
               </div>
             </div>
 
@@ -91,6 +94,11 @@
 
       <!-- Operazioni -->
       <div class="row">
+        <div class="col-md-3 offset-md-6 mt-2">
+          <button type="button" class="btn btn-default btn-block" (click)="goToList()">
+            Indietro
+          </button>
+        </div>
         <div class="col-md-3 mt-2">
           <button type="submit" class="btn btn-primary btn-block" [disabled]="!playerForm.valid">
             Salva

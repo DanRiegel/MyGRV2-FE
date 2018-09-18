@@ -1,0 +1,87 @@
+<app-container-page>
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-12">
+        <h1>Gestione Personaggi</h1>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-12">
+
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Giocatore</th>
+                <th>Personaggio</th>
+                <th class="text-center">Stato</th>
+                <th class="text-center">Approvazioni</th>
+                <th class="text-center">Giorni Giocati</th>
+                <th>PX</th>
+                <th>&nbsp;</th>
+              </tr>
+              <tr>
+                <th>
+                  <input type="text" class="form-control form-control-sm" [(ngModel)]="filters.userName">
+                </th>
+                <th>
+                  <input type="text" class="form-control form-control-sm" [(ngModel)]="filters.nome">
+                </th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let character of charactersList | CharacterFilter : filters.userName : filters.nome">
+                <td>{{ character.userName }}</td>
+                <td>{{ character.nome }}</td>
+                <td class="text-center">
+                  <i class="fa fa-smile text-success" *ngIf="character.active" [tooltip]="'Attivo'"></i>
+                  <i class="fa fa-bolt text-danger" *ngIf="!character.active" [tooltip]="'Inattivo'"></i>
+                </td>
+                <td class="text-center">
+                  <!-- Approvazione background -->
+                  <i class="fa fa-book mr-1" *ngIf="character.approvationStatus === 0" [tooltip]="'Background da inviare'"></i>
+                  <i class="fa fa-book mr-1 text-warning" *ngIf="character.approvationStatus === 1" [tooltip]="'Background in attesa di approvazione'"></i>
+                  <i class="fa fa-book mr-1 text-success" *ngIf="character.approvationStatus === 2" [tooltip]="'Background approvato'"></i>
+                  <i class="fa fa-book mr-1 text-danger" *ngIf="character.approvationStatus === 3" [tooltip]="'Background non approvato'"></i>
+                  <!-- Approvazione personaggo -->
+                  <i class="fa fa-user mr-1" *ngIf="character.characterApprovationStatus === 0" [tooltip]="'Dati personaggio da inviare'"></i>
+                  <i class="fa fa-user mr-1 text-warning" *ngIf="character.characterApprovationStatus === 1" [tooltip]="'Personaggio in attesa di approvazione'"></i>
+                  <i class="fa fa-user mr-1 text-success" *ngIf="character.characterApprovationStatus === 2" [tooltip]="'Personaggio approvato'"></i>
+                  <i class="fa fa-user mr-1 text-danger" *ngIf="character.characterApprovationStatus === 3" [tooltip]="'Personaggio non approvato'"></i>
+                  <!-- Approvazione abilità -->
+                  <i class="fa fa-list" *ngIf="character.skillsApprovationStatus === 0" [tooltip]="'Abilità da inviare'"></i>
+                  <i class="fa fa-list text-warning" *ngIf="character.skillsApprovationStatus === 1" [tooltip]="'Abilità in attesa di approvazione'"></i>
+                  <i class="fa fa-list text-success" *ngIf="character.skillsApprovationStatus === 2" [tooltip]="'Abilità approvate'"></i>
+                  <i class="fa fa-list text-danger" *ngIf="character.skillsApprovationStatus === 3" [tooltip]="'Abilità non approvate'"></i>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-default btn-sm" [tooltip]="'Diminuisci giorni giocati'" (click)="removePlayedDay(character.id)">
+                    <i class="fa fa-minus"></i>
+                  </button>
+                  <div class="d-inline-block ml-1 mr-1">
+                    {{ character.playedDays }}
+                  </div>
+                  <button type="button" class="btn btn-default btn-sm" [tooltip]="'Aumenta giorni giocati'" (click)="addPlayedDay(character.id)">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </td>
+                <td>{{ character.experiencePoints }}</td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" [tooltip]="'Modifica personaggio'" (click)="openCharacter(character.id)">
+                    <i class="fa fa-edit"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</app-container-page>

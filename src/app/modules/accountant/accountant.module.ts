@@ -10,27 +10,36 @@ import { PipesModule } from '../pipes/pipes.module';
 import { QuillModule } from 'ngx-quill';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 // Componenti
 import {
-  MasterCharactersListComponent,
-  MasterCharacterComponent
+  AccountantCharactersListComponent,
+  AccountantCharacterComponent,
+  AccountantPlayerComponent,
+  AccountantPlayersListComponent
 } from './components/';
 
 // Routing
-import { MasterRoutingModule } from './master.routing';
+import { AccountantRoutingModule } from './accountant.routing';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    MasterRoutingModule,
+    AccountantRoutingModule,
     LayoutComponentsModule,
     PipesModule,
     QuillModule,
     TooltipModule,
-    ModalModule
+    ModalModule,
+    BsDatepickerModule
   ],
-  declarations: [MasterCharactersListComponent, MasterCharacterComponent]
+  declarations: [
+    AccountantCharactersListComponent,
+    AccountantCharacterComponent,
+    AccountantPlayerComponent,
+    AccountantPlayersListComponent
+  ]
 })
-export class MasterModule {}
+export class AccountantModule {}

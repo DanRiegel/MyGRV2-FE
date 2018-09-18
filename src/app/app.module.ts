@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 // Moduli Esterni
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 // Moduli
 import { LayoutComponentsModule } from './modules/layout-components/layout-components.module';
@@ -55,7 +56,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     AppRoutingModule,
     LayoutComponentsModule,
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   declarations: [
     AppComponent,
