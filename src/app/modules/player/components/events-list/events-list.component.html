@@ -14,16 +14,22 @@
             <div class="row">
               <div class="col-12">
                 <h2>{{ event.nome }}</h2>
-                <p class="font-weight-bold">{{ (event.datainizio | date: 'dd/MM/yyyy') + (event.datafine !== event.datainizio ? ' - ' + (event.datafine
+                <p class="font-weight-bold">{{ (event.datainizio | date: 'dd/MM/yyyy') + (event.datafine !==
+                  event.datainizio ? ' - ' + (event.datafine
                   | date: 'dd/MM/yyyy') : '') }}</p>
                 <p class="text-justify">{{ event.descrizione }}</p>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-3 offset-sm-9">
-                <button type="button" class="btn btn-primary btn-block" (click)="subscribeEvent(event.id)">
+                <button type="button" class="btn btn-primary btn-block" (click)="subscribeEvent(event.id)" *ngIf="!userIsSubscribedToEvent['key' + event.id]">
                   <i class="fa fa-calendar"></i>
                   Iscriviti all'evento
+                </button>
+
+                <button type="button" class="btn btn-danger btn-block" [disabled]="true" *ngIf="userIsSubscribedToEvent['key' + event.id]">
+                  <i class="fa fa-calendar"></i>
+                  Già iscritto
                 </button>
               </div>
             </div>

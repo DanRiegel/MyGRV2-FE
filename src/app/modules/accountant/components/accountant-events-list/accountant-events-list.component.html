@@ -1,0 +1,190 @@
+<app-container-page>
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-12">
+        <h1>Gestione Eventi</h1>
+      </div>
+    </div>
+
+    <!-- Prossimi eventi -->
+    <div class="row">
+      <div class="col-12">
+
+        <h2>Prossimi Eventi</h2>
+
+        <div class="card mt-2" *ngFor="let eventItem of nextEventsList">
+          <div class="card-header">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-10">
+                  <strong>{{ eventItem.nome }}</strong> ({{ eventItem.datainizio | date : 'dd/MM' }} - {{
+                  eventItem.datafine | date :
+                  'dd/MM' }})
+                </div>
+                <div class="col-2 text-right">
+                  <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-success" container="body" [tooltip]="'Iscrivi giocatore'"
+                      (click)="subscribePlayer(eventItem.id)">
+                      <i class="fa fa-user-plus"></i>
+                    </button>
+                    <!--
+                    <button type="button" class="btn btn-primary" container="body" [tooltip]="'Modifica evento'">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    -->
+                    <button type="button" class="btn btn-secondary" (click)="toggleEventDetail(eventItem.id)" container="body"
+                      [tooltip]="showEventData['key' + eventItem.id] ? 'Nascondi' : 'Dettagli'">
+                      <ng-container *ngIf="!showEventData['key' + eventItem.id]">
+                        <i class="fa fa-plus"></i>
+                      </ng-container>
+                      <ng-container *ngIf="showEventData['key' + eventItem.id]">
+                        <i class="fa fa-minus"></i>
+                      </ng-container>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body" *ngIf="showEventData['key' + eventItem.id]">
+            <p class="card-text">
+              {{ eventItem.descrizione }}
+            </p>
+
+            <!-- Elenco iscritti -->
+            <ng-container *ngIf="eventSubscriptions['key' + eventItem.id]">
+              <h5 class="card-title">Iscritti</h5>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-striped">
+                  <thead>
+                    <tr>
+                      <th>Giocatore</th>
+                      <th>Data Iscrizione</th>
+                      <th>Personaggio</th>
+                      <th>Mod. Pagamento</th>
+                      <th class="text-center">Pagato</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let evtSubscr of eventSubscriptions['key' + eventItem.id]">
+                      <td>{{ evtSubscr.nomegiocatore + ' ' + evtSubscr.cognomegiocatore }}</td>
+                      <td>{{ evtSubscr.dataiscrizione | date : 'dd/MM/yyyy' }}</td>
+                      <td>
+                        <ng-container *ngIf="evtSubscr.dettagli">
+                          <div *ngFor="let dettaglio of evtSubscr.dettagli">
+                            Giorno {{ dettaglio.giorno }}: {{ dettaglio.tipoiscrizione + (dettaglio.nomepersonaggio ? '
+                            (' + dettaglio.nomepersonaggio + ')' : '') }}
+                          </div>
+                        </ng-container>
+                      </td>
+                      <td>{{ evtSubscr.nomemodalitapagamento }}</td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-link" (click)="toggleSubscriptionPayment(evtSubscr)">
+                          <i class="fa" [class.fa-square]="!evtSubscr.pagata" [class.fa-check-square]="evtSubscr.pagata"></i>
+                        </button>
+                      </td>
+                      <td class="text-right">
+                        <button type="button" class="btn btn-sm btn-danger" container="body" [tooltip]="'Rimuovi iscrizione'"
+                          (click)="deleteSubscription(eventItem.id, evtSubscr.id)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Eventi passati -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <h2>Eventi passati</h2>
+
+        <div class="card mt-2" *ngFor="let eventItem of oldEventsList">
+          <div class="card-header">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-10">
+                  <strong>{{ eventItem.nome }}</strong> ({{ eventItem.datainizio | date : 'dd/MM' }} - {{
+                  eventItem.datafine | date :
+                  'dd/MM' }})
+                </div>
+                <div class="col-2 text-right">
+                  <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-secondary" (click)="toggleEventDetail(eventItem.id)" container="body"
+                      [tooltip]="showEventData['key' + eventItem.id] ? 'Nascondi' : 'Dettagli'">
+                      <ng-container *ngIf="!showEventData['key' + eventItem.id]">
+                        <i class="fa fa-plus"></i>
+                      </ng-container>
+                      <ng-container *ngIf="showEventData['key' + eventItem.id]">
+                        <i class="fa fa-minus"></i>
+                      </ng-container>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body" *ngIf="showEventData['key' + eventItem.id]">
+            <p class="card-text">
+              {{ eventItem.descrizione }}
+            </p>
+
+            <!-- Elenco iscritti -->
+            <ng-container *ngIf="eventSubscriptions['key' + eventItem.id]">
+              <h5 class="card-title">Iscritti</h5>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-striped">
+                  <thead>
+                    <tr>
+                      <th>Giocatore</th>
+                      <th>Data Iscrizione</th>
+                      <th>Personaggio</th>
+                      <th>Mod. Pagamento</th>
+                      <th class="text-center">Pagato</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let evtSubscr of eventSubscriptions['key' + eventItem.id]">
+                      <td>{{ evtSubscr.nomegiocatore + ' ' + evtSubscr.cognomegiocatore }}</td>
+                      <td>{{ evtSubscr.dataiscrizione | date : 'dd/MM/yyyy' }}</td>
+                      <td>
+                        <ng-container *ngIf="evtSubscr.dettagli">
+                          <div *ngFor="let dettaglio of evtSubscr.dettagli">
+                            Giorno {{ dettaglio.giorno }}: {{ dettaglio.tipoiscrizione + (dettaglio.nomepersonaggio ? '
+                            (' + dettaglio.nomepersonaggio + ')' : '') }}
+                          </div>
+                        </ng-container>
+                      </td>
+                      <td>{{ evtSubscr.nomemodalitapagamento }}</td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-link" (click)="toggleSubscriptionPayment(evtSubscr)">
+                          <i class="fa" [class.fa-square]="!evtSubscr.pagata" [class.fa-check-square]="evtSubscr.pagata"></i>
+                        </button>
+                      </td>
+                      <td class="text-right">
+                        <button type="button" class="btn btn-sm btn-danger" container="body" [tooltip]="'Rimuovi iscrizione'"
+                          (click)="deleteSubscription(eventItem.id, evtSubscr.id)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</app-container-page>

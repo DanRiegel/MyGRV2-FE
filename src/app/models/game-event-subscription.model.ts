@@ -6,4 +6,5 @@ export class GameEventSubscription {
   public idmodalitapagamento: number;
   public note: string;
   public pagata: boolean;
+  public dataiscrizione: string;
 }

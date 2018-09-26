@@ -25,6 +25,15 @@ export class CharacterService {
       .get(`${environment.apiUrl}/characters/`)
       .map((res: RestResponse<CharacterDTO[]>) => res);
   }
+
+  public GetPlayerCharacters(
+    playerId: number
+  ): Observable<RestResponse<CharacterDTO[]>> {
+    return this.httpClient
+      .get(`${environment.apiUrl}/characters/by-player/${playerId}/`)
+      .map((res: RestResponse<CharacterDTO[]>) => res);
+  }
+
   public GetAllCharacters(): Observable<RestResponse<CharacterDTO[]>> {
     return this.httpClient
       .get(`${environment.apiUrl}/characters/all/`)

@@ -5,8 +5,11 @@ import { Routes, RouterModule } from '@angular/router';
 import {
   AccountantCharactersListComponent,
   AccountantCharacterComponent,
+  AccountantEventSubscriptionComponent,
+  AccountantEventSubscriptionSuccessComponent,
   AccountantPlayerComponent,
-  AccountantPlayersListComponent
+  AccountantPlayersListComponent,
+  AccountantEventsListComponent
 } from './components/';
 
 // Guards
@@ -32,6 +35,21 @@ const routes: Routes = [
   {
     path: 'characters/:characterId',
     component: AccountantCharacterComponent,
+    canActivate: [UserGuardService]
+  },
+  {
+    path: 'events',
+    component: AccountantEventsListComponent,
+    canActivate: [UserGuardService]
+  },
+  {
+    path: 'events/:eventId/subscription',
+    component: AccountantEventSubscriptionComponent,
+    canActivate: [UserGuardService]
+  },
+  {
+    path: 'events/:eventId/subscription/success/:subscriptionId',
+    component: AccountantEventSubscriptionSuccessComponent,
     canActivate: [UserGuardService]
   }
 ];

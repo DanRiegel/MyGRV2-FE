@@ -16,8 +16,11 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {
   AccountantCharactersListComponent,
   AccountantCharacterComponent,
+  AccountantEventSubscriptionComponent,
+  AccountantEventSubscriptionSuccessComponent,
   AccountantPlayerComponent,
-  AccountantPlayersListComponent
+  AccountantPlayersListComponent,
+  AccountantEventsListComponent
 } from './components/';
 
 // Routing
@@ -38,8 +41,11 @@ import { AccountantRoutingModule } from './accountant.routing';
   declarations: [
     AccountantCharactersListComponent,
     AccountantCharacterComponent,
+    AccountantEventSubscriptionComponent,
+    AccountantEventSubscriptionSuccessComponent,
     AccountantPlayerComponent,
-    AccountantPlayersListComponent
+    AccountantPlayersListComponent,
+    AccountantEventsListComponent
   ]
 })
 export class AccountantModule {}

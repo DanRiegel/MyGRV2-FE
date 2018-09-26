@@ -45,6 +45,10 @@ export class CommonService {
         <MenuEntry>{
           label: 'Gestione personaggi',
           route: '/accountant/characters'
+        },
+        <MenuEntry>{
+          label: 'Gestione eventi e iscrizioni',
+          route: '/accountant/events'
         }
       ]
     }
