@@ -34,7 +34,8 @@ import {
   CharacterService,
   EventService,
   SubscriptionModesService,
-  PaymentMethodsService
+  PaymentMethodsService,
+  ErrorNotificationService
 } from './services/';
 
 // Routing
@@ -79,6 +80,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     EventService,
     SubscriptionModesService,
     PaymentMethodsService,
+    ErrorNotificationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,

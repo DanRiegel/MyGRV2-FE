@@ -1,0 +1,80 @@
+<app-container-page>
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-12">
+        <h1>Notifica un errore di MyGRV2</h1>
+      </div>
+    </div>
+
+    <form name="errorForm" #errorForm="ngForm" (ngSubmit)="sendError()">
+
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="errorLocation">In quale pagina di MyGRV2 si è verificato l'errore?</label>
+            <input type="text" id="errorLocation" name="errorLocation" class="form-control" [(ngModel)]="notificationData.errorLocation"
+              [required]="true">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 mt-2">
+          <div class="form-group">
+            <label for="errorDescription">Descrivi brevemente l'errore verificato e, se possibile, come riprodurlo</label>
+            <textarea type="text" id="errorDescription" name="errorDescription" class="form-control" [(ngModel)]="notificationData.errorDescription"
+              [required]="true"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mt-2">
+          <div class="form-group">
+            <label for="deviceInUse">Quale dispositivo stai utilizzando?</label>
+            <select class="form-control" id="deviceInUse" name="deviceInUse" [(ngModel)]="notificationData.deviceInUse">
+              <option value="Windows">PC Windows</option>
+              <option value="MacOS">PC Mac</option>
+              <option value="AndroidTablet">Tablet Android</option>
+              <option value="AndroidSmartphone">Cellulare Android</option>
+              <option value="iPhone">iPhone</option>
+              <option value="iPad">iPad</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6 mt-2">
+          <div class="form-group">
+            <label for="browserInUse">Quale navigatore stai utilizzando?</label>
+            <select class="form-control" id="browserInUse" name="browserInUse" [(ngModel)]="notificationData.browserInUse">
+              <option value="Chrome">Google Chrome</option>
+              <option value="Firefox">Mozilla Firefox</option>
+              <option value="Explorer">Internet Explorer</option>
+              <option value="Edge">Microsoft Edge</option>
+              <option value="Safari">Safari</option>
+              <option value="Altro">Altro</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Operazioni -->
+      <div class="row">
+        <div class="col-md-3 mt-2">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!errorForm.valid || sending">
+            <ng-container *ngIf="!sending">Invia segnalazione</ng-container>
+            <ng-container *ngIf="sending">
+              <i class="fa fa-spin fa-spinner"></i>
+              Invio in corso
+            </ng-container>
+          </button>
+        </div>
+        <div class="col-md-9 mt-2" [class.bg-success]="sent && !sentError" [class.bg-danger]="sent && sentError">
+          <span *ngIf="!sent">&nbsp;</span>
+          <span *ngIf="sent && !sentError">Grazie per il tuo contributo, la segnalazione è stata inviata correttamente</span>
+          <span *ngIf="sent && sentError">Si è verificato un errore durante l'invio della richiesta. Ritenta oppure
+            contatta direttamente lo sviluppatore</span>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</app-container-page>

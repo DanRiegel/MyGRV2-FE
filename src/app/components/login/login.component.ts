@@ -19,7 +19,15 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.AutoLogin().subscribe(res => {
+      if (!!res.payload) {
+        this.userService.LoggedUserToken = res.payload as string;
+
+        this.getUserDataAndRedirectToDashboard();
+      }
+    });
+  }
 
   doLogin(): void {
     if (!this.username || !this.password) {
@@ -30,12 +38,16 @@ export class LoginComponent implements OnInit {
       if (!res.error && !!res.payload) {
         this.userService.LoggedUserToken = res.payload;
 
-        this.playerService.GetCurrentPlayer().subscribe(playerRes => {
-          if (!playerRes.error && !!playerRes.payload) {
-            this.userService.PlayerData = playerRes.payload;
-            this.router.navigateByUrl('/');
-          }
-        });
+        this.getUserDataAndRedirectToDashboard();
+      }
+    });
+  }
+
+  private getUserDataAndRedirectToDashboard(): void {
+    this.playerService.GetCurrentPlayer().subscribe(playerRes => {
+      if (!playerRes.error && !!playerRes.payload) {
+        this.userService.PlayerData = playerRes.payload;
+        this.router.navigateByUrl('/');
       }
     });
   }

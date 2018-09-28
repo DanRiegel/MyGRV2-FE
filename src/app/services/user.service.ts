@@ -98,6 +98,18 @@ export class UserService {
     return userData && userData.role && userData.role.indexOf(roleCod) > -1;
   }
 
+  public AutoLogin(): Observable<RestResponse<string | boolean>> {
+    return this.httpClient
+      .get(`${environment.apiUrl}/login/`)
+      .map((res: any) => {
+        if (!res.payload) {
+          return res as RestResponse<boolean>;
+        } else {
+          return res as RestResponse<string>;
+        }
+      });
+  }
+
   public Login(
     username: string,
     password: string

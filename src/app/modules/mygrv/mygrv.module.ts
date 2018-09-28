@@ -12,7 +12,11 @@ import { LayoutComponentsModule } from '../layout-components/layout-components.m
 import { PipesModule } from '../pipes/pipes.module';
 
 // Componenti
-import { DashboardComponent, PlayerDataComponent } from './components/';
+import {
+  DashboardComponent,
+  PlayerDataComponent,
+  NotifyErrorComponent
+} from './components/';
 
 // Routing
 import { MygrvRoutingModule } from './mygrv.routing';
@@ -28,6 +32,6 @@ import { MygrvRoutingModule } from './mygrv.routing';
     PipesModule,
     MygrvRoutingModule
   ],
-  declarations: [DashboardComponent, PlayerDataComponent]
+  declarations: [DashboardComponent, PlayerDataComponent, NotifyErrorComponent]
 })
 export class MygrvModule {}

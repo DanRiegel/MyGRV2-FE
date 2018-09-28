@@ -1,5 +1,6 @@
 export * from './character.service';
 export * from './common.service';
+export * from './error-notification.service';
 export * from './event.service';
 export * from './guard.service';
 export * from './http-interceptor.service';

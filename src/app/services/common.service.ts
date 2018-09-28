@@ -19,6 +19,7 @@ export class CommonService {
     label: 'Riepilogo',
     route: '/mygrv/dashboard'
   };
+
   public playerDataEntry = <MenuEntry>{
     label: 'I tuoi dati',
     route: '/mygrv/data'
@@ -67,6 +68,12 @@ export class CommonService {
     label: 'Comunicazioni',
     route: '/player/notifications'
   };
+
+  public notifyErrorEntry = <MenuEntry>{
+    label: 'Notifica Errore',
+    route: '/mygrv/notify-error'
+  };
+
   public logoutEntry = <MenuEntry>{ label: 'Logout', route: '/logout' };
 
   constructor(
@@ -97,6 +104,7 @@ export class CommonService {
     }
 
     entries.push(this.messagesEntry);
+    entries.push(this.notifyErrorEntry);
     entries.push(this.logoutEntry);
     return entries;
   }
