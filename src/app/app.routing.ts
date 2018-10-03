@@ -34,6 +34,11 @@ const routes: Routes = [
     canActivate: [GuardService]
   },
   { path: 'login', component: LoginComponent },
+  {
+    path: 'relogin',
+    component: LoginComponent,
+    data: { preventAutoLogin: true }
+  },
   { path: 'logout', component: LogoutComponent },
   { path: '**', redirectTo: '' }
 ];

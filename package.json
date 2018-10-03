@@ -1,6 +1,6 @@
 {
-  "name": "my-grv2-fe",
-  "version": "2.0.0-alpha5",
+  "name": "mygrv2-fe",
+  "version": "2.0.0-alpha6",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

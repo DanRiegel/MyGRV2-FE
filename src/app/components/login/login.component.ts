@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 // Servizi
 import { UserService, PlayerService } from '../../services/';
@@ -16,15 +16,20 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private playerService: PlayerService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.userService.AutoLogin().subscribe(res => {
-      if (!!res.payload) {
-        this.userService.LoggedUserToken = res.payload as string;
+    this.activatedRoute.data.subscribe(params => {
+      if (!params.preventAutoLogin) {
+        this.userService.AutoLogin().subscribe(res => {
+          if (!!res.payload) {
+            this.userService.LoggedUserToken = res.payload as string;
 
-        this.getUserDataAndRedirectToDashboard();
+            this.getUserDataAndRedirectToDashboard();
+          }
+        });
       }
     });
   }
