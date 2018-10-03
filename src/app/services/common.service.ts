@@ -64,10 +64,12 @@ export class CommonService {
     }
   ];
 
+  /*
   public messagesEntry = <MenuEntry>{
     label: 'Comunicazioni',
     route: '/player/notifications'
   };
+  */
 
   public notifyErrorEntry = <MenuEntry>{
     label: 'Notifica Errore',
@@ -103,7 +105,7 @@ export class CommonService {
       entries = entries.concat(this.masterEntries);
     }
 
-    entries.push(this.messagesEntry);
+    // entries.push(this.messagesEntry);
     entries.push(this.notifyErrorEntry);
     entries.push(this.logoutEntry);
     return entries;

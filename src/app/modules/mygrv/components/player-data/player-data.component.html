@@ -5,6 +5,14 @@
         <h1>Il tuo profilo</h1>
       </div>
     </div>
+    <div class="row" *ngIf="isFirstAccess">
+      <div clasS="col-12 mt-2">
+        <div class="border border-success pl-2 pr-2">
+          Benvenuto in MyGRV2! Per proseguire inserisci i dati mancanti, che ci saranno utili per contattarti in caso
+          di necessità.
+        </div>
+      </div>
+    </div>
 
     <form name="playerForm" #playerForm="ngForm" (ngSubmit)="savePlayer()">
 
@@ -19,13 +27,13 @@
         </div>
         <div class="col-md-4 mt-2">
           <div class="form-group">
-            <label for="nome">Nome</label>
+            <label for="nome">Nome*</label>
             <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="player.nome" [required]="true">
           </div>
         </div>
         <div class="col-md-4 mt-2">
           <div class="form-group">
-            <label for="cognome">Cognome</label>
+            <label for="cognome">Cognome*</label>
             <input type="text" id="cognome" name="cognome" class="form-control" [(ngModel)]="player.cognome" [required]="true">
           </div>
         </div>
@@ -34,21 +42,26 @@
       <div class="row">
         <div class="col-md-4 mt-2">
           <div class="form-group">
-            <label for="recapito">Telefono</label>
+            <label for="recapito">Telefono**</label>
             <input type="text" id="recapito" name="recapito" class="form-control" [(ngModel)]="player.recapito"
               [required]="!player.recapitomail || (!!player.recapitomail && player.recapitomail.trim() === '')">
           </div>
         </div>
         <div class="col-md-4 mt-2">
           <div class="form-group">
-            <label for="recapitomail">Email</label>
+            <label for="recapitomail">Email**</label>
             <input type="text" id="recapitomail" name="recapitomail" class="form-control" [(ngModel)]="player.recapitomail"
               [required]="!player.recapito || (!!player.recapito && player.recapito.trim() === '')">
           </div>
         </div>
+        <div class="col-md-12">
+          <small class="font-italic">** Inserisci almeno un recapito tra telefono ed e-mail. Inserire un indirizzo
+            e-mail ti permetterà di ricevere automaticamente comunicazioni ed aggiornamenti sui tuoi personaggi. Non
+            sarà utilizzato per altri scopi.</small>
+        </div>
       </div>
 
-      <div class="row">
+      <div class="row" *ngIf="!isFirstAccess">
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="nome">Data Firma Scarico Responsabilità</label>

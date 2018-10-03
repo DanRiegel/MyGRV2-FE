@@ -23,6 +23,13 @@ const routes: Routes = [
     component: PlayerDataComponent
   },
   {
+    path: 'first-access',
+    component: PlayerDataComponent,
+    data: {
+      firstAccess: true
+    }
+  },
+  {
     path: 'notify-error',
     component: NotifyErrorComponent
   }

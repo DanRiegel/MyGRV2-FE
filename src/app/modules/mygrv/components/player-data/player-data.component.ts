@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 // Servizi
 import { PlayerService } from '../../../../services';
@@ -15,9 +16,18 @@ export class PlayerDataComponent implements OnInit {
   // Dati Giocatore
   public player: Player;
 
-  constructor(private playerService: PlayerService) {}
+  public isFirstAccess = false;
+
+  constructor(
+    private playerService: PlayerService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.activatedRoute.data.subscribe(params => {
+      this.isFirstAccess = !!params.firstAccess;
+    });
+
     this.loadCurrentPlayerData();
   }
 
