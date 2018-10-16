@@ -12,7 +12,8 @@
         <div class="col-md-8 mt-2">
           <div class="form-group">
             <label for="characterName">Nome del personaggio</label>
-            <input type="text" id="characterName" name="characterName" class="form-control" [(ngModel)]="character.nome" [disabled]="character.characterApprovationStatus> 0">
+            <input type="text" id="characterName" name="characterName" class="form-control" [(ngModel)]="character.nome"
+              [disabled]="character.characterApprovationStatus> 0">
           </div>
         </div>
         <div class="col-md-4 mt-2">
@@ -28,20 +29,22 @@
       <!-- Pulsanti Switching BG / Scheda -->
       <div class="row">
         <div class="col-sm-12">
-          <button type="button" class="btn btn-lg btn-round mt-2" [class.btn-primary]="activeSection !== 'bg'" [class.btn-default]="activeSection === 'bg'"
-            container="body" [tooltip]="'Background del personaggio'" (click)="activeSection = 'bg'">
+          <button type="button" class="btn btn-lg btn-round mt-2" [class.btn-primary]="activeSection !== 'bg'"
+            [class.btn-default]="activeSection === 'bg'" container="body" [tooltip]="'Background del personaggio'"
+            (click)="activeSection = 'bg'">
             <i class="fa fa-user"></i>
             <span *ngIf="activeSection === 'bg'">Background del personaggio</span>
             <!-- Background -->
           </button>
-          <button type="button" class="btn btn-lg btn-round mt-2" [class.btn-primary]="activeSection !== 'sc'" [class.btn-default]="activeSection === 'sc'"
-            container="body" [tooltip]="'Informazioni generali'" (click)="activeSection = 'sc'">
+          <button type="button" class="btn btn-lg btn-round mt-2" [class.btn-primary]="activeSection !== 'sc'"
+            [class.btn-default]="activeSection === 'sc'" container="body" [tooltip]="'Informazioni generali'" (click)="activeSection = 'sc'">
             <i class="fa fa-file"></i>
             <span *ngIf="activeSection === 'sc'">Informazioni generali</span>
             <!-- Informazioni Generali -->
           </button>
-          <button type="button" class="btn btn-lg btn-round mt-2" [class.btn-primary]="activeSection !== 'ab'" [class.btn-default]="activeSection === 'ab' || !(character.id > 0)"
-            container="body" [tooltip]="'Abilità'" (click)="activeSection = 'ab'">
+          <button type="button" class="btn btn-lg btn-round mt-2" [class.btn-primary]="activeSection !== 'ab'"
+            [class.btn-default]="activeSection === 'ab' || !(character.id > 0)" container="body" [tooltip]="'Abilità'"
+            (click)="activeSection = 'ab'">
             <i class="fa fa-list"></i>
             <span *ngIf="activeSection === 'ab'">Abilità</span>
             <!-- Abilità -->
@@ -54,9 +57,10 @@
         <div class="col-12 mt-2">
           <div class="form-group">
             <label for="background">Background del personaggio</label>
-            <quill-editor *ngIf="character.approvationStatus === 0 || character.approvationStatus === 3" id="background" name="background"
-              [(ngModel)]="character.background" [style]="{ height: '300px' }" [modules]="{ toolbar: [['bold', 'italic', 'underline']] }"></quill-editor>
-            <div *ngIf="character.approvationStatus > 0 && character.approvationStatus !== 3" class="form-control" [innerHTML]="character.background"></div>
+            <quill-editor *ngIf="character.approvationStatus === 0 || character.approvationStatus === 3" id="background"
+              name="background" [(ngModel)]="character.background" [style]="{ height: '300px' }" [modules]="{ toolbar: [['bold', 'italic', 'underline']] }"></quill-editor>
+            <div *ngIf="character.approvationStatus > 0 && character.approvationStatus !== 3" class="border border-primary pl-2 pr-2"
+              [innerHTML]="character.background"></div>
           </div>
         </div>
 
@@ -84,7 +88,7 @@
         <div class="col-12 mt-2" *ngIf="!!character.playerNotes && character.playerNotes.trim() !==''">
           <div class="form-group">
             <label>Note dai master</label>
-            <div class="form-control" [innerHTML]="character.playerNotes"></div>
+            <div class="border border-primary pl-2 pr-2" [innerHTML]="character.playerNotes"></div>
           </div>
         </div>
       </div>
@@ -102,7 +106,8 @@
         <div class="col-md-3 mt-2">
           <div class="form-group">
             <label for="divinityId">Divinità</label>
-            <select id="divinityId" name="divinityId" class="form-control" [(ngModel)]="character.divinityId" [disabled]="character.characterApprovationStatus > 0">
+            <select id="divinityId" name="divinityId" class="form-control" [(ngModel)]="character.divinityId"
+              [disabled]="character.characterApprovationStatus > 0">
               <option [value]="entry.key" *ngFor="let entry of divinities">{{ entry.value }}</option>
             </select>
           </div>
@@ -118,7 +123,8 @@
         <div class="col-md-3 mt-2">
           <div class="form-group">
             <label for="provenanceId">Provenienza</label>
-            <select id="provenanceId" name="provenanceId" class="form-control" [(ngModel)]="character.provenanceId" [disabled]="character.characterApprovationStatus > 0">
+            <select id="provenanceId" name="provenanceId" class="form-control" [(ngModel)]="character.provenanceId"
+              [disabled]="character.characterApprovationStatus > 0">
               <option [value]="entry.key" *ngFor="let entry of provenances">{{ entry.value }}</option>
             </select>
           </div>
@@ -197,7 +203,8 @@
                     </button>
                   </td>
                   <td class="text-center">
-                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome" (click)="openSkillDetail(skill)">
+                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome"
+                      (click)="openSkillDetail(skill)">
                       <span class="fa-stack">
                         <i class="fa fa-circle fa-stack-2x"></i>
                         <i class="fa fa-info fa-inverse fa-stack-1x"></i>
@@ -245,7 +252,8 @@
                     </button>
                   </td>
                   <td class="text-center">
-                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome" (click)="openSkillDetail(skill)">
+                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome"
+                      (click)="openSkillDetail(skill)">
                       <span class="fa-stack">
                         <i class="fa fa-circle fa-stack-2x"></i>
                         <i class="fa fa-info fa-inverse fa-stack-1x"></i>
@@ -293,7 +301,8 @@
                     </button>
                   </td>
                   <td class="text-center">
-                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome" (click)="openSkillDetail(skill)">
+                    <button type="button" class="btn btn-link btn-sm" container="body" [tooltip]="'Dettagli abilità ' + skill.nome"
+                      (click)="openSkillDetail(skill)">
                       <span class="fa-stack">
                         <i class="fa fa-circle fa-stack-2x"></i>
                         <i class="fa fa-info fa-inverse fa-stack-1x"></i>

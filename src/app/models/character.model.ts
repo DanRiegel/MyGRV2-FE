@@ -16,6 +16,7 @@ export class Character {
   public skillsApprovationStatus: number;
   public playerNotes: string;
   public masterNotes: string;
+  public baseExperiencePoints: number;
   public experiencePoints: number;
   public usedPoints: number;
   public selectedSkills: Skill[];

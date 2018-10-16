@@ -10,10 +10,14 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 // Servizi
-import { CommonService, CharacterService } from '../../../../services';
+import {
+  CommonService,
+  CharacterService,
+  PlayerService
+} from '../../../../services';
 
 // Modelli
-import { Character, KeyValue, Skill } from '../../../../models';
+import { Character, KeyValue, Skill, Player } from '../../../../models';
 
 @Component({
   selector: 'app-master-character',
@@ -31,6 +35,7 @@ export class MasterCharacterComponent implements OnInit {
   public focuses: KeyValue[] = [];
   public baseSkills: Skill[] = [];
   public unlockedSkills: Skill[] = [];
+  public players: Player[] = [];
 
   // Dati Personaggio
   public character: Character;
@@ -44,6 +49,7 @@ export class MasterCharacterComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private characterService: CharacterService,
+    private playerService: PlayerService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private bsModalService: BsModalService
@@ -66,7 +72,8 @@ export class MasterCharacterComponent implements OnInit {
       this.commonService.getIndoles(),
       this.commonService.getOrigins(),
       this.commonService.getFocuses(),
-      this.commonService.getSkills()
+      this.commonService.getSkills(),
+      this.playerService.GetPlayers()
     ];
 
     forkJoin(tablesCalls).subscribe(resps => {
@@ -98,6 +105,11 @@ export class MasterCharacterComponent implements OnInit {
       // Base skills
       if (!!resps[5].payload) {
         this.baseSkills = resps[5].payload;
+      }
+
+      // Players
+      if (!!resps[6].payload) {
+        this.players = resps[6].payload;
       }
 
       this.loadCharacter(characterId);
