@@ -12,6 +12,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
+                <th>&nbsp;</th>
                 <th>Giocatore</th>
                 <th>Personaggio</th>
                 <th class="text-center">Stato</th>
@@ -21,6 +22,11 @@
                 <th>&nbsp;</th>
               </tr>
               <tr>
+                <th>
+                  <button type="button" class="btn btn-sm btn-link btn-block" (click)="toggleCheckAll()">
+                    <i class="fa" [class.fa-square]="!allChecked" [class.fa-check-square]="allChecked"></i>
+                  </button>
+                </th>
                 <th>
                   <input type="text" class="form-control form-control-sm" [(ngModel)]="filters.userName">
                 </th>
@@ -32,7 +38,7 @@
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <th>
-                  <button type="button" class="btn btn-sm btn-success" container="body" [tooltip]="'Crea personaggio'"
+                  <button type="button" class="btn btn-sm btn-success" container="body" container="body" [tooltip]="'Crea personaggio'"
                     (click)="openCharacter(0)">
                     <i class="fa fa-user-plus"></i>
                   </button>
@@ -41,51 +47,83 @@
             </thead>
             <tbody>
               <tr *ngFor="let character of charactersList | CharacterFilter : filters.userName : filters.nome">
+                <td>
+                  <button type="button" class="btn btn-sm btn-link btn-block" (click)="toggleCheck(character)">
+                    <i class="fa" [class.fa-square]="!selectedCharacters['key' + character.id]" [class.fa-check-square]="selectedCharacters['key' + character.id]"></i>
+                  </button>
+                </td>
                 <td>{{ character.userName }}</td>
                 <td>{{ character.nome }}</td>
                 <td class="text-center">
-                  <i class="fa fa-smile text-success" *ngIf="character.active" [tooltip]="'Attivo'"></i>
-                  <i class="fa fa-bolt text-danger" *ngIf="!character.active" [tooltip]="'Inattivo'"></i>
+                  <i class="fa fa-smile text-success" *ngIf="character.active" container="body" [tooltip]="'Attivo'"></i>
+                  <i class="fa fa-bolt text-danger" *ngIf="!character.active" container="body" [tooltip]="'Inattivo'"></i>
                 </td>
                 <td class="text-center">
                   <!-- Approvazione background -->
-                  <i class="fa fa-book mr-1" *ngIf="character.approvationStatus === 0" [tooltip]="'Background da inviare'"></i>
-                  <i class="fa fa-book mr-1 text-warning" *ngIf="character.approvationStatus === 1" [tooltip]="'Background in attesa di approvazione'"></i>
-                  <i class="fa fa-book mr-1 text-success" *ngIf="character.approvationStatus === 2" [tooltip]="'Background approvato'"></i>
-                  <i class="fa fa-book mr-1 text-danger" *ngIf="character.approvationStatus === 3" [tooltip]="'Background non approvato'"></i>
+                  <i class="fa fa-book mr-1" *ngIf="character.approvationStatus === 0" container="body" [tooltip]="'Background da inviare'"></i>
+                  <i class="fa fa-book mr-1 text-warning" *ngIf="character.approvationStatus === 1" container="body"
+                    [tooltip]="'Background in attesa di approvazione'"></i>
+                  <i class="fa fa-book mr-1 text-success" *ngIf="character.approvationStatus === 2" container="body"
+                    [tooltip]="'Background approvato'"></i>
+                  <i class="fa fa-book mr-1 text-danger" *ngIf="character.approvationStatus === 3" container="body"
+                    [tooltip]="'Background non approvato'"></i>
                   <!-- Approvazione personaggo -->
-                  <i class="fa fa-user mr-1" *ngIf="character.characterApprovationStatus === 0" [tooltip]="'Dati personaggio da inviare'"></i>
-                  <i class="fa fa-user mr-1 text-warning" *ngIf="character.characterApprovationStatus === 1" [tooltip]="'Personaggio in attesa di approvazione'"></i>
-                  <i class="fa fa-user mr-1 text-success" *ngIf="character.characterApprovationStatus === 2" [tooltip]="'Personaggio approvato'"></i>
-                  <i class="fa fa-user mr-1 text-danger" *ngIf="character.characterApprovationStatus === 3" [tooltip]="'Personaggio non approvato'"></i>
+                  <i class="fa fa-user mr-1" *ngIf="character.characterApprovationStatus === 0" container="body"
+                    [tooltip]="'Dati personaggio da inviare'"></i>
+                  <i class="fa fa-user mr-1 text-warning" *ngIf="character.characterApprovationStatus === 1" container="body"
+                    [tooltip]="'Personaggio in attesa di approvazione'"></i>
+                  <i class="fa fa-user mr-1 text-success" *ngIf="character.characterApprovationStatus === 2" container="body"
+                    [tooltip]="'Personaggio approvato'"></i>
+                  <i class="fa fa-user mr-1 text-danger" *ngIf="character.characterApprovationStatus === 3" container="body"
+                    [tooltip]="'Personaggio non approvato'"></i>
                   <!-- Approvazione abilità -->
-                  <i class="fa fa-list" *ngIf="character.skillsApprovationStatus === 0" [tooltip]="'Abilità da inviare'"></i>
-                  <i class="fa fa-list text-warning" *ngIf="character.skillsApprovationStatus === 1" [tooltip]="'Abilità in attesa di approvazione'"></i>
-                  <i class="fa fa-list text-success" *ngIf="character.skillsApprovationStatus === 2" [tooltip]="'Abilità approvate'"></i>
-                  <i class="fa fa-list text-danger" *ngIf="character.skillsApprovationStatus === 3" [tooltip]="'Abilità non approvate'"></i>
+                  <i class="fa fa-list" *ngIf="character.skillsApprovationStatus === 0" container="body" [tooltip]="'Abilità da inviare'"></i>
+                  <i class="fa fa-list text-warning" *ngIf="character.skillsApprovationStatus === 1" container="body"
+                    [tooltip]="'Abilità in attesa di approvazione'"></i>
+                  <i class="fa fa-list text-success" *ngIf="character.skillsApprovationStatus === 2" container="body"
+                    [tooltip]="'Abilità approvate'"></i>
+                  <i class="fa fa-list text-danger" *ngIf="character.skillsApprovationStatus === 3" container="body"
+                    [tooltip]="'Abilità non approvate'"></i>
                 </td>
                 <td class="text-center">
-                  <button type="button" class="btn btn-default btn-sm" [tooltip]="'Diminuisci giorni giocati'" (click)="removePlayedDay(character.id)">
+                  <button type="button" class="btn btn-default btn-sm" container="body" [tooltip]="'Diminuisci giorni giocati'"
+                    (click)="removePlayedDay(character.id)">
                     <i class="fa fa-minus"></i>
                   </button>
                   <div class="d-inline-block ml-1 mr-1">
                     {{ character.playedDays }}
                   </div>
-                  <button type="button" class="btn btn-default btn-sm" [tooltip]="'Aumenta giorni giocati'" (click)="addPlayedDay(character.id)">
+                  <button type="button" class="btn btn-default btn-sm" container="body" [tooltip]="'Aumenta giorni giocati'"
+                    (click)="addPlayedDay(character.id)">
                     <i class="fa fa-plus"></i>
                   </button>
                 </td>
                 <td>{{ character.experiencePoints }}</td>
                 <td>
-                  <button type="button" class="btn btn-primary btn-sm" [tooltip]="'Modifica personaggio'" (click)="openCharacter(character.id)">
-                    <i class="fa fa-edit"></i>
-                  </button>
+                  <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-success" container="body" [tooltip]="'Stampa scheda personaggio'"
+                      (click)="printCharacterSheet(character.id)">
+                      <i class="fa fa-print"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" container="body" [tooltip]="'Modifica personaggio'"
+                      (click)="openCharacter(character.id)">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                  </div>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
 
+      </div>
+    </div>
+    <div class="row mt-2" *ngIf="selectedCount > 0">
+      <div class="col-md-4 offset-md-8">
+        <button type="button" class="btn btn-primary btn-block" (click)="printSelectedCharactersSheet()">
+          <i class="fa fa-print"></i>
+          Stampa schede selezionate
+        </button>
       </div>
     </div>
   </div>

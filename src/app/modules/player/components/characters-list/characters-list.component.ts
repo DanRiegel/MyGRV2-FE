@@ -7,6 +7,11 @@ import { CharacterService } from '../../../../services';
 // Modelli
 import { CharacterDTO } from '../../../../models';
 
+// Utility
+import { FileUtils } from '../../../../utils/fileUtils';
+
+const FileSaver = require('file-saver');
+
 @Component({
   selector: 'app-characters-list',
   templateUrl: './characters-list.component.html',
@@ -42,5 +47,18 @@ export class CharactersListComponent implements OnInit {
 
   public openCharacter(characterId: number): void {
     this.router.navigate([characterId], { relativeTo: this.activatedRoute });
+  }
+
+  public printCharacterSheet(characterId: number) {
+    this.characterService
+      .PrintCharactersSheets([characterId])
+      .subscribe(res => {
+        if (!res.payload) {
+          return;
+        }
+
+        const blob = FileUtils.b64toBlob(res.payload, 'application/zip');
+        FileSaver.saveAs(blob, 'characters-sheets.zip');
+      });
   }
 }

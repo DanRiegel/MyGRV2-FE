@@ -7,6 +7,11 @@ import { CharacterService } from '../../../../services';
 // Modelli
 import { CharacterDTO } from '../../../../models';
 
+// Utility
+import { FileUtils } from '../../../../utils/fileUtils';
+
+const FileSaver = require('file-saver');
+
 @Component({
   selector: 'app-master-characters-list',
   templateUrl: './master-characters-list.component.html',
@@ -14,6 +19,9 @@ import { CharacterDTO } from '../../../../models';
 })
 export class MasterCharactersListComponent implements OnInit {
   public charactersList: CharacterDTO[] = [];
+  public selectedCharacters: { [key: string]: boolean } = {};
+  public selectedCount = 0;
+  public allChecked = false;
   public filters: CharacterDTO = new CharacterDTO();
 
   constructor(
@@ -34,6 +42,26 @@ export class MasterCharactersListComponent implements OnInit {
 
       this.charactersList = res.payload;
     });
+  }
+
+  public toggleCheckAll() {
+    this.allChecked = !this.allChecked;
+
+    this.charactersList.forEach(character => {
+      this.selectedCharacters[`key${character.id}`] = this.allChecked;
+    });
+
+    this.selectedCount = this.allChecked ? this.charactersList.length : 0;
+  }
+
+  public toggleCheck(character: CharacterDTO) {
+    this.selectedCharacters['key' + character.id] = !this.selectedCharacters[
+      'key' + character.id
+    ];
+
+    this.selectedCount += this.selectedCharacters['key' + character.id]
+      ? 1
+      : -1;
   }
 
   public removePlayedDay(characterId: number): void {
@@ -58,5 +86,39 @@ export class MasterCharactersListComponent implements OnInit {
 
   public openCharacter(characterId: number): void {
     this.router.navigate([characterId], { relativeTo: this.activatedRoute });
+  }
+
+  public printCharacterSheet(characterId: number) {
+    this.characterService
+      .PrintCharactersSheets([characterId])
+      .subscribe(res => {
+        if (!res.payload) {
+          return;
+        }
+
+        const blob = FileUtils.b64toBlob(res.payload, 'application/zip');
+        FileSaver.saveAs(blob, 'characters-sheets.zip');
+      });
+  }
+
+  public printSelectedCharactersSheet() {
+    const ids: number[] = [];
+    for (const characterKey in this.selectedCharacters) {
+      if (
+        this.selectedCharacters.hasOwnProperty(characterKey) &&
+        this.selectedCharacters[characterKey]
+      ) {
+        ids.push(parseInt(characterKey.replace('key', ''), null));
+      }
+    }
+
+    this.characterService.PrintCharactersSheets(ids).subscribe(res => {
+      if (!res.payload) {
+        return;
+      }
+
+      const blob = FileUtils.b64toBlob(res.payload, 'application/zip');
+      FileSaver.saveAs(blob, 'characters-sheets.zip');
+    });
   }
 }

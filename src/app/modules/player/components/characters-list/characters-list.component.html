@@ -20,7 +20,8 @@
 
             <div class="mt-2">
               <h4 class="card-title">{{ character.nome }}</h4>
-              <p class="card-text" *ngIf="character.active">{{ character.usedPoints }} / {{ character.experiencePoints }}
+              <p class="card-text" *ngIf="character.active">{{ character.usedPoints }} / {{ character.experiencePoints
+                }}
                 px</p>
               <p class="card-text" *ngIf="!character.active">
                 <i class="fa fa-bolt"></i> Inattivo
@@ -29,6 +30,12 @@
 
             <button type="button" class="btn btn-primary btn-block mt-2" (click)="openCharacter(character.id)">
               Apri scheda e BG
+            </button>
+
+            <button type="button" class="btn btn-success btn-block mt-2" [disabled]="!(character.approvationStatus === 2 &&character.characterApprovationStatus === 2 && character.skillsApprovationStatus === 2)"
+              (click)="printCharacterSheet(character.id)">
+              <i class="fa fa-print"></i>
+              Stampa scheda
             </button>
           </div>
         </div>

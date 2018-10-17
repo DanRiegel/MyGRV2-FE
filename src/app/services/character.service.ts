@@ -95,4 +95,14 @@ export class CharacterService {
       .put(`${environment.apiUrl}/characters/${characterId}/addday/`, {})
       .map((res: RestResponse<Character>) => res);
   }
+
+  public PrintCharactersSheets(
+    charactersIds: number[]
+  ): Observable<RestResponse<string>> {
+    return this.httpClient
+      .post(`${environment.apiUrl}/characters-sheet/`, {
+        charactersIds: charactersIds
+      })
+      .map((res: RestResponse<string>) => res);
+  }
 }
