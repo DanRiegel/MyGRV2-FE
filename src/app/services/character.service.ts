@@ -80,6 +80,54 @@ export class CharacterService {
       .map((res: RestResponse<Character>) => res);
   }
 
+  public ApproveCharacterBackground(
+    characterId: number
+  ): Observable<RestResponse<Character>> {
+    return this.httpClient
+      .put(`${environment.apiUrl}/characters/${characterId}/approvebg/`, {})
+      .map((res: RestResponse<Character>) => res);
+  }
+
+  public ApproveCharacter(
+    characterId: number
+  ): Observable<RestResponse<Character>> {
+    return this.httpClient
+      .put(`${environment.apiUrl}/characters/${characterId}/approvepg/`, {})
+      .map((res: RestResponse<Character>) => res);
+  }
+
+  public ApproveSkills(
+    characterId: number
+  ): Observable<RestResponse<Character>> {
+    return this.httpClient
+      .put(`${environment.apiUrl}/characters/${characterId}/approveskills/`, {})
+      .map((res: RestResponse<Character>) => res);
+  }
+
+  public RejectCharacterBackground(
+    characterId: number
+  ): Observable<RestResponse<Character>> {
+    return this.httpClient
+      .put(`${environment.apiUrl}/characters/${characterId}/rejectbg/`, {})
+      .map((res: RestResponse<Character>) => res);
+  }
+
+  public RejectCharacter(
+    characterId: number
+  ): Observable<RestResponse<Character>> {
+    return this.httpClient
+      .put(`${environment.apiUrl}/characters/${characterId}/rejectpg/`, {})
+      .map((res: RestResponse<Character>) => res);
+  }
+
+  public RejectSkills(
+    characterId: number
+  ): Observable<RestResponse<Character>> {
+    return this.httpClient
+      .put(`${environment.apiUrl}/characters/${characterId}/rejectskills/`, {})
+      .map((res: RestResponse<Character>) => res);
+  }
+
   public RemovePlayedDay(
     characterId: number
   ): Observable<RestResponse<Character>> {

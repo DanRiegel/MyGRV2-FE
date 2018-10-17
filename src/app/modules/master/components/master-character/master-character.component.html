@@ -108,7 +108,7 @@
             </div>
 
             <div class="col-md-3" *ngIf="character.id > 0 && character.approvationStatus !== 3">
-              <button type="button" class="btn btn-danger btn-block" (click)="disapproveBackground()">
+              <button type="button" class="btn btn-danger btn-block" (click)="rejectBackground()">
                 <i class="fa fa-thumbs-down"></i>
                 Rifiuta BG
               </button>
@@ -210,7 +210,7 @@
             </div>
 
             <div class="col-md-3" *ngIf="character.id > 0 && character.characterApprovationStatus !== 3">
-              <button type="button" class="btn btn-danger btn-block" (click)="disapproveCharacter()">
+              <button type="button" class="btn btn-danger btn-block" (click)="rejectCharacter()">
                 <i class="fa fa-thumbs-down"></i>
                 Rifiuta Personaggio
               </button>
@@ -396,7 +396,7 @@
             </div>
 
             <div class="col-md-3" *ngIf="character.id > 0 && character.skillsApprovationStatus !== 3">
-              <button type="button" class="btn btn-danger btn-block" (click)="disapproveSkills()">
+              <button type="button" class="btn btn-danger btn-block" (click)="rejectSkills()">
                 <i class="fa fa-thumbs-down"></i>
                 Rifiuta Abilità
               </button>

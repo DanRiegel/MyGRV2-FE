@@ -19,6 +19,7 @@ import {
   CharacterDTO,
   PaymentMethod
 } from '../../../../models';
+import { ROLE_MASTER } from 'app/constants';
 
 @Component({
   selector: 'app-event-subscription',
@@ -59,6 +60,10 @@ export class EventSubscriptionComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.has('eventId')) {
         const eventId = +params.get('eventId');
+
+        if (this.userService.HasRole(ROLE_MASTER)) {
+          this.subscriptionTypes.push({ key: 'MASTER', value: 'Master' });
+        }
 
         this.loadPaymentMethods();
         this.loadPlayerCharacters();

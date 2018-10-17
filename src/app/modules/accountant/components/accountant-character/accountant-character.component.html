@@ -83,6 +83,13 @@
             </div>
           </div>
 
+          <!-- Richiesta approvazione -->
+          <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && (character.approvationStatus === 0 || character.approvationStatus === 3)">
+            <button type="button" class="btn btn-primary btn-block" (click)="requestBackgroundApprovation()">
+              Richiedi Approvazione BG
+            </button>
+          </div>
+
           <!-- Stato approvazione -->
           <div class="col-12 mt-2" *ngIf="character.id > 0 && character.approvationStatus > 0">
             <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.approvationStatus === 1">
@@ -166,18 +173,26 @@
             </div>
           </div>
 
+          <!-- Richiesta approvazione-->
+          <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && character.characterApprovationStatus === 0">
+            <button type="button" class="btn btn-primary btn-block" (click)="requestCharacterApprovation()">
+              Richiedi Approvazione PG
+            </button>
+          </div>
+
+          <!-- Stato approvazione -->
           <div class="col-12 mt-2" *ngIf="character.id > 0 && character.characterApprovationStatus > 0">
             <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.characterApprovationStatus === 1">
               <i class="fa fa-pause"></i>
-              Il tuo personaggio è in attesa di approvazione da parte dei master
+              Il personaggio è in attesa di approvazione da parte dei master
             </div>
             <div class="col-12 pt-1 pb-1 bg-success text-light" *ngIf="character.characterApprovationStatus === 2">
               <i class="fa fa-thumbs-up"></i>
-              Il tuo personaggio è stato approvato
+              Il personaggio è stato approvato
             </div>
             <div class="col-12 pt-1 pb-1 bg-danger text-light" *ngIf="character.characterApprovationStatus === 3">
               <i class="fa fa-thumbs-down"></i>
-              Il tuo personaggio non è stato approvato. Sarai contattato a breve da un master
+              Il personaggio non è stato approvato. Sarai contattato a breve da un master
             </div>
           </div>
 
@@ -333,7 +348,14 @@
             </div>
           </div>
 
-          <!-- Stato Approvazione -->
+          <!-- Richiesta approvazione -->
+          <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && character.skillsApprovationStatus === 0">
+            <button type="button" class="btn btn-primary btn-block" (click)="requestSkillsApprovation()">
+              Richiedi Revisione Abilità
+            </button>
+          </div>
+
+          <!-- Stato approvazione -->
           <div class="col-12 mt-2" *ngIf="character.id > 0 && character.skillsApprovationStatus > 0">
             <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.skillsApprovationStatus === 1">
               <i class="fa fa-pause"></i>

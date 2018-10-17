@@ -142,67 +142,97 @@ export class MasterCharacterComponent implements OnInit {
   }
 
   public approveBackground(): void {
-    this.character.approvationStatus = 2;
     this.characterService
       .SaveCharacter(this.character)
       .subscribe(characterRes => {
         if (!!characterRes.payload) {
-          this.character = characterRes.payload;
+          this.characterService
+            .ApproveCharacterBackground(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
+              }
+            });
         }
       });
   }
 
-  public disapproveBackground(): void {
-    this.character.approvationStatus = 3;
+  public rejectBackground(): void {
     this.characterService
       .SaveCharacter(this.character)
       .subscribe(characterRes => {
         if (!!characterRes.payload) {
-          this.character = characterRes.payload;
+          this.characterService
+            .RejectCharacterBackground(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
+              }
+            });
         }
       });
   }
 
   public approveCharacter(): void {
-    this.character.characterApprovationStatus = 2;
     this.characterService
       .SaveCharacter(this.character)
       .subscribe(characterRes => {
         if (!!characterRes.payload) {
-          this.character = characterRes.payload;
+          this.characterService
+            .ApproveCharacter(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
+              }
+            });
         }
       });
   }
 
-  public disapproveCharacter(): void {
-    this.character.characterApprovationStatus = 3;
+  public rejectCharacter(): void {
     this.characterService
       .SaveCharacter(this.character)
       .subscribe(characterRes => {
         if (!!characterRes.payload) {
-          this.character = characterRes.payload;
+          this.characterService
+            .RejectCharacter(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
+              }
+            });
         }
       });
   }
 
   public approveSkills(): void {
-    this.character.skillsApprovationStatus = 2;
     this.characterService
       .SaveCharacter(this.character)
       .subscribe(characterRes => {
         if (!!characterRes.payload) {
-          this.character = characterRes.payload;
+          this.characterService
+            .ApproveSkills(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
+              }
+            });
         }
       });
   }
 
-  public disapproveSkills(): void {
-    this.character.skillsApprovationStatus = 3;
+  public rejectSkills(): void {
     this.characterService
       .SaveCharacter(this.character)
       .subscribe(characterRes => {
         if (!!characterRes.payload) {
-          this.character = characterRes.payload;
+          this.characterService
+            .RejectSkills(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
+              }
+            });
         }
       });
   }

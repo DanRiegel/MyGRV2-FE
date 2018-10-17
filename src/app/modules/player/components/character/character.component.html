@@ -64,12 +64,14 @@
           </div>
         </div>
 
+        <!-- Richiesta approvazione -->
         <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && (character.approvationStatus === 0 || character.approvationStatus === 3)">
           <button type="button" class="btn btn-primary btn-block" (click)="requestBackgroundApprovation()">
             Richiedi Approvazione BG
           </button>
         </div>
 
+        <!-- Stato approvazione -->
         <div class="col-12 mt-2" *ngIf="character.id > 0 && character.approvationStatus > 0">
           <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.approvationStatus === 1">
             <i class="fa fa-pause"></i>
@@ -138,12 +140,14 @@
           </div>
         </div>
 
+        <!-- Richiesta approvazione -->
         <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && character.characterApprovationStatus === 0">
           <button type="button" class="btn btn-primary btn-block" (click)="requestCharacterApprovation()">
             Richiedi Approvazione PG
           </button>
         </div>
 
+        <!-- Stato approvazione -->
         <div class="col-12 mt-2" *ngIf="character.id > 0 && character.characterApprovationStatus > 0">
           <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.characterApprovationStatus === 1">
             <i class="fa fa-pause"></i>
@@ -158,14 +162,6 @@
             Il tuo personaggio non è stato approvato. Sarai contattato a breve da un master
           </div>
         </div>
-        <!--
-      <div class="col-md-3 mt-2">
-        <div class="form-group">
-          <label for="playedDays">Giorni Giocati</label>
-          <input type="number" id="playedDays" name="playedDays" class="form-control" [(ngModel)]="character.playedDays">
-        </div>
-      </div>
-      -->
       </div>
 
       <!-- Sezione Abilità -->
@@ -318,12 +314,14 @@
           </div>
         </div>
 
+        <!-- Richiesta approvazione -->
         <div class="col-md-3 offset-sm-9 mt-2" *ngIf="character.id > 0 && character.skillsApprovationStatus === 0">
           <button type="button" class="btn btn-primary btn-block" (click)="requestSkillsApprovation()">
             Richiedi Revisione Abilità
           </button>
         </div>
 
+        <!-- Stato approvazione -->
         <div class="col-12 mt-2" *ngIf="character.id > 0 && character.skillsApprovationStatus > 0">
           <div class="col-12 pt-1 pb-1 bg-warning text-dark" *ngIf="character.skillsApprovationStatus === 1">
             <i class="fa fa-pause"></i>

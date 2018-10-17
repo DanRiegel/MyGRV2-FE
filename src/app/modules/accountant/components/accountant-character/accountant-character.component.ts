@@ -150,6 +150,72 @@ export class AccountantCharacterComponent implements OnInit {
     });
   }
 
+  public requestBackgroundApprovation(): void {
+    this.characterService
+      .SaveCharacter(this.character)
+      .subscribe(characterRes => {
+        if (!!characterRes.payload) {
+          this.characterService
+            .RequestCharacterBackgroundApprovation(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
+
+                if (this.character.id === 0) {
+                  this.router.navigate(['..', res.payload.id], {
+                    relativeTo: this.activatedRoute
+                  });
+                }
+              }
+            });
+        }
+      });
+  }
+
+  public requestCharacterApprovation(): void {
+    this.characterService
+      .SaveCharacter(this.character)
+      .subscribe(characterRes => {
+        if (!!characterRes.payload) {
+          this.characterService
+            .RequestCharacterApprovation(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
+
+                if (this.character.id === 0) {
+                  this.router.navigate(['..', res.payload.id], {
+                    relativeTo: this.activatedRoute
+                  });
+                }
+              }
+            });
+        }
+      });
+  }
+
+  public requestSkillsApprovation(): void {
+    this.characterService
+      .SaveCharacter(this.character)
+      .subscribe(characterRes => {
+        if (!!characterRes.payload) {
+          this.characterService
+            .RequestSkillsApprovation(this.character.id)
+            .subscribe(res => {
+              if (!!res.payload) {
+                this.character = res.payload;
+
+                if (this.character.id === 0) {
+                  this.router.navigate(['..', res.payload.id], {
+                    relativeTo: this.activatedRoute
+                  });
+                }
+              }
+            });
+        }
+      });
+  }
+
   public openSkillDetail(skill: Skill) {
     const modalRef = this.bsModalService.show(SkillDetailComponent);
     modalRef.content.skill = skill;

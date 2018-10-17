@@ -7,7 +7,8 @@
     </div>
     <div class="row">
       <div class="col-12 mt-4">
-        La tua iscrizione è stata inviata con successo. Troverai qui di seguito il riepilogo con importo e istruzioni per il pagamento.
+        La tua iscrizione è stata inviata con successo. Troverai qui di seguito il riepilogo con importo e istruzioni
+        per il pagamento.
       </div>
     </div>
     <!-- Riepilogo evento -->
@@ -25,7 +26,8 @@
       </div>
       <div class="col-md-3 mt-2">
         <label>Fine evento</label>
-        <div class="form-control">{{ subscriptionData.datafine ? (subscriptionData.datafine | date: 'dd/MM/yyyy') : (subscriptionData.datainizio |
+        <div class="form-control">{{ subscriptionData.datafine ? (subscriptionData.datafine | date: 'dd/MM/yyyy') :
+          (subscriptionData.datainizio |
           date: 'dd/MM/yyyy') }}</div>
       </div>
     </div>
@@ -38,7 +40,8 @@
           </div>
           <div class="col-12 mt-2">
             <label>{{ subscriptionData.nomemodalitaiscrizione }}</label>
-            <div class="form-control" *ngIf="!!subscriptionData.descrizionemodalitaiscrizione && subscriptionData.descrizionemodalitaiscrizione.trim() !== ''">{{ subscriptionData.descrizionemodalitaiscrizione }}</div>
+            <div class="form-control" *ngIf="!!subscriptionData.descrizionemodalitaiscrizione && subscriptionData.descrizionemodalitaiscrizione.trim() !== ''">{{
+              subscriptionData.descrizionemodalitaiscrizione }}</div>
           </div>
           <div class="col-md-6 mt-2">
             <label>Costo</label>
@@ -54,7 +57,8 @@
           </div>
           <div class="col-12 mt-2">
             <label>{{ subscriptionData.nomemodalitapagamento }}</label>
-            <div class="form-control" *ngIf="!!subscriptionData.descrizionemodalitapagamento && subscriptionData.descrizionemodalitapagamento.trim() !== ''">{{ subscriptionData.descrizionemodalitapagamento }}</div>
+            <div class="form-control" style="height: auto;" *ngIf="!!subscriptionData.descrizionemodalitapagamento && subscriptionData.descrizionemodalitapagamento.trim() !== ''">{{
+              subscriptionData.descrizionemodalitapagamento }}</div>
           </div>
           <div class="col-md-6 mt-2" *ngIf="(subscriptionData.costotot - subscriptionData.costo) > 0">
             <label>Costo aggiuntivo</label>
