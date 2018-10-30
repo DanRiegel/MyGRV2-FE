@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 // Servizi
-import { CharacterService } from '../../../../services';
+import {
+  AppConfigurationService,
+  CharacterService
+} from '../../../../services';
 
 // Modelli
 import { CharacterDTO } from '../../../../models';
@@ -20,28 +23,36 @@ const FileSaver = require('file-saver');
 export class CharactersListComponent implements OnInit {
   public charactersList: CharacterDTO[] = [];
   public canCreateCharacters = false;
+  public showPrintSheet = false;
 
   constructor(
+    private appConfigurationService: AppConfigurationService,
     private characterService: CharacterService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.characterService.GetCharacters().subscribe(res => {
-      if (!res.payload) {
-        return;
+    this.appConfigurationService.getAppConfiguration().subscribe(configRes => {
+      if (configRes.payload) {
+        this.showPrintSheet = configRes.payload.playerCanPrintCharacterSheet;
       }
 
-      this.charactersList = res.payload;
-    });
+      this.characterService.GetCharacters().subscribe(res => {
+        if (!res.payload) {
+          return;
+        }
 
-    this.characterService.CanCreateCharacters().subscribe(res => {
-      if (!res.payload) {
-        return;
-      }
+        this.charactersList = res.payload;
+      });
 
-      this.canCreateCharacters = res.payload;
+      this.characterService.CanCreateCharacters().subscribe(res => {
+        if (!res.payload) {
+          return;
+        }
+
+        this.canCreateCharacters = res.payload;
+      });
     });
   }
 

@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Invia nuovo messaggio</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- Caricamento -->
+<div class="modal-body text-center" *ngIf="!newMessage">
+  <div class="mt-2 mb-2">
+    <i class="fa fa-3x fa-spin fa-spinner"></i>
+  </div>
+</div>
+<!-- Form nuovo messaggio -->
+<form #newMessageForm="ngForm" *ngIf="!!newMessage">
+  <div class="modal-body">
+    <!-- Gruppo destinatario -->
+    <div class="form-group">
+      <label for="newMessageGroup">Invia il nuovo messaggio a</label>
+      <select class="form-control" id="newMessageGroup" name="newMessageGroup" [(ngModel)]="newMessage.gruppodestinatario"
+        [required]="true" (change)="groupChanged(newMessage.gruppodestinatario)">
+        <option value="">Seleziona...</option>
+        <option value="PLAYER">Giocatore</option>
+        <option value="CHARACTER">Personaggio</option>
+        <option value="PNG">PNG</option>
+        <option value="ACCOUNTANT">Gruppo segreteria</option>
+        <option value="MASTER">Gruppo master</option>
+      </select>
+    </div>
+    <!-- Giocatore -->
+    <div class="form-group" *ngIf="newMessage.gruppodestinatario === 'PLAYER' || newMessage.gruppodestinatario === 'CHARACTER'">
+      <label for="newMessagePlayer">Giocatore</label>
+      <select class="form-control" id="newMessagePlayer" name="newMessagePlayer" [(ngModel)]="newMessage.idgiocatoredestinatario"
+        [required]="true" (change)="playerChanged(newMessage.idgiocatoredestinatario)">
+        <option [value]="null">Seleziona...</option>
+        <option [ngValue]="player.id" *ngFor="let player of playersList">{{ player.nome + ' ' + player.cognome + ' (' +
+          player.username + ')' }}</option>
+      </select>
+    </div>
+    <!-- Personaggio -->
+    <div class="form-group" *ngIf="newMessage.gruppodestinatario === 'CHARACTER' && newMessage.idgiocatoredestinatario">
+      <label for="newMessageCharacter">Personaggio</label>
+      <select class="form-control" id="newMessageCharacter" name="newMessageCharacter" [(ngModel)]="newMessage.idpersonaggiodestinatario"
+        [required]="true">
+        <option [value]="null">Seleziona...</option>
+        <option [ngValue]="character.id" *ngFor="let character of charactersList">{{ character.nome }}</option>
+      </select>
+    </div>
+    <!-- PNG -->
+    <div class="form-group" *ngIf="newMessage.gruppodestinatario === 'PNG'">
+      <label for="newMessagePng">Nome PNG</label>
+      <input type="text" class="form-control" id="newMessagePng" name="newMessagePng" [(ngModel)]="newMessage.nomepng"
+        [required]="true">
+    </div>
+    <!-- Messaggio -->
+    <div class="form-group mt-2" *ngIf="mostraTestoMessaggio()">
+      <label for="newMessageText">Testo del messaggio</label>
+      <textarea class="form-control" id="newMessageText" name="newMessageText" [(ngModel)]="newMessage.contenuto"
+        [required]="true"></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="w-100">
+      <div class="row">
+        <div class="col-md-6 offset-md-6">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="newMessageForm.invalid">
+            <i class="fa fa-paper-plane"></i>
+            Invia
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

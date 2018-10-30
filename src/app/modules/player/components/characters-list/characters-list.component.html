@@ -32,8 +32,8 @@
               Apri scheda e BG
             </button>
 
-            <button type="button" class="btn btn-success btn-block mt-2" [disabled]="!(character.approvationStatus === 2 &&character.characterApprovationStatus === 2 && character.skillsApprovationStatus === 2)"
-              (click)="printCharacterSheet(character.id)">
+            <button type="button" class="btn btn-success btn-block mt-2" [disabled]="!(character.approvationStatus === 2 && character.characterApprovationStatus === 2 && character.skillsApprovationStatus === 2)"
+              (click)="printCharacterSheet(character.id)" *ngIf="showPrintSheet">
               <i class="fa fa-print"></i>
               Stampa scheda
             </button>

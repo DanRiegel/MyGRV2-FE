@@ -73,7 +73,7 @@ export class EventSubscriptionComponent implements OnInit {
   }
 
   private loadPlayerCharacters(): void {
-    this.characterService.GetCharacters().subscribe(res => {
+    this.characterService.GetPlayableCharacters().subscribe(res => {
       if (!!res.payload) {
         this.playerCharacters = res.payload;
       }

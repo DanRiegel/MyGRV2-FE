@@ -1,0 +1,36 @@
+.Messaging__Container
+  height: calc(100vh - 80px)
+  .Messaging__Container__Row
+    height: 100%
+    .Messaging__Container__Col
+      height: 100%
+.Conversation__Area
+  height: calc(100% - 170px)
+  overflow-y: auto
+.Conversation__NewMessage__Container
+  height: 120px
+  textarea
+    width: 100%
+    height: 100%
+    padding: 10px
+.Conversation__NewMessage__Actions
+  margin-top: 10px
+  height: 40px
+.Conversations__Container
+  overflow-y: auto
+  .Conversation__Box
+    padding: 10px
+    border-bottom: 1px solid #333
+    text-decoration: none
+    height: 80px
+    &:last-child
+      border-bottom: 0px
+    &:hover
+      text-decoration: none
+      background-color: rgba(0, 0, 0, 0.1)
+    .Conversation__Box__Sender
+      .Conversation__Box__Sender
+        font-weight: bold
+      .Conversation__Box__Character
+        font-style: italic
+        font-size: 0.8em

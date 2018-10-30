@@ -5,7 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import {
   LandingComponent,
   LoginComponent,
-  LogoutComponent
+  LogoutComponent,
+  MessagingComponent
 } from './components/';
 
 // Servizi
@@ -33,6 +34,7 @@ const routes: Routes = [
     loadChildren: './modules/accountant/accountant.module#AccountantModule',
     canActivate: [GuardService]
   },
+  { path: 'messaging', component: MessagingComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'relogin',

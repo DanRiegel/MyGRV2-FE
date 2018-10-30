@@ -18,11 +18,15 @@ import {
   LandingComponent,
   LoginComponent,
   SkillDetailComponent,
-  ConfirmModalComponent
+  ConfirmModalComponent,
+  LogoutComponent,
+  MessagingComponent,
+  NewMessageComponent
 } from './components/';
 
 // Servizi
 import {
+  AppConfigurationService,
   CommonService,
   GuardService,
   UserGuardService,
@@ -35,7 +39,8 @@ import {
   EventService,
   SubscriptionModesService,
   PaymentMethodsService,
-  ErrorNotificationService
+  ErrorNotificationService,
+  MessagingService
 } from './services/';
 
 // Routing
@@ -46,7 +51,6 @@ import * as CONST from './constants';
 
 // Ambiente
 import { environment } from '../environments/environment';
-import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   imports: [
@@ -66,9 +70,12 @@ import { LogoutComponent } from './components/logout/logout.component';
     LoginComponent,
     SkillDetailComponent,
     ConfirmModalComponent,
-    LogoutComponent
+    LogoutComponent,
+    MessagingComponent,
+    NewMessageComponent
   ],
   providers: [
+    AppConfigurationService,
     CommonService,
     GuardService,
     UserGuardService,
@@ -81,13 +88,18 @@ import { LogoutComponent } from './components/logout/logout.component';
     SubscriptionModesService,
     PaymentMethodsService,
     ErrorNotificationService,
+    MessagingService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
       multi: true
     }
   ],
-  entryComponents: [SkillDetailComponent, ConfirmModalComponent],
+  entryComponents: [
+    SkillDetailComponent,
+    ConfirmModalComponent,
+    NewMessageComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

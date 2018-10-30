@@ -32,6 +32,7 @@ export class AccountantEventSubscriptionComponent implements OnInit {
   public gameEvent: GameEvent;
   public subscriptionData: GameEventSubscription;
   public eventDays: number;
+  public selectedPlayer: Player;
   public availableDays: number[] = [];
   public selectedDays: number[] = [];
   public daysSubscriptions: {
@@ -40,8 +41,7 @@ export class AccountantEventSubscriptionComponent implements OnInit {
   public subscriptionModes: SubscriptionMode[] = [];
   public subscriptionTypes: { key: string; value: string }[] = [
     { key: 'PG', value: 'Personaggio' },
-    { key: 'PNG', value: 'PNG' },
-    { key: 'MASTER', value: 'Master' }
+    { key: 'PNG', value: 'PNG' }
   ];
   public players: Player[] = [];
   public playerCharacters: CharacterDTO[] = [];
@@ -81,11 +81,19 @@ export class AccountantEventSubscriptionComponent implements OnInit {
   }
 
   public loadPlayerCharacters(playerId: number): void {
-    this.characterService.GetPlayerCharacters(playerId).subscribe(res => {
-      if (!!res.payload) {
-        this.playerCharacters = res.payload;
-      }
-    });
+    const numericID = Number(playerId);
+
+    if (!isNaN(numericID)) {
+      this.selectedPlayer = this.players.find(
+        player => player.id === numericID
+      );
+
+      this.characterService.GetPlayerCharacters(playerId).subscribe(res => {
+        if (!!res.payload) {
+          this.playerCharacters = res.payload;
+        }
+      });
+    }
   }
 
   private loadPaymentMethods(): void {

@@ -1,3 +1,4 @@
+export * from './app-configuration.service';
 export * from './character.service';
 export * from './common.service';
 export * from './error-notification.service';
@@ -6,6 +7,7 @@ export * from './guard.service';
 export * from './http-interceptor.service';
 export * from './loader.service';
 export * from './menu.service';
+export * from './messaging.service';
 export * from './payment-methods.service';
 export * from './player.service';
 export * from './subscription-modes.service';

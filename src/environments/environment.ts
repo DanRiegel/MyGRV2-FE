@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://mygrv2.local:8080/MyGRV2/services'
+  apiUrl: '/MyGRV2/services'
 };
