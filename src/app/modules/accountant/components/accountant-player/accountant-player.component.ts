@@ -7,6 +7,9 @@ import { PlayerService } from '../../../../services';
 // Modelli
 import { Player } from '../../../../models';
 
+// Utility
+import { ConversionUtils } from 'app/utils/conversionUtils';
+
 @Component({
   selector: 'app-accountant-player',
   templateUrl: './accountant-player.component.html',
@@ -48,28 +51,14 @@ export class AccountantPlayerComponent implements OnInit {
     });
   }
 
-  private dateToString(dateValue: Date): string {
-    if (!dateValue) {
-      return null;
-    }
-
-    return (
-      dateValue.getFullYear().toString() +
-      '-' +
-      (dateValue.getMonth() + 1).toString() +
-      '-' +
-      dateValue.getDate().toString()
-    );
-  }
-
   public savePlayer(): void {
     if (this.dataScaricoResponsabilita) {
-      this.player.dataScaricoResponsabilita = this.dateToString(
+      this.player.dataScaricoResponsabilita = ConversionUtils.dateToString(
         this.dataScaricoResponsabilita
       );
     }
     if (this.dataQuotaAssociativa) {
-      this.player.dataQuotaAssociativa = this.dateToString(
+      this.player.dataQuotaAssociativa = ConversionUtils.dateToString(
         this.dataQuotaAssociativa
       );
     }

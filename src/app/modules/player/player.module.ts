@@ -9,6 +9,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 // Moduli
 import { LayoutComponentsModule } from '../layout-components/layout-components.module';
+import { RisorseUtiliModule } from '../../components/risorse-utili/risorse-utili.module';
 import { PipesModule } from '../pipes/pipes.module';
 
 // Componenti
@@ -32,6 +33,7 @@ import { PlayerRoutingModule } from './player.routing';
     FormsModule,
     PlayerRoutingModule,
     LayoutComponentsModule,
+    RisorseUtiliModule,
     PipesModule,
     QuillModule,
     TooltipModule,

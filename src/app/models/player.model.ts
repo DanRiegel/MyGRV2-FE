@@ -10,4 +10,5 @@ export class Player {
   public giocatore: boolean;
   public segreteria: boolean;
   public master: boolean;
+  public privacyaccettata: boolean;
 }

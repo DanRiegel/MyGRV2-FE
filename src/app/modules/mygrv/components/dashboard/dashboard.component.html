@@ -6,7 +6,9 @@
         <div class="card">
           <div class="card-body">
             <p class="card-text">
-              Descrizione di MyGRV v2
+              Benvenuto in MyGRV2, il portale per gestire a 360 gradi la tua
+              esperienza Live a DEUS. Seleziona dai box sottostanti o dal menù
+              in cima alla pagina le operazioni che vuoi svolgere.
             </p>
           </div>
         </div>
@@ -14,17 +16,17 @@
     </div>
 
     <div class="row mt-2">
-
-      <!-- Personaggi Creati-->
-      <div class="col-md-4 mb-2" *ngIf="userService.PlayerData && userService.PlayerData.giocatore">
+      <!-- Personaggi Creati -->
+      <div
+        class="col-md-4 mb-2"
+        *ngIf="userService.PlayerData && userService.PlayerData.giocatore"
+      >
         <div class="card text-white bg-success">
           <div class="card-body">
-
             <div class="row">
               <div class="col-8 align-self-center">
                 <h5 class="card-title mb-0">
-                  <i class="fa fa-user"></i>
-                  Personaggi creati
+                  <i class="fa fa-user"></i> Personaggi creati
                 </h5>
               </div>
               <div class="col-4 text-right">
@@ -33,25 +35,29 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary btn-block mt-2" (click)="openCharactersList()">
+        <button
+          type="button"
+          class="btn btn-primary btn-block mt-2"
+          (click)="openCharactersList()"
+        >
           Gestisci i tuoi personaggi
         </button>
       </div>
 
       <!-- Live Giocati -->
-      <div class="col-md-4 mb-2" *ngIf="userService.PlayerData && userService.PlayerData.giocatore">
+      <div
+        class="col-md-4 mb-2"
+        *ngIf="userService.PlayerData && userService.PlayerData.giocatore"
+      >
         <div class="card text-white bg-danger">
           <div class="card-body">
-
             <div class="row">
               <div class="col-8 align-self-center">
                 <h5 class="card-title mb-0">
-                  <i class="fa fa-calendar"></i>
-                  Giorni Giocati
+                  <i class="fa fa-calendar"></i> Giorni Giocati
                 </h5>
               </div>
               <div class="col-4 text-right">
@@ -60,45 +66,46 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary btn-block mt-2" (click)="openEventsList()">
+        <button
+          type="button"
+          class="btn btn-primary btn-block mt-2"
+          (click)="openEventsList()"
+        >
           Iscriviti al prossimo LIVE
         </button>
       </div>
 
       <!-- Comunicazioni -->
       <!--
-      <div class="col-md-4 mb-2">
-        <div class="card text-white bg-primary">
-          <div class="card-body">
+        <div class="col-md-4 mb-2">
+          <div class="card text-white bg-primary">
+            <div class="card-body">
 
-            <div class="row">
-              <div class="col-8 align-self-center">
-                <h5 class="card-title mb-0">
-                  <i class="fa fa-bell"></i>
-                  Nuovi messaggi
-                </h5>
-              </div>
-              <div class="col-4 text-right">
-                <div class="btn btn-light btn-lg btn-round text-primary">
-                  0
+              <div class="row">
+                <div class="col-8 align-self-center">
+                  <h5 class="card-title mb-0">
+                    <i class="fa fa-bell"></i>
+                    Nuovi messaggi
+                  </h5>
+                </div>
+                <div class="col-4 text-right">
+                  <div class="btn btn-light btn-lg btn-round text-primary">
+                    0
+                  </div>
                 </div>
               </div>
+
             </div>
-
           </div>
+
+          <button type="button" class="btn btn-primary btn-block mt-2" [disabled]="true">
+            Vedi tutti i messaggi
+          </button>
         </div>
-
-        <button type="button" class="btn btn-primary btn-block mt-2" [disabled]="true">
-          Vedi tutti i messaggi
-        </button>
-      </div>
       -->
-
     </div>
-
   </div>
 </app-container-page>

@@ -101,7 +101,7 @@
                 <td>{{ character.experiencePoints }}</td>
                 <td>
                   <div class="btn-group btn-group-sm" role="group">
-                    <button type="button" class="btn btn-success" container="body" [tooltip]="'Stampa scheda personaggio'"
+                    <button type="button" class="btn btn-success" container="body" [tooltip]="'Scarica scheda personaggio'"
                       (click)="printCharacterSheet(character.id)">
                       <i class="fa fa-print"></i>
                     </button>
@@ -122,7 +122,7 @@
       <div class="col-md-4 offset-md-8">
         <button type="button" class="btn btn-primary btn-block" (click)="printSelectedCharactersSheet()">
           <i class="fa fa-print"></i>
-          Stampa schede selezionate
+          Scarica schede selezionate
         </button>
       </div>
     </div>

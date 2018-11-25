@@ -22,6 +22,9 @@ import {
   Player
 } from '../../../../models';
 
+// Utility
+import { ConversionUtils } from 'app/utils/conversionUtils';
+
 @Component({
   selector: 'app-accountant-event-subscription',
   templateUrl: './accountant-event-subscription.component.html',
@@ -34,6 +37,7 @@ export class AccountantEventSubscriptionComponent implements OnInit {
   public eventDays: number;
   public selectedPlayer: Player;
   public availableDays: number[] = [];
+  public availableDaysNames: string[] = [];
   public selectedDays: number[] = [];
   public daysSubscriptions: {
     [key: string]: GameEventSubscriptionCharacter;
@@ -108,10 +112,12 @@ export class AccountantEventSubscriptionComponent implements OnInit {
     this.eventService.GetEvent(eventId).subscribe(res => {
       if (!!res.payload) {
         this.gameEvent = res.payload;
+
         this.subscriptionData = <GameEventSubscription>{
           id: 0,
           idgiocatore: 0,
-          idevento: this.gameEvent.id
+          idevento: this.gameEvent.id,
+          dataiscrizione: new Date()
         };
 
         const startDate = new Date(this.gameEvent.datainizio).getTime();
@@ -120,8 +126,16 @@ export class AccountantEventSubscriptionComponent implements OnInit {
           : new Date(this.gameEvent.datainizio).getTime();
 
         this.eventDays = 1 + (endDate - startDate) / this.millisInADay;
-        this.availableDays = [];
+        this.availableDaysNames = [];
+
         for (let i = 1; i <= this.eventDays; i++) {
+          const newDay = new Date(startDate);
+          newDay.setDate(newDay.getDate() + (i - 1));
+
+          this.availableDaysNames = [
+            ...this.availableDaysNames,
+            ConversionUtils.dayOfWeekToString(newDay.getDay())
+          ];
           this.availableDays = [...this.availableDays, i];
         }
       }

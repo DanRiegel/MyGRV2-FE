@@ -20,6 +20,7 @@ import {
   PaymentMethod
 } from '../../../../models';
 import { ROLE_MASTER } from 'app/constants';
+import { ConversionUtils } from 'app/utils/conversionUtils';
 
 @Component({
   selector: 'app-event-subscription',
@@ -32,6 +33,7 @@ export class EventSubscriptionComponent implements OnInit {
   public subscriptionData: GameEventSubscription;
   public eventDays: number;
   public availableDays: number[] = [];
+  public availableDaysNames: string[] = [];
   public selectedDays: number[] = [];
   public daysSubscriptions: {
     [key: string]: GameEventSubscriptionCharacter;
@@ -98,14 +100,24 @@ export class EventSubscriptionComponent implements OnInit {
           idevento: this.gameEvent.id
         };
 
-        const startDate = new Date(this.gameEvent.datainizio).getTime();
-        const endDate = this.gameEvent.datafine
+        const startDate = new Date(this.gameEvent.datainizio);
+        const startDateTime = startDate.getTime();
+        const endDateTime = this.gameEvent.datafine
           ? new Date(this.gameEvent.datafine).getTime()
           : new Date(this.gameEvent.datainizio).getTime();
 
-        this.eventDays = 1 + (endDate - startDate) / this.millisInADay;
+        this.eventDays = 1 + (endDateTime - startDateTime) / this.millisInADay;
         this.availableDays = [];
+        this.availableDaysNames = [];
+
         for (let i = 1; i <= this.eventDays; i++) {
+          const newDay = new Date(startDate);
+          newDay.setDate(newDay.getDate() + (i - 1));
+
+          this.availableDaysNames = [
+            ...this.availableDaysNames,
+            ConversionUtils.dayOfWeekToString(newDay.getDay())
+          ];
           this.availableDays = [...this.availableDays, i];
         }
       }

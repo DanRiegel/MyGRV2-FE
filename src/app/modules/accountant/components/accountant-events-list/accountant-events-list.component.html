@@ -1,15 +1,12 @@
 <app-container-page>
   <div class="container pt-4">
     <div class="row">
-      <div class="col-12">
-        <h1>Gestione Eventi</h1>
-      </div>
+      <div class="col-12"><h1>Gestione Eventi</h1></div>
     </div>
 
     <!-- Prossimi eventi -->
     <div class="row">
       <div class="col-12">
-
         <h2>Prossimi Eventi</h2>
 
         <div class="card mt-2" *ngFor="let eventItem of nextEventsList">
@@ -17,24 +14,61 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-10">
-                  <strong>{{ eventItem.nome }}</strong> ({{ eventItem.datainizio | date : 'dd/MM' }} - {{
-                  eventItem.datafine | date :
-                  'dd/MM' }})
+                  <strong>{{ eventItem.nome }}</strong> ({{
+                    eventItem.datainizio | date: 'dd/MM'
+                  }}
+                  - {{ eventItem.datafine | date: 'dd/MM' }})
                 </div>
                 <div class="col-2 text-right">
                   <div class="btn-group btn-group-sm" role="group">
-                    <button type="button" class="btn btn-success" container="body" [tooltip]="'Iscrivi giocatore'"
-                      (click)="subscribePlayer(eventItem.id)">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      container="body"
+                      [tooltip]="'Scarica schede iscritti'"
+                      (click)="printEventCharacterSheet(eventItem, false)"
+                    >
+                      <i class="fa fa-print"></i>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      container="body"
+                      [tooltip]="'Scarica schede paganti'"
+                      (click)="printEventCharacterSheet(eventItem, true)"
+                    >
+                      <i class="fa fa-money-bill-alt"></i>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-success"
+                      container="body"
+                      [tooltip]="'Iscrivi giocatore'"
+                      (click)="subscribePlayer(eventItem.id)"
+                    >
                       <i class="fa fa-user-plus"></i>
                     </button>
                     <!--
-                    <button type="button" class="btn btn-primary" container="body" [tooltip]="'Modifica evento'">
-                      <i class="fa fa-edit"></i>
-                    </button>
+                      <button type="button" class="btn btn-primary" container="body" [tooltip]="'Modifica evento'">
+                        <i class="fa fa-edit"></i>
+                      </button>
                     -->
-                    <button type="button" class="btn btn-secondary" (click)="toggleEventDetail(eventItem.id)" container="body"
-                      [tooltip]="showEventData['key' + eventItem.id] ? 'Nascondi' : 'Dettagli'">
-                      <ng-container *ngIf="!showEventData['key' + eventItem.id]">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="toggleEventDetail(eventItem.id)"
+                      container="body"
+                      [tooltip]="
+                        showEventData['key' + eventItem.id]
+                          ? 'Nascondi'
+                          : 'Dettagli'
+                      "
+                    >
+                      <ng-container
+                        *ngIf="!showEventData['key' + eventItem.id]"
+                      >
                         <i class="fa fa-plus"></i>
                       </ng-container>
                       <ng-container *ngIf="showEventData['key' + eventItem.id]">
@@ -47,9 +81,7 @@
             </div>
           </div>
           <div class="card-body" *ngIf="showEventData['key' + eventItem.id]">
-            <p class="card-text">
-              {{ eventItem.descrizione }}
-            </p>
+            <p class="card-text">{{ eventItem.descrizione }}</p>
 
             <!-- Elenco iscritti -->
             <ng-container *ngIf="eventSubscriptions['key' + eventItem.id]">
@@ -64,32 +96,96 @@
                       <th>Personaggio</th>
                       <th>Mod. Pagamento</th>
                       <th class="text-center">Pagato</th>
+                      <th class="text-center">Note</th>
                       <th>&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let evtSubscr of eventSubscriptions['key' + eventItem.id]">
-                      <td>{{ evtSubscr.nomegiocatore + ' ' + evtSubscr.cognomegiocatore }}</td>
-                      <td>{{ evtSubscr.dataiscrizione | date : 'dd/MM/yyyy' }}</td>
+                    <tr
+                      *ngFor="
+                        let evtSubscr of eventSubscriptions[
+                          'key' + eventItem.id
+                        ]
+                      "
+                    >
+                      <td>
+                        {{
+                          evtSubscr.nomegiocatore +
+                            ' ' +
+                            evtSubscr.cognomegiocatore
+                        }}
+                      </td>
+                      <td>
+                        {{ evtSubscr.dataiscrizione | date: 'dd/MM/yyyy' }}
+                      </td>
                       <td>
                         <ng-container *ngIf="evtSubscr.dettagli">
                           <div *ngFor="let dettaglio of evtSubscr.dettagli">
-                            Giorno {{ dettaglio.giorno }}: {{ dettaglio.tipoiscrizione + (dettaglio.nomepersonaggio ? '
-                            (' + dettaglio.nomepersonaggio + ')' : '') }}
+                            Giorno {{ dettaglio.giorno }}:
+                            {{
+                              dettaglio.tipoiscrizione +
+                                (dettaglio.nomepersonaggio
+                                  ? '
+                            (' +
+                                    dettaglio.nomepersonaggio +
+                                    ')'
+                                  : '')
+                            }}
                           </div>
                         </ng-container>
                       </td>
                       <td>{{ evtSubscr.nomemodalitapagamento }}</td>
                       <td class="text-center">
-                        <button type="button" class="btn btn-link" (click)="toggleSubscriptionPayment(evtSubscr)">
-                          <i class="fa" [class.fa-square]="!evtSubscr.pagata" [class.fa-check-square]="evtSubscr.pagata"></i>
+                        <button
+                          type="button"
+                          class="btn btn-link"
+                          (click)="toggleSubscriptionPayment(evtSubscr)"
+                        >
+                          <i
+                            class="fa"
+                            [class.fa-square]="!evtSubscr.pagata"
+                            [class.fa-check-square]="evtSubscr.pagata"
+                          ></i>
+                        </button>
+                      </td>
+                      <td class="text-center">
+                        <button
+                          type="button"
+                          class="btn btn-link btn-sm"
+                          container="body"
+                          [tooltip]="evtSubscr.note"
+                          *ngIf="evtSubscr.note"
+                        >
+                          <span class="fa-stack">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-info fa-inverse fa-stack-1x"></i>
+                          </span>
                         </button>
                       </td>
                       <td class="text-right">
-                        <button type="button" class="btn btn-sm btn-danger" container="body" [tooltip]="'Rimuovi iscrizione'"
-                          (click)="deleteSubscription(eventItem.id, evtSubscr.id)">
-                          <i class="fa fa-trash"></i>
-                        </button>
+                        <div class="btn-group btn-group-sm" role="group">
+                          <button
+                            type="button"
+                            class="btn btn-success"
+                            container="body"
+                            [disabled]="!subscriptionHasCharacters(evtSubscr)"
+                            [tooltip]="'Scarica scheda personaggio'"
+                            (click)="printCharacterSheet(evtSubscr)"
+                          >
+                            <i class="fa fa-print"></i>
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-danger"
+                            container="body"
+                            [tooltip]="'Rimuovi iscrizione'"
+                            (click)="
+                              deleteSubscription(eventItem.id, evtSubscr.id)
+                            "
+                          >
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -111,15 +207,27 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-10">
-                  <strong>{{ eventItem.nome }}</strong> ({{ eventItem.datainizio | date : 'dd/MM' }} - {{
-                  eventItem.datafine | date :
-                  'dd/MM' }})
+                  <strong>{{ eventItem.nome }}</strong> ({{
+                    eventItem.datainizio | date: 'dd/MM'
+                  }}
+                  - {{ eventItem.datafine | date: 'dd/MM' }})
                 </div>
                 <div class="col-2 text-right">
                   <div class="btn-group btn-group-sm" role="group">
-                    <button type="button" class="btn btn-secondary" (click)="toggleEventDetail(eventItem.id)" container="body"
-                      [tooltip]="showEventData['key' + eventItem.id] ? 'Nascondi' : 'Dettagli'">
-                      <ng-container *ngIf="!showEventData['key' + eventItem.id]">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="toggleEventDetail(eventItem.id)"
+                      container="body"
+                      [tooltip]="
+                        showEventData['key' + eventItem.id]
+                          ? 'Nascondi'
+                          : 'Dettagli'
+                      "
+                    >
+                      <ng-container
+                        *ngIf="!showEventData['key' + eventItem.id]"
+                      >
                         <i class="fa fa-plus"></i>
                       </ng-container>
                       <ng-container *ngIf="showEventData['key' + eventItem.id]">
@@ -132,9 +240,7 @@
             </div>
           </div>
           <div class="card-body" *ngIf="showEventData['key' + eventItem.id]">
-            <p class="card-text">
-              {{ eventItem.descrizione }}
-            </p>
+            <p class="card-text">{{ eventItem.descrizione }}</p>
 
             <!-- Elenco iscritti -->
             <ng-container *ngIf="eventSubscriptions['key' + eventItem.id]">
@@ -153,26 +259,63 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let evtSubscr of eventSubscriptions['key' + eventItem.id]">
-                      <td>{{ evtSubscr.nomegiocatore + ' ' + evtSubscr.cognomegiocatore }}</td>
-                      <td>{{ evtSubscr.dataiscrizione | date : 'dd/MM/yyyy' }}</td>
+                    <tr
+                      *ngFor="
+                        let evtSubscr of eventSubscriptions[
+                          'key' + eventItem.id
+                        ]
+                      "
+                    >
+                      <td>
+                        {{
+                          evtSubscr.nomegiocatore +
+                            ' ' +
+                            evtSubscr.cognomegiocatore
+                        }}
+                      </td>
+                      <td>
+                        {{ evtSubscr.dataiscrizione | date: 'dd/MM/yyyy' }}
+                      </td>
                       <td>
                         <ng-container *ngIf="evtSubscr.dettagli">
                           <div *ngFor="let dettaglio of evtSubscr.dettagli">
-                            Giorno {{ dettaglio.giorno }}: {{ dettaglio.tipoiscrizione + (dettaglio.nomepersonaggio ? '
-                            (' + dettaglio.nomepersonaggio + ')' : '') }}
+                            Giorno {{ dettaglio.giorno }}:
+                            {{
+                              dettaglio.tipoiscrizione +
+                                (dettaglio.nomepersonaggio
+                                  ? '
+                            (' +
+                                    dettaglio.nomepersonaggio +
+                                    ')'
+                                  : '')
+                            }}
                           </div>
                         </ng-container>
                       </td>
                       <td>{{ evtSubscr.nomemodalitapagamento }}</td>
                       <td class="text-center">
-                        <button type="button" class="btn btn-link" (click)="toggleSubscriptionPayment(evtSubscr)">
-                          <i class="fa" [class.fa-square]="!evtSubscr.pagata" [class.fa-check-square]="evtSubscr.pagata"></i>
+                        <button
+                          type="button"
+                          class="btn btn-link"
+                          (click)="toggleSubscriptionPayment(evtSubscr)"
+                        >
+                          <i
+                            class="fa"
+                            [class.fa-square]="!evtSubscr.pagata"
+                            [class.fa-check-square]="evtSubscr.pagata"
+                          ></i>
                         </button>
                       </td>
                       <td class="text-right">
-                        <button type="button" class="btn btn-sm btn-danger" container="body" [tooltip]="'Rimuovi iscrizione'"
-                          (click)="deleteSubscription(eventItem.id, evtSubscr.id)">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-danger"
+                          container="body"
+                          [tooltip]="'Rimuovi iscrizione'"
+                          (click)="
+                            deleteSubscription(eventItem.id, evtSubscr.id)
+                          "
+                        >
                           <i class="fa fa-trash"></i>
                         </button>
                       </td>
@@ -183,7 +326,6 @@
             </ng-container>
           </div>
         </div>
-
       </div>
     </div>
   </div>

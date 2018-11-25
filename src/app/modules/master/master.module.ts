@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 // Moduli
 import { LayoutComponentsModule } from '../layout-components/layout-components.module';
+import { RisorseUtiliModule } from '../../components/risorse-utili/risorse-utili.module';
 import { PipesModule } from '../pipes/pipes.module';
 
 // Moduli Esterni
@@ -26,6 +27,7 @@ import { MasterRoutingModule } from './master.routing';
     FormsModule,
     MasterRoutingModule,
     LayoutComponentsModule,
+    RisorseUtiliModule,
     PipesModule,
     QuillModule,
     TooltipModule,

@@ -1,13 +1,11 @@
 <app-container-page *ngIf="gameEvent">
   <div class="container pt-4">
     <div class="row">
-      <div class="col-12">
-        <h1>Iscrizione evento</h1>
-      </div>
+      <div class="col-12"><h1>Iscrizione evento</h1></div>
     </div>
     <!-- Contenitore colonne -->
     <div class="row">
-      <!-- Dati Evento-->
+      <!-- Dati Evento -->
       <div class="col-md-4">
         <div class="container-fluid">
           <!-- Nome e date -->
@@ -15,9 +13,7 @@
             <div class="col-md-12 mt-2">
               <div class="form-group">
                 <label>Nome evento</label>
-                <div class="form-control">
-                  {{ gameEvent.nome }}
-                </div>
+                <div class="form-control">{{ gameEvent.nome }}</div>
               </div>
             </div>
             <div class="col-md-6 mt-2">
@@ -32,7 +28,11 @@
               <div class="form-group">
                 <label>Data Fine</label>
                 <div class="form-control">
-                  {{ gameEvent.datafine ? (gameEvent.datafine | date: 'dd/MM/yyyy') : (gameEvent.datainizio | date: 'dd/MM/yyyy') }}
+                  {{
+                    gameEvent.datafine
+                      ? (gameEvent.datafine | date: 'dd/MM/yyyy')
+                      : (gameEvent.datainizio | date: 'dd/MM/yyyy')
+                  }}
                 </div>
               </div>
             </div>
@@ -42,9 +42,7 @@
             <div class="col-md-12 mt-2">
               <div class="form-group">
                 <label>Location</label>
-                <div class="form-control">
-                  {{ gameEvent.location }}
-                </div>
+                <div class="form-control">{{ gameEvent.location }}</div>
               </div>
             </div>
           </div>
@@ -52,7 +50,10 @@
             <div class="col-md-12 mt-2">
               <div class="form-group">
                 <label>Descrizione Evento</label>
-                <div class="form-control" [innerHTML]="gameEvent.descrizione"></div>
+                <div
+                  class="form-control"
+                  [innerHTML]="gameEvent.descrizione"
+                ></div>
               </div>
             </div>
           </div>
@@ -67,10 +68,22 @@
             <div class="col-md-12 mt-2">
               <label>Seleziona i giorni per i quali vuoi iscriverti</label>
             </div>
-            <div class="col-6 col-md-4 mt-2" *ngFor="let day of availableDays">
-              <button type="button" class="btn btn-block" [class.btn-success]="!!daysSubscriptions['day' + day]" (click)="toggleDay(day)">
-                <i class="fa" [class.fa-square]="!daysSubscriptions['day' + day]" [class.fa-check-square]="!!daysSubscriptions['day' + day]"></i>
-                Giorno {{ day }}
+            <div
+              class="col-6 col-md-4 mt-2"
+              *ngFor="let day of availableDays; let i = index"
+            >
+              <button
+                type="button"
+                class="btn btn-block"
+                [class.btn-success]="!!daysSubscriptions['day' + day]"
+                (click)="toggleDay(day)"
+              >
+                <i
+                  class="fa"
+                  [class.fa-square]="!daysSubscriptions['day' + day]"
+                  [class.fa-check-square]="!!daysSubscriptions['day' + day]"
+                ></i>
+                {{ availableDaysNames[i] }}
               </button>
             </div>
           </div>
@@ -79,20 +92,47 @@
           <ng-container *ngIf="selectedDays.length > 0">
             <div class="row">
               <div class="col-md-12 mt-4">
-                <label *ngIf="subscriptionModes.length === 0">Nessuna modalità di iscrizione per il numero di giorni selezionato</label>
-                <label *ngIf="subscriptionModes.length > 0">Seleziona la modalità di iscrizione</label>
+                <label *ngIf="subscriptionModes.length === 0"
+                  >Nessuna modalità di iscrizione per il numero di giorni
+                  selezionato</label
+                >
+                <label *ngIf="subscriptionModes.length > 0"
+                  >Seleziona la modalità di iscrizione</label
+                >
               </div>
             </div>
-            <div class="row pt-2 pb-2 EventSubscription__SubscriptionRow" *ngFor="let mode of subscriptionModes">
+            <div
+              class="row pt-2 pb-2 EventSubscription__SubscriptionRow"
+              *ngFor="let mode of subscriptionModes"
+            >
               <div class="col-md-8 mt-1">
                 <strong>{{ mode.nome }}</strong>
                 <p>{{ mode.descrizione }}</p>
               </div>
-              <div class="col-md-2 mt-1 text-right">€ {{ mode.costo | number : '1.2-2' }}</div>
+              <div class="col-md-2 mt-1 text-right">
+                € {{ mode.costo | number: '1.2-2' }}
+              </div>
               <div class="col-md-2 mt-1">
-                <button type="button" class="btn btn-block" [class.btn-primary]="subscriptionData.idmodalitaiscrizione !== mode.id" [class.btn-success]="subscriptionData.idmodalitaiscrizione === mode.id"
-                  (click)="subscriptionData.idmodalitaiscrizione = mode.id">
-                  <i class="fa" [class.fa-square]="subscriptionData.idmodalitaiscrizione !== mode.id" [class.fa-check-square]="subscriptionData.idmodalitaiscrizione === mode.id"></i>
+                <button
+                  type="button"
+                  class="btn btn-block"
+                  [class.btn-primary]="
+                    subscriptionData.idmodalitaiscrizione !== mode.id
+                  "
+                  [class.btn-success]="
+                    subscriptionData.idmodalitaiscrizione === mode.id
+                  "
+                  (click)="subscriptionData.idmodalitaiscrizione = mode.id"
+                >
+                  <i
+                    class="fa"
+                    [class.fa-square]="
+                      subscriptionData.idmodalitaiscrizione !== mode.id
+                    "
+                    [class.fa-check-square]="
+                      subscriptionData.idmodalitaiscrizione === mode.id
+                    "
+                  ></i>
                 </button>
               </div>
             </div>
@@ -102,21 +142,44 @@
           <ng-container *ngIf="!!subscriptionData.idmodalitaiscrizione">
             <div class="row">
               <div class="col-md-12 mt-4">
-                <label>Scegli il personaggio con il quale iscriverti all'evento</label>
+                <label
+                  >Scegli il personaggio con il quale iscriverti
+                  all'evento</label
+                >
               </div>
             </div>
-            <div class="row pt-2 pb-2 EventSubscription__SubscriptionRow" *ngFor="let day of selectedDays">
+            <div
+              class="row pt-2 pb-2 EventSubscription__SubscriptionRow"
+              *ngFor="let day of selectedDays"
+            >
               <div class="col-md-2 mt-1">
-                <strong>Giorno {{ daysSubscriptions['day' + day].giorno }}</strong>
+                <strong
+                  >Giorno {{ daysSubscriptions['day' + day].giorno }}</strong
+                >
               </div>
               <div class="col-md-5 mt-1">
-                <select class="form-control" [(ngModel)]="daysSubscriptions['day' + day].tipoiscrizione">
-                  <option *ngFor="let tipo of subscriptionTypes" [value]="tipo.key">{{ tipo.value }}</option>
+                <select
+                  class="form-control"
+                  [(ngModel)]="daysSubscriptions['day' + day].tipoiscrizione"
+                >
+                  <option
+                    *ngFor="let tipo of subscriptionTypes"
+                    [value]="tipo.key"
+                    >{{ tipo.value }}</option
+                  >
                 </select>
               </div>
               <div class="col-md-5 mt-1">
-                <select class="form-control" *ngIf="daysSubscriptions['day' + day].tipoiscrizione === 'PG'" [(ngModel)]="daysSubscriptions['day' + day].idpersonaggio">
-                  <option *ngFor="let character of playerCharacters" [value]="character.id">{{ character.nome }}</option>
+                <select
+                  class="form-control"
+                  *ngIf="daysSubscriptions['day' + day].tipoiscrizione === 'PG'"
+                  [(ngModel)]="daysSubscriptions['day' + day].idpersonaggio"
+                >
+                  <option
+                    *ngFor="let character of playerCharacters"
+                    [value]="character.id"
+                    >{{ character.nome }}</option
+                  >
                 </select>
               </div>
             </div>
@@ -126,33 +189,60 @@
           <ng-container *ngIf="characterSelectionIsValid()">
             <div class="row">
               <div class="col-md-12 mt-4">
-                <label>Scegli in che modo eseguire il pagamento dell'evento</label>
+                <label
+                  >Scegli in che modo eseguire il pagamento dell'evento</label
+                >
               </div>
               <div class="col-md-12 mt-1">
-                <select class="form-control" [(ngModel)]="subscriptionData.idmodalitapagamento">
-                  <option *ngFor="let tipo of paymentMethods" [value]="tipo.id">{{ tipo.nome }}</option>
+                <select
+                  class="form-control"
+                  [(ngModel)]="subscriptionData.idmodalitapagamento"
+                >
+                  <option
+                    *ngFor="let tipo of paymentMethods"
+                    [value]="tipo.id"
+                    >{{ tipo.nome }}</option
+                  >
                 </select>
               </div>
             </div>
           </ng-container>
 
           <!-- Conferma Iscrizione -->
-          <ng-container *ngIf="selectedDays.length > 0 && !!subscriptionData.idmodalitaiscrizione && characterSelectionIsValid() && !!subscriptionData.idmodalitapagamento">
+          <ng-container
+            *ngIf="
+              selectedDays.length > 0 &&
+              !!subscriptionData.idmodalitaiscrizione &&
+              characterSelectionIsValid() &&
+              !!subscriptionData.idmodalitapagamento
+            "
+          >
             <div class="row">
               <div class="col-md-12 mt-4">
-                <label>Inserisci eventuali note che desideri comunicare agli organizzatori</label>
+                <label
+                  >Inserisci eventuali note che desideri comunicare agli
+                  organizzatori</label
+                >
               </div>
               <div class="col-md-12 mt-2">
-                <textarea class="form-control" [(ngModel)]="subscriptionData.note"></textarea>
+                <textarea
+                  class="form-control"
+                  [(ngModel)]="subscriptionData.note"
+                ></textarea>
               </div>
               <div class="col-md-8 mt-2">
                 <span class="text-danger" *ngIf="subscriptionError">
-                  Si è verificato un errore durante l'iscrizione. Ritenta tra qualche secondo oppure contattaci per segnalarci il problema
+                  Si è verificato un errore durante l'iscrizione. Ritenta tra
+                  qualche secondo oppure contattaci per segnalarci il problema
                 </span>
                 <span *ngIf="!subscriptionError">&nbsp;</span>
               </div>
               <div class="col-md-4 mt-2">
-                <button type="button" class="btn btn-primary btn-block" (click)="sendSubscription()">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-block"
+                  (click)="sendSubscription()"
+                >
                   Conferma l'iscrizione
                 </button>
               </div>

@@ -1,85 +1,118 @@
 <app-container-page *ngIf="!!subscriptionData">
   <div class="container pt-4">
     <div class="row">
-      <div class="col-12">
-        <h1>Iscrizione completata</h1>
-      </div>
+      <div class="col-12"><h1>Iscrizione completata</h1></div>
     </div>
     <div class="row">
       <div class="col-12 mt-4">
-        La tua iscrizione è stata inviata con successo. Troverai qui di seguito il riepilogo con importo e istruzioni
-        per il pagamento.
+        La tua iscrizione è stata inviata con successo. Troverai qui di seguito
+        il riepilogo con importo e istruzioni per il pagamento.
+        <p>
+          Se è il primo live che giochi quest'anno, ricordati che sarà
+          necessario pagare direttamente all'evento
+          <strong>ulteriori € 5.00</strong> per la quota annuale
+        </p>
       </div>
     </div>
     <!-- Riepilogo evento -->
     <div class="row mt-4">
-      <div class="col-12">
-        <h2>Riepilogo evento</h2>
-      </div>
+      <div class="col-12"><h2>Riepilogo evento</h2></div>
       <div class="col-md-6 mt-2">
         <label>Evento</label>
         <div class="form-control">{{ subscriptionData.nomeevento }}</div>
       </div>
       <div class="col-md-3 mt-2">
         <label>Inizio evento</label>
-        <div class="form-control">{{ subscriptionData.datainizio | date: 'dd/MM/yyyy' }}</div>
+        <div class="form-control">
+          {{ subscriptionData.datainizio | date: 'dd/MM/yyyy' }}
+        </div>
       </div>
       <div class="col-md-3 mt-2">
         <label>Fine evento</label>
-        <div class="form-control">{{ subscriptionData.datafine ? (subscriptionData.datafine | date: 'dd/MM/yyyy') :
-          (subscriptionData.datainizio |
-          date: 'dd/MM/yyyy') }}</div>
+        <div class="form-control">
+          {{
+            subscriptionData.datafine
+              ? (subscriptionData.datafine | date: 'dd/MM/yyyy')
+              : (subscriptionData.datainizio | date: 'dd/MM/yyyy')
+          }}
+        </div>
       </div>
     </div>
     <div class="row">
       <!-- Riepilogo Modalità iscrizione -->
       <div class="col-md-6 mt-4">
         <div class="row">
-          <div class="col-12">
-            <h2>Modalità di iscrizione</h2>
-          </div>
+          <div class="col-12"><h2>Modalità di iscrizione</h2></div>
           <div class="col-12 mt-2">
             <label>{{ subscriptionData.nomemodalitaiscrizione }}</label>
-            <div class="form-control" *ngIf="!!subscriptionData.descrizionemodalitaiscrizione && subscriptionData.descrizionemodalitaiscrizione.trim() !== ''">{{
-              subscriptionData.descrizionemodalitaiscrizione }}</div>
+            <div
+              class="form-control"
+              *ngIf="
+                !!subscriptionData.descrizionemodalitaiscrizione &&
+                subscriptionData.descrizionemodalitaiscrizione.trim() !== ''
+              "
+            >
+              {{ subscriptionData.descrizionemodalitaiscrizione }}
+            </div>
           </div>
           <div class="col-md-6 mt-2">
             <label>Costo</label>
-            <div class="form-control">€ {{ subscriptionData.costo | number: '1.2-2' }}</div>
+            <div class="form-control">
+              € {{ subscriptionData.costo | number: '1.2-2' }}
+            </div>
           </div>
         </div>
       </div>
       <!-- Riepilogo Modalità di pagamento -->
       <div class="col-md-6 mt-4">
         <div class="row">
-          <div class="col-12">
-            <h2>Modalità di pagamento</h2>
-          </div>
+          <div class="col-12"><h2>Modalità di pagamento</h2></div>
           <div class="col-12 mt-2">
             <label>{{ subscriptionData.nomemodalitapagamento }}</label>
-            <div class="form-control" style="height: auto;" *ngIf="!!subscriptionData.descrizionemodalitapagamento && subscriptionData.descrizionemodalitapagamento.trim() !== ''">{{
-              subscriptionData.descrizionemodalitapagamento }}</div>
+            <div
+              class="form-control"
+              style="height: auto;"
+              *ngIf="
+                !!subscriptionData.descrizionemodalitapagamento &&
+                subscriptionData.descrizionemodalitapagamento.trim() !== ''
+              "
+            >
+              {{ subscriptionData.descrizionemodalitapagamento }}
+            </div>
           </div>
-          <div class="col-md-6 mt-2" *ngIf="(subscriptionData.costotot - subscriptionData.costo) > 0">
+          <div
+            class="col-md-6 mt-2"
+            *ngIf="subscriptionData.costotot - subscriptionData.costo > 0"
+          >
             <label>Costo aggiuntivo</label>
-            <div class="form-control">€ {{ (subscriptionData.costotot - subscriptionData.costo) | number: '1.2-2' }}</div>
+            <div class="form-control">
+              €
+              {{
+                subscriptionData.costotot - subscriptionData.costo
+                  | number: '1.2-2'
+              }}
+            </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Importo totale -->
     <div class="row mt-4">
-      <div class="col-12">
-        <h2>Totale pagamento</h2>
-      </div>
+      <div class="col-12"><h2>Totale pagamento</h2></div>
       <div class="col-md-3 mt-2">
-        <div class="form-control text-success font-weight-bold">€ {{ subscriptionData.costotot | number: '1.2-2' }}</div>
+        <div class="form-control text-success font-weight-bold">
+          € {{ subscriptionData.costotot | number: '1.2-2' }}
+        </div>
       </div>
     </div>
     <!-- Ritorno alla pagina principale -->
     <div class="row">
       <div class="col-4 offset-4 mt-4">
-        <button type="button" class="btn btn-primary btn-block" (click)="GoToDashboard()">
+        <button
+          type="button"
+          class="btn btn-primary btn-block"
+          (click)="GoToDashboard()"
+        >
           Torna alla pagina principale
         </button>
       </div>

@@ -30,7 +30,7 @@ export class UserGuardService implements CanActivate {
       );
 
       if (!giocatoreValido) {
-        this.router.navigateByUrl('/mygrv/data');
+        this.router.navigateByUrl('/mygrv/first-access');
       }
 
       return giocatoreValido;
@@ -44,7 +44,7 @@ export class UserGuardService implements CanActivate {
           res && res.payload && this.giocatoreHaDatiObbligatori(res.payload);
 
         if (!giocatoreValido) {
-          this.router.navigateByUrl('/mygrv/data');
+          this.router.navigateByUrl('/mygrv/first-access');
         }
 
         return giocatoreValido;
@@ -70,6 +70,6 @@ export class UserGuardService implements CanActivate {
       return false;
     }
 
-    return true;
+    return datiGiocatore.privacyaccettata;
   }
 }

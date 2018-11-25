@@ -201,6 +201,10 @@ export class CharacterComponent implements OnInit {
   }
 
   public toggleSkill(skill: Skill): void {
+    if (skill.validato) {
+      return;
+    }
+
     const hasSkill = !!this.character.selectedSkills.find(
       item => item.id === skill.id
     );

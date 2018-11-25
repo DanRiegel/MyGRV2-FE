@@ -1,40 +1,53 @@
 <app-container-page *ngIf="!!player">
   <div class="container pt-4">
     <div class="row">
-      <div class="col-12">
-        <h1>Il tuo profilo</h1>
-      </div>
+      <div class="col-12"><h1>Il tuo profilo</h1></div>
     </div>
     <div class="row" *ngIf="isFirstAccess">
-      <div clasS="col-12 mt-2">
-        <div class="border border-success pl-2 pr-2">
-          Benvenuto in MyGRV2! Per proseguire inserisci i dati mancanti, che ci saranno utili per contattarti in caso
-          di necessità.
+      <div class="col-12 mt-2">
+        <div class="pl-2 pr-2">
+          <span class="fa-stack">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-exclamation fa-inverse fa-stack-1x"></i>
+          </span>
+          Benvenuto in MyGRV2! Per proseguire inserisci i dati mancanti, che ci
+          saranno utili per contattarti in caso di necessità.
         </div>
       </div>
     </div>
 
     <form name="playerForm" #playerForm="ngForm" (ngSubmit)="savePlayer()">
-
       <div class="row">
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="username">Username</label>
-            <div class="form-control">
-              {{ player.username }}
-            </div>
+            <div class="form-control">{{ player.username }}</div>
           </div>
         </div>
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="nome">Nome*</label>
-            <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="player.nome" [required]="true">
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              class="form-control"
+              [(ngModel)]="player.nome"
+              [required]="true"
+            />
           </div>
         </div>
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="cognome">Cognome*</label>
-            <input type="text" id="cognome" name="cognome" class="form-control" [(ngModel)]="player.cognome" [required]="true">
+            <input
+              type="text"
+              id="cognome"
+              name="cognome"
+              class="form-control"
+              [(ngModel)]="player.cognome"
+              [required]="true"
+            />
           </div>
         </div>
       </div>
@@ -43,21 +56,42 @@
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="recapito">Telefono**</label>
-            <input type="text" id="recapito" name="recapito" class="form-control" [(ngModel)]="player.recapito"
-              [required]="!player.recapitomail || (!!player.recapitomail && player.recapitomail.trim() === '')">
+            <input
+              type="text"
+              id="recapito"
+              name="recapito"
+              class="form-control"
+              [(ngModel)]="player.recapito"
+              [required]="
+                !player.recapitomail ||
+                (!!player.recapitomail && player.recapitomail.trim() === '')
+              "
+            />
           </div>
         </div>
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="recapitomail">Email**</label>
-            <input type="text" id="recapitomail" name="recapitomail" class="form-control" [(ngModel)]="player.recapitomail"
-              [required]="!player.recapito || (!!player.recapito && player.recapito.trim() === '')">
+            <input
+              type="text"
+              id="recapitomail"
+              name="recapitomail"
+              class="form-control"
+              [(ngModel)]="player.recapitomail"
+              [required]="
+                !player.recapito ||
+                (!!player.recapito && player.recapito.trim() === '')
+              "
+            />
           </div>
         </div>
         <div class="col-md-12">
-          <small class="font-italic">** Inserisci almeno un recapito tra telefono ed e-mail. Inserire un indirizzo
-            e-mail ti permetterà di ricevere automaticamente comunicazioni ed aggiornamenti sui tuoi personaggi. Non
-            sarà utilizzato per altri scopi.</small>
+          <small class="font-italic"
+            >** Inserisci almeno un recapito tra telefono ed e-mail. Inserire un
+            indirizzo e-mail ti permetterà di ricevere automaticamente
+            comunicazioni ed aggiornamenti sui tuoi personaggi. Non sarà
+            utilizzato per altri scopi.</small
+          >
         </div>
       </div>
 
@@ -66,8 +100,12 @@
           <div class="form-group">
             <label for="nome">Data Firma Scarico Responsabilità</label>
             <div class="form-control">
-              {{ !!player.dataScaricoResponsabilita ? (player.dataScaricoResponsabilita | date : 'dd/MM/yyyy') : 'Non
-              firmato' }}
+              {{
+                !!player.dataScaricoResponsabilita
+                  ? (player.dataScaricoResponsabilita | date: 'dd/MM/yyyy')
+                  : 'Non
+              firmato'
+              }}
             </div>
           </div>
         </div>
@@ -75,7 +113,11 @@
           <div class="form-group">
             <label for="nome">Data Pagamento Quota Associativa</label>
             <div class="form-control">
-              {{ !!player.dataQuotaAssociativa ? (player.dataQuotaAssociativa | date : 'dd/MM/yyyy') : '&nbsp;' }}
+              {{
+                !!player.dataQuotaAssociativa
+                  ? (player.dataQuotaAssociativa | date: 'dd/MM/yyyy')
+                  : '&nbsp;'
+              }}
             </div>
           </div>
         </div>
@@ -85,33 +127,67 @@
 
             <div class="row">
               <div class="col-md-4">
-                <i class="fa" [class.fa-square]="!player.giocatore" [class.fa-check-square]="player.giocatore"></i>
+                <i
+                  class="fa"
+                  [class.fa-square]="!player.giocatore"
+                  [class.fa-check-square]="player.giocatore"
+                ></i>
                 Giocatore
               </div>
               <div class="col-md-4">
-                <i class="fa" [class.fa-square]="!player.segreteria" [class.fa-check-square]="player.segreteria"></i>
+                <i
+                  class="fa"
+                  [class.fa-square]="!player.segreteria"
+                  [class.fa-check-square]="player.segreteria"
+                ></i>
                 Segreteria
               </div>
               <div class="col-md-4">
-                <i class="fa" [class.fa-square]="!player.master" [class.fa-check-square]="player.master"></i>
+                <i
+                  class="fa"
+                  [class.fa-square]="!player.master"
+                  [class.fa-check-square]="player.master"
+                ></i>
                 Master
               </div>
             </div>
-
           </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 mt-2 text-justify">
+          <label
+            ><input
+              type="checkbox"
+              name="privacyaccettata"
+              [required]="true"
+              [(ngModel)]="player.privacyaccettata"
+            />
+            Accetto di dare il proprio consenso all'uso dei dati personali da
+            parte del gruppo Deus GRV, ai sensi dell’<strong
+              >art. 13 D.lgs. n. 196/2003</strong
+            >
+            e del <strong>GDPR 679/2016</strong> per la realizzazione di
+            iniziative di profilazione e di comunicazione diretta (via email,
+            messaggistica telefonica, posta ordinaria) per la finalità
+            organizzative del gruppo.</label
+          >
         </div>
       </div>
 
       <!-- Operazioni -->
       <div class="row">
         <div class="col-md-3 mt-2">
-          <button type="submit" class="btn btn-primary btn-block" [disabled]="!playerForm.valid">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="!playerForm.valid"
+          >
             Salva
           </button>
         </div>
       </div>
-
     </form>
-
   </div>
 </app-container-page>

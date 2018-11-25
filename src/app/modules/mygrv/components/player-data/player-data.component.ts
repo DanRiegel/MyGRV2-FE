@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 // Servizi
-import { PlayerService } from '../../../../services';
+import { PlayerService, UserService } from '../../../../services';
 
 // Modelli
 import { Player } from '../../../../models';
@@ -20,7 +20,9 @@ export class PlayerDataComponent implements OnInit {
 
   constructor(
     private playerService: PlayerService,
-    private activatedRoute: ActivatedRoute
+    private userService: UserService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -43,6 +45,11 @@ export class PlayerDataComponent implements OnInit {
     this.playerService.SavePlayer(this.player).subscribe(res => {
       if (!!res.payload) {
         this.player = res.payload;
+        this.userService.PlayerData = this.player;
+
+        if (this.isFirstAccess) {
+          this.router.navigateByUrl('/');
+        }
       }
     });
   }
