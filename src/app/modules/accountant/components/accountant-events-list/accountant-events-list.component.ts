@@ -3,7 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 // Componenti
-import { ConfirmModalComponent } from '../../../../components';
+import {
+  ConfirmModalComponent,
+  EditNoteModalComponent
+} from '../../../../components';
 
 // Moduli Esterni
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -132,6 +135,29 @@ export class AccountantEventsListComponent implements OnInit {
     );
   }
 
+  public editNote(
+    eventId: number,
+    eventSubscription: GameEventSubscriptionDTO
+  ): void {
+    const modalRef = this.bsModalService.show(EditNoteModalComponent);
+    modalRef.content.noteText = eventSubscription.note;
+
+    this.bsModalService.onHide.subscribe(() => {
+      if (modalRef.content.result) {
+        this.eventService
+          .SetSubscriptionNotes(
+            eventSubscription.id,
+            modalRef.content.newNoteText
+          )
+          .subscribe(res => {
+            if (res.payload) {
+              this.loadEventSubscriptions(eventId);
+            }
+          });
+      }
+    });
+  }
+
   public printCharacterSheet(
     eventSubscription: GameEventSubscriptionDTO
   ): void {
@@ -147,6 +173,17 @@ export class AccountantEventsListComponent implements OnInit {
 
       const blob = FileUtils.b64toBlob(res.payload, 'application/zip');
       FileSaver.saveAs(blob, 'characters-sheets.zip');
+    });
+  }
+
+  public printEventSubscribersList(eventData: GameEvent): void {
+    this.eventService.printEventSubscribersList(eventData.id).subscribe(res => {
+      if (!res.payload) {
+        return;
+      }
+
+      const blob = FileUtils.b64toBlob(res.payload, 'application/pdf');
+      FileSaver.saveAs(blob, 'lista-iscritti.pdf');
     });
   }
 

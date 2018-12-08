@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 
 // Componenti
-import { SkillDetailComponent } from '../../../../components';
+import { SkillDetailComponent, ConfirmModalComponent } from '../../../../components';
 
 // Moduli Esterni
 import { BsModalService } from 'ngx-bootstrap/modal';

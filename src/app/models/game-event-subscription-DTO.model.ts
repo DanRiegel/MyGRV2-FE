@@ -22,4 +22,5 @@ export class GameEventSubscriptionDTO {
   public pagata: boolean;
   public costotot: number;
   public dettagli: GameEventSubscriptionCharacterDTO[];
+  public note: string;
 }

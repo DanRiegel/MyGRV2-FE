@@ -43,10 +43,18 @@ export class AccountantPlayerComponent implements OnInit {
     this.playerService.GetPlayer(playerId).subscribe(res => {
       if (!!res.payload) {
         this.player = res.payload;
-        this.dataScaricoResponsabilita = new Date(
-          this.player.dataScaricoResponsabilita
-        );
-        this.dataQuotaAssociativa = new Date(this.player.dataQuotaAssociativa);
+
+        if (this.player.dataScaricoResponsabilita) {
+          this.dataScaricoResponsabilita = new Date(
+            this.player.dataScaricoResponsabilita
+          );
+        }
+
+        if (this.player.dataQuotaAssociativa) {
+          this.dataQuotaAssociativa = new Date(
+            this.player.dataQuotaAssociativa
+          );
+        }
       }
     });
   }

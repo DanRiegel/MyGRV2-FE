@@ -3,7 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 
 // Componenti
-import { SkillDetailComponent } from '../../../../components';
+import {
+  SkillDetailComponent,
+  ConfirmModalComponent
+} from '../../../../components';
 
 // Moduli Esterni
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -150,69 +153,105 @@ export class AccountantCharacterComponent implements OnInit {
   }
 
   public requestBackgroundApprovation(): void {
-    this.characterService
-      .SaveCharacter(this.character)
-      .subscribe(characterRes => {
-        if (!!characterRes.payload) {
-          this.characterService
-            .RequestCharacterBackgroundApprovation(this.character.id)
-            .subscribe(res => {
-              if (!!res.payload) {
-                this.character = res.payload;
+    const modalRef = this.bsModalService.show(ConfirmModalComponent);
+    modalRef.content.title = 'Conferma richiesta approvazione';
+    modalRef.content.content = `Confermare la richiesta di approvazione? Una volta eseguita non potrai apportare ulteriori modifiche`;
+    modalRef.content.closebutton = `Annulla`;
+    modalRef.content.okbutton = `Conferma`;
 
-                if (this.character.id === 0) {
-                  this.router.navigate(['..', res.payload.id], {
-                    relativeTo: this.activatedRoute
-                  });
-                }
-              }
-            });
-        }
-      });
+    this.bsModalService.onHide.subscribe(() => {
+      if (modalRef.content.result) {
+        this.characterService
+          .SaveCharacter(this.character)
+          .subscribe(characterRes => {
+            if (!!characterRes.payload) {
+              this.character = characterRes.payload;
+
+              this.characterService
+                .RequestCharacterBackgroundApprovation(this.character.id)
+                .subscribe(res => {
+                  if (!!res.payload) {
+                    this.character = res.payload;
+
+                    if (this.character.id === 0) {
+                      this.router.navigate(['..', res.payload.id], {
+                        relativeTo: this.activatedRoute
+                      });
+                    }
+                  }
+                });
+            }
+          });
+      }
+    });
   }
 
   public requestCharacterApprovation(): void {
-    this.characterService
-      .SaveCharacter(this.character)
-      .subscribe(characterRes => {
-        if (!!characterRes.payload) {
-          this.characterService
-            .RequestCharacterApprovation(this.character.id)
-            .subscribe(res => {
-              if (!!res.payload) {
-                this.character = res.payload;
+    const modalRef = this.bsModalService.show(ConfirmModalComponent);
+    modalRef.content.title = 'Conferma richiesta approvazione';
+    modalRef.content.content = `Confermare la richiesta di approvazione? Una volta eseguita non potrai apportare ulteriori modifiche`;
+    modalRef.content.closebutton = `Annulla`;
+    modalRef.content.okbutton = `Conferma`;
 
-                if (this.character.id === 0) {
-                  this.router.navigate(['..', res.payload.id], {
-                    relativeTo: this.activatedRoute
-                  });
-                }
-              }
-            });
-        }
-      });
+    this.bsModalService.onHide.subscribe(() => {
+      if (modalRef.content.result) {
+        this.characterService
+          .SaveCharacter(this.character)
+          .subscribe(characterRes => {
+            if (!!characterRes.payload) {
+              this.character = characterRes.payload;
+
+              this.characterService
+                .RequestCharacterApprovation(this.character.id)
+                .subscribe(res => {
+                  if (!!res.payload) {
+                    this.character = res.payload;
+
+                    if (this.character.id === 0) {
+                      this.router.navigate(['..', res.payload.id], {
+                        relativeTo: this.activatedRoute
+                      });
+                    }
+                  }
+                });
+            }
+          });
+      }
+    });
   }
 
   public requestSkillsApprovation(): void {
-    this.characterService
-      .SaveCharacter(this.character)
-      .subscribe(characterRes => {
-        if (!!characterRes.payload) {
-          this.characterService
-            .RequestSkillsApprovation(this.character.id)
-            .subscribe(res => {
-              if (!!res.payload) {
-                this.character = res.payload;
+    const modalRef = this.bsModalService.show(ConfirmModalComponent);
+    modalRef.content.title = 'Conferma richiesta approvazione';
+    modalRef.content.content = `Confermare la richiesta di approvazione? Una volta eseguita non potrai apportare ulteriori modifiche`;
+    modalRef.content.closebutton = `Annulla`;
+    modalRef.content.okbutton = `Conferma`;
 
-                if (this.character.id === 0) {
-                  this.router.navigate(['..', res.payload.id], {
-                    relativeTo: this.activatedRoute
-                  });
-                }
-              }
-            });
-        }
-      });
+    this.bsModalService.onHide.subscribe(() => {
+      if (modalRef.content.result) {
+        this.characterService
+          .SaveCharacter(this.character)
+          .subscribe(characterRes => {
+            if (!!characterRes.payload) {
+              this.character = characterRes.payload;
+
+              this.characterService
+                .RequestSkillsApprovation(this.character.id)
+                .subscribe(res => {
+                  if (!!res.payload) {
+                    this.character = res.payload;
+
+                    if (this.character.id === 0) {
+                      this.router.navigate(['..', res.payload.id], {
+                        relativeTo: this.activatedRoute
+                      });
+                    }
+                  }
+                });
+            }
+          });
+      }
+    });
   }
 
   public openSkillDetail(skill: Skill) {
@@ -224,7 +263,7 @@ export class AccountantCharacterComponent implements OnInit {
     if (skill.validato) {
       return;
     }
-    
+
     const hasSkill = !!this.character.selectedSkills.find(
       item => item.id === skill.id
     );

@@ -3,21 +3,24 @@
     <div class="row">
       <!-- Box Esterno -->
       <div class="col-md-6 offset-md-3 Login__Box border border-primary">
-
         <!-- Restringimento Form -->
         <div class="row">
           <div class="col-md-10 offset-md-1">
-
-            <h4 class="text-center">Accedi a MyGRV2</h4>
+            <h4 class="text-center">Accedi a MyGRV 2.0</h4>
 
             <!-- Form -->
             <form #loginForm="ngForm" (submit)="doLogin()">
-
               <!-- Username -->
               <div class="form-group">
                 <label for="username">Username</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" name="username" [(ngModel)]="username" required>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="username"
+                    [(ngModel)]="username"
+                    required
+                  />
                 </div>
               </div>
 
@@ -25,24 +28,43 @@
               <div class="form-group">
                 <label for="password">Password</label>
                 <div class="input-group">
-                  <input type="password" class="form-control" name="password" [(ngModel)]="password" required>
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    [(ngModel)]="password"
+                    required
+                  />
                 </div>
               </div>
 
               <!-- Accesso -->
-              <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.valid">
+              <button
+                type="submit"
+                class="btn btn-primary btn-block"
+                [disabled]="!loginForm.valid"
+              >
                 Accedi
               </button>
-
             </form>
 
-            <a class="btn btn-link btn-block mt-2 border border-primary" href="/">
-              Torna al sito
+            <a
+              class="btn btn-link btn-block mt-2"
+              href="/wp-login.php?action=register"
+            >
+              Non hai un account? Iscriviti adesso
             </a>
 
+            <hr />
+
+            <a
+              class="btn btn-link btn-block mt-2 border border-primary"
+              href="/"
+            >
+              Torna alla home
+            </a>
           </div>
         </div>
-
       </div>
     </div>
   </div>

@@ -25,6 +25,16 @@
                       type="button"
                       class="btn btn-primary"
                       container="body"
+                      [tooltip]="'Scarica elenco iscritti'"
+                      (click)="printEventSubscribersList(eventItem, false)"
+                    >
+                      <i class="fa fa-list"></i>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      container="body"
                       [tooltip]="'Scarica schede iscritti'"
                       (click)="printEventCharacterSheet(eventItem, false)"
                     >
@@ -154,10 +164,13 @@
                           class="btn btn-link btn-sm"
                           container="body"
                           [tooltip]="evtSubscr.note"
-                          *ngIf="evtSubscr.note"
+                          (click)="editNote(eventItem.id, evtSubscr)"
                         >
                           <span class="fa-stack">
-                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i
+                              class="fa fa-circle fa-stack-2x"
+                              [class.text-success]="evtSubscr.note"
+                            ></i>
                             <i class="fa fa-info fa-inverse fa-stack-1x"></i>
                           </span>
                         </button>

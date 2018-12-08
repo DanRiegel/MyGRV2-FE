@@ -21,7 +21,8 @@ import {
   ConfirmModalComponent,
   LogoutComponent,
   MessagingComponent,
-  NewMessageComponent
+  NewMessageComponent,
+  EditNoteModalComponent
 } from './components/';
 
 // Servizi
@@ -72,7 +73,8 @@ import { environment } from '../environments/environment';
     ConfirmModalComponent,
     LogoutComponent,
     MessagingComponent,
-    NewMessageComponent
+    NewMessageComponent,
+    EditNoteModalComponent
   ],
   providers: [
     AppConfigurationService,
@@ -98,7 +100,8 @@ import { environment } from '../environments/environment';
   entryComponents: [
     SkillDetailComponent,
     ConfirmModalComponent,
-    NewMessageComponent
+    NewMessageComponent,
+    EditNoteModalComponent
   ],
   bootstrap: [AppComponent]
 })

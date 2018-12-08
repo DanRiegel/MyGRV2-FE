@@ -104,6 +104,17 @@
         <div class="col-12 mt-2">
           <div class="form-group">
             <label for="background">Background</label>
+            <p
+              *ngIf="
+                character.approvationStatus === 0 ||
+                character.approvationStatus === 3
+              "
+            >
+              <small
+                >Ricordati, una volta completato il background, di scorrere la
+                pagina e salvare le modifiche eseguite con il pulsante "salva".</small
+              >
+            </p>
             <quill-editor
               *ngIf="
                 character.approvationStatus === 0 ||

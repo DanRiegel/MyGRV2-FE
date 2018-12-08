@@ -98,11 +98,38 @@ export class EventService {
       .map((res: RestResponse<boolean>) => res);
   }
 
+  public SetSubscriptionNotes(
+    subscriptionId: number,
+    noteText: string
+  ): Observable<RestResponse<boolean>> {
+    return this.httpClient
+      .put(
+        `${
+          environment.apiUrl
+        }/event-subscription/set-note-text/${subscriptionId}/`,
+        { notes: noteText }
+      )
+      .map((res: RestResponse<boolean>) => res);
+  }
+
   public RemoveSubscription(
     subscriptionId: number
   ): Observable<RestResponse<boolean>> {
     return this.httpClient
       .delete(`${environment.apiUrl}/event-subscription/${subscriptionId}/`)
       .map((res: RestResponse<boolean>) => res);
+  }
+
+  public printEventSubscribersList(
+    eventId: number
+  ): Observable<RestResponse<string>> {
+    return this.httpClient
+      .put(
+        `${
+          environment.apiUrl
+        }/event-subscription/print-participants/${eventId}/`,
+        {}
+      )
+      .map((res: RestResponse<string>) => res);
   }
 }

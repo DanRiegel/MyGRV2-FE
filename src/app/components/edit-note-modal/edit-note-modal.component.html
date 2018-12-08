@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Modifica nota</h4>
+  <button
+    type="button"
+    class="close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- Form note -->
+<form #notesForm="ngForm" (ngSubmit)="saveNotes()">
+  <div class="modal-body">
+    <!-- Messaggio -->
+    <div class="form-group mt-2">
+      <textarea
+        class="form-control"
+        id="newNoteText"
+        name="newNoteText"
+        [(ngModel)]="newNoteText"
+        [maxLength]="255"
+      ></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="w-100">
+      <div class="row">
+        <div class="col-md-6 offset-md-6">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="notesForm.invalid"
+          >
+            Salva
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
