@@ -259,10 +259,7 @@ export class CharacterComponent implements OnInit {
       this.getUnlockedSkills();
     } else {
       // Verifico di poter acquisire l'abilità con i PX a disposizione
-      if (
-        this.character.experiencePoints - this.usedPx >= skill.costopx &&
-        this.character.skillsApprovationStatus === 0
-      ) {
+      if (this.character.experiencePoints - this.usedPx >= skill.costopx) {
         this.character.selectedSkills = [
           ...this.character.selectedSkills,
           skill
