@@ -112,7 +112,8 @@
             >
               <small
                 >Ricordati, una volta completato il background, di scorrere la
-                pagina e salvare le modifiche eseguite con il pulsante "salva".</small
+                pagina e salvare le modifiche eseguite con il pulsante
+                "salva".</small
               >
             </p>
             <quill-editor
@@ -377,8 +378,7 @@
                       <i
                         class="fa fa-plus"
                         *ngIf="
-                          character.experiencePoints - usedPx >=
-                            skill.costopx
+                          character.experiencePoints - usedPx >= skill.costopx
                         "
                       ></i>
                       {{ skill.nome }}
@@ -452,9 +452,7 @@
                       <i
                         class="fa fa-plus"
                         *ngIf="
-                          character.experiencePoints - usedPx >=
-                            skill.costopx &&
-                          character.skillsApprovationStatus === 0
+                          character.experiencePoints - usedPx >= skill.costopx
                         "
                       ></i>
                       {{ skill.nome }}
@@ -523,13 +521,7 @@
                       class="btn btn-link btn-sm"
                       (click)="toggleSkill(skill)"
                     >
-                      <i
-                        class="fa fa-minus"
-                        *ngIf="
-                          character.skillsApprovationStatus === 0 &&
-                          !skill.validato
-                        "
-                      ></i>
+                      <i class="fa fa-minus" *ngIf="!skill.validato"></i>
                       {{ skill.nome }}
                     </button>
                   </td>
