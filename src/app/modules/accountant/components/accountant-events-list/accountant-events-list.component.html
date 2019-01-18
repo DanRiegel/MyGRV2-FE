@@ -101,6 +101,58 @@
                 <table class="table table-sm table-striped">
                   <thead>
                     <tr>
+                      <th class="text-center">Giorno</th>
+                      <th class="text-center">Totale (Pag. / Tot.)</th>
+                      <th class="text-center">PG (Pag. / Tot.)</th>
+                      <th class="text-center">PNG (Pag. / Tot.)</th>
+                      <th class="text-center">Master (Pag. / Tot.)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let subscriptionsData of dailySubscriptions[
+                          'key' + eventItem.id
+                        ]
+                      "
+                    >
+                      <td class="text-center">
+                        {{ subscriptionsData.giorno }}
+                      </td>
+                      <td class="text-center">
+                        {{
+                          subscriptionsData.pgpaganti +
+                            subscriptionsData.pngpaganti +
+                            subscriptionsData.masterpaganti
+                        }}
+                        /
+                        {{
+                          subscriptionsData.pg +
+                            subscriptionsData.png +
+                            subscriptionsData.master
+                        }}
+                      </td>
+                      <td class="text-center">
+                        {{ subscriptionsData.pgpaganti }} /
+                        {{ subscriptionsData.pg }}
+                      </td>
+                      <td class="text-center">
+                        {{ subscriptionsData.pngpaganti }} /
+                        {{ subscriptionsData.png }}
+                      </td>
+                      <td class="text-center">
+                        {{ subscriptionsData.masterpaganti }} /
+                        {{ subscriptionsData.master }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-responsive mt-2">
+                <table class="table table-sm table-striped">
+                  <thead>
+                    <tr>
                       <th>Giocatore</th>
                       <th>Data Iscrizione</th>
                       <th>Personaggio</th>

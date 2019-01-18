@@ -18,6 +18,7 @@ import { EventService, CharacterService } from '../../../../services';
 import {
   GameEvent,
   GameEventSubscriptionDTO,
+  GameEventDailySubscriptions,
   RestResponse
 } from '../../../../models';
 
@@ -36,6 +37,9 @@ export class AccountantEventsListComponent implements OnInit {
 
   public showEventData: { [key: string]: boolean } = {};
   public eventSubscriptions: { [key: string]: GameEventSubscriptionDTO[] } = {};
+  public dailySubscriptions: {
+    [key: string]: GameEventDailySubscriptions[];
+  } = {};
 
   constructor(
     private eventService: EventService,
@@ -100,8 +104,62 @@ export class AccountantEventsListComponent implements OnInit {
     this.eventService.GetEventSubscriptions(eventId).subscribe(res => {
       if (res.payload) {
         this.eventSubscriptions['key' + eventId] = res.payload;
+
+        this.generateDailySubscriptionsData(eventId);
       }
     });
+  }
+
+  public generateDailySubscriptionsData(eventId: number): void {
+    const dailySubscriptionsList: GameEventDailySubscriptions[] = [];
+
+    if (!!this.eventSubscriptions['key' + eventId]) {
+      this.eventSubscriptions['key' + eventId].forEach(subscription => {
+        subscription.dettagli.forEach(dett => {
+          let dailyDetail: GameEventDailySubscriptions = dailySubscriptionsList.find(
+            dailySubscr => dailySubscr.giorno === dett.giorno
+          );
+
+          if (!dailyDetail) {
+            dailyDetail = <GameEventDailySubscriptions>{
+              giorno: dett.giorno,
+              pg: 0,
+              png: 0,
+              master: 0,
+              pgpaganti: 0,
+              pngpaganti: 0,
+              masterpaganti: 0
+            };
+            dailySubscriptionsList.push(dailyDetail);
+          }
+
+          switch (dett.tipoiscrizione) {
+            case 'PG':
+              dailyDetail.pg++;
+              if (subscription.pagata) {
+                dailyDetail.pgpaganti++;
+              }
+              break;
+            case 'PNG':
+              dailyDetail.png++;
+              if (subscription.pagata) {
+                dailyDetail.pngpaganti++;
+              }
+              break;
+            case 'MASTER':
+              dailyDetail.master++;
+              if (subscription.pagata) {
+                dailyDetail.masterpaganti++;
+              }
+              break;
+          }
+        });
+      });
+    }
+
+    this.dailySubscriptions['key' + eventId] = dailySubscriptionsList.sort(
+      (item1, item2) => item1.giorno - item2.giorno
+    );
   }
 
   public toggleSubscriptionPayment(

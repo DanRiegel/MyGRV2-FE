@@ -3,6 +3,7 @@ export * from './character-dto.model';
 export * from './character.model';
 export * from './communication.model';
 export * from './error-notification.model';
+export * from './game-event-daily-subscriptions.model';
 export * from './game-event-subscription-character-DTO.model';
 export * from './game-event-subscription-character.model';
 export * from './game-event-subscription-DTO.model';
