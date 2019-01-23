@@ -41,6 +41,18 @@ export class AccountantEventSubscriptionSuccessComponent implements OnInit {
     this.eventService.GetSubscription(subscriptionId).subscribe(res => {
       if (!!res.payload) {
         this.subscriptionData = res.payload;
+
+        if (
+          this.subscriptionData.descrizionemodalitapagamento &&
+          this.subscriptionData.descrizionemodalitapagamento.indexOf(
+            '--impo--'
+          ) > -1
+        ) {
+          this.subscriptionData.descrizionemodalitapagamento = this.subscriptionData.descrizionemodalitapagamento.replace(
+            '--impo--',
+            this.subscriptionData.costotot.toString()
+          );
+        }
       }
     });
   }

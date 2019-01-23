@@ -38,6 +38,15 @@
         </div>
       </div>
     </div>
+    <!-- Importo totale -->
+    <div class="row mt-4">
+      <div class="col-12"><h2>Totale pagamento</h2></div>
+      <div class="col-md-3 mt-2">
+        <div class="form-control text-success font-weight-bold">
+          € {{ subscriptionData.costotot | number: '1.2-2' }}
+        </div>
+      </div>
+    </div>
     <div class="row">
       <!-- Riepilogo Modalità iscrizione -->
       <div class="col-md-6 mt-4">
@@ -76,9 +85,8 @@
                 !!subscriptionData.descrizionemodalitapagamento &&
                 subscriptionData.descrizionemodalitapagamento.trim() !== ''
               "
-            >
-              {{ subscriptionData.descrizionemodalitapagamento }}
-            </div>
+              [innerHTML]="subscriptionData.descrizionemodalitapagamento"
+            ></div>
           </div>
           <div
             class="col-md-6 mt-2"
@@ -93,15 +101,6 @@
               }}
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <!-- Importo totale -->
-    <div class="row mt-4">
-      <div class="col-12"><h2>Totale pagamento</h2></div>
-      <div class="col-md-3 mt-2">
-        <div class="form-control text-success font-weight-bold">
-          € {{ subscriptionData.costotot | number: '1.2-2' }}
         </div>
       </div>
     </div>
