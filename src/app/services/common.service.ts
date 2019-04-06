@@ -30,7 +30,8 @@ export class CommonService {
       label: 'Giocatore',
       subEntries: [
         <MenuEntry>{ label: 'I tuoi personaggi', route: '/player/characters' },
-        <MenuEntry>{ label: 'Iscrizione eventi', route: '/player/events' }
+        <MenuEntry>{ label: 'Iscrizione eventi', route: '/player/events' },
+        <MenuEntry>{ label: 'Stanze in gioco', route: '/chatrooms' }
       ]
     }
   ];
@@ -59,7 +60,11 @@ export class CommonService {
     <MenuEntry>{
       label: 'Master',
       subEntries: [
-        <MenuEntry>{ label: 'Gestione personaggi', route: '/master/characters' }
+        <MenuEntry>{
+          label: 'Gestione personaggi',
+          route: '/master/characters'
+        },
+        <MenuEntry>{ label: 'Stanze in gioco', route: '/chatrooms' }
       ]
     }
   ];

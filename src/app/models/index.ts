@@ -1,6 +1,7 @@
 export * from './app-configuration.model';
 export * from './character-dto.model';
 export * from './character.model';
+export * from './chatroom.model';
 export * from './communication.model';
 export * from './error-notification.model';
 export * from './game-event-daily-subscriptions.model';

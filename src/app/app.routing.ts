@@ -34,6 +34,11 @@ const routes: Routes = [
     loadChildren: './modules/accountant/accountant.module#AccountantModule',
     canActivate: [GuardService]
   },
+  {
+    path: 'chatrooms',
+    loadChildren: './modules/chatrooms/chatrooms.module#ChatroomsModule',
+    canActivate: [GuardService]
+  },
   { path: 'messaging', component: MessagingComponent },
   { path: 'login', component: LoginComponent },
   {

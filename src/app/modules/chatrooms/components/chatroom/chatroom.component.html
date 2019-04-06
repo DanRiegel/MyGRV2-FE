@@ -1,0 +1,32 @@
+<app-container-page>
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-12">
+        <h1>Stanza di Gioco: {{ chatroom ? chatroom.nome : '' }}</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 Chatroom__MessagesArea"></div>
+    </div>
+    <form class="row">
+      <div class="col-12 pl-0 pr-0 mt-2 Chatroom__NewMessage">
+        <textarea [(ngModel)]="newMessageText"></textarea>
+      </div>
+      <div class="col-6 col-lg-9">
+        <div class="form-group">
+          <label for="writeAs">Scrivi come</label>
+          <input type="text" class="form-control" *ngIf="isMaster" />
+          <div class="form-control" *ngIf="!isMaster && !!character">
+            {{ character.nome }}
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="form-group">
+          <label>&nbsp;</label>
+          <button type="submit" class="btn btn-primary btn-block">Invia</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</app-container-page>
