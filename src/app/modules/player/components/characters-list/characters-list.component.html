@@ -1,17 +1,18 @@
 <app-container-page>
-  <div class="container pt-4">
+  <div class="container mt-2">
     <div class="row">
       <div class="col-12">
         <h1>Gestione Personaggi</h1>
       </div>
     </div>
     <div class="row mt-2">
-
       <!-- Elenco Personaggi -->
-      <div class="col-md-4 col-lg-3 mb-2" *ngFor="let character of charactersList">
+      <div
+        class="col-md-4 col-lg-3 mb-2"
+        *ngFor="let character of charactersList"
+      >
         <div class="card">
           <div class="card-body text-center">
-
             <div class="character-icon-container">
               <div class="character-icon">
                 <i class="fa fa-user"></i>
@@ -20,20 +21,35 @@
 
             <div class="mt-2">
               <h4 class="card-title">{{ character.nome }}</h4>
-              <p class="card-text" *ngIf="character.active">{{ character.usedPoints }} / {{ character.experiencePoints
-                }}
-                px</p>
+              <p class="card-text" *ngIf="character.active">
+                {{ character.usedPoints }} / {{ character.experiencePoints }} px
+              </p>
               <p class="card-text" *ngIf="!character.active">
                 <i class="fa fa-bolt"></i> Inattivo
               </p>
             </div>
 
-            <button type="button" class="btn btn-primary btn-block mt-2" (click)="openCharacter(character.id)">
+            <button
+              type="button"
+              class="btn btn-primary btn-block mt-2"
+              (click)="openCharacter(character.id)"
+            >
               Apri scheda e BG
             </button>
 
-            <button type="button" class="btn btn-success btn-block mt-2" [disabled]="!(character.approvationStatus === 2 && character.characterApprovationStatus === 2 && character.skillsApprovationStatus === 2)"
-              (click)="printCharacterSheet(character.id)" *ngIf="showPrintSheet">
+            <button
+              type="button"
+              class="btn btn-success btn-block mt-2"
+              [disabled]="
+                !(
+                  character.approvationStatus === 2 &&
+                  character.characterApprovationStatus === 2 &&
+                  character.skillsApprovationStatus === 2
+                )
+              "
+              (click)="printCharacterSheet(character.id)"
+              *ngIf="showPrintSheet"
+            >
               <i class="fa fa-print"></i>
               Scarica scheda
             </button>
@@ -45,7 +61,6 @@
       <div class="col-md-4 col-lg-3 mb-2" *ngIf="canCreateCharacters">
         <div class="card">
           <div class="card-body">
-
             <div class="character-icon-container">
               <div class="character-icon">
                 <i class="fa fa-plus"></i>
@@ -57,13 +72,16 @@
               <p class="card-text">&nbsp;</p>
             </div>
 
-            <button type="button" class="btn btn-primary btn-block mt-2" (click)="openCharacter(0)">
+            <button
+              type="button"
+              class="btn btn-primary btn-block mt-2"
+              (click)="openCharacter(0)"
+            >
               Crea nuovo PG
             </button>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </app-container-page>

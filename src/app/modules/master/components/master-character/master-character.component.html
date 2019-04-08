@@ -1,5 +1,5 @@
 <app-container-page *ngIf="!!character">
-  <div class="container pt-4">
+  <div class="container mt-2">
     <div class="row">
       <div class="col-12">
         <h1>Scheda {{ !!character.nome ? 'di ' + character.nome : '' }}</h1>
@@ -132,7 +132,13 @@
         <div class="col-12 mt-2">
           <div class="form-group">
             <label for="background">Background</label>
-            <p><small>Ricordati, una volta completato il background, di scorrere la pagina e salvare le modifiche eseguite con il pulsante "salva".</small></p>
+            <p>
+              <small
+                >Ricordati, una volta completato il background, di scorrere la
+                pagina e salvare le modifiche eseguite con il pulsante
+                "salva".</small
+              >
+            </p>
             <quill-editor
               id="background"
               name="background"

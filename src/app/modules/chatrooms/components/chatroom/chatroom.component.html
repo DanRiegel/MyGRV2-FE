@@ -1,30 +1,107 @@
 <app-container-page>
-  <div class="container pt-4">
-    <div class="row">
-      <div class="col-12">
-        <h1>Stanza di Gioco: {{ chatroom ? chatroom.nome : '' }}</h1>
+  <div class="Chatroom__Overlay" *ngIf="showOverlay">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1>Benvenuto!</h1>
+          <p>
+            Sei appena entrato in una stanza in-game. Questo significa che tutto
+            ciò che scriverai e leggerai qui sta avvenendo durante la tua
+            avventura su Enon.
+          </p>
+          <p>
+            Ricordati quindi che ciò che scriverai sarà di pubblico dominio e
+            tutti i giocatori che hanno accesso a questa stanza potranno
+            usufruirne durante i prossimi eventi.
+          </p>
+          <p>
+            Ricorda inoltre che questa non è una chat e le cose che puoi
+            scrivere sono limitate ad un messaggio di massimo 1000 caratteri
+            ogni 60 secondi.
+          </p>
+          <p>
+            Infine, la comunicazione in questa stanza non è in stile "Play By
+            Chat", non sarà quindi necessario descrivere le azioni che si fanno,
+            ma semplicemente dire quello che si vuole :-)
+          </p>
+          <p>
+            Buona giocata!
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button
+            type="button"
+            class="btn btn-success btn-block"
+            (click)="showOverlay = false"
+          >
+            OK, HO CAPITO
+          </button>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 Chatroom__MessagesArea"></div>
+  </div>
+  <div class="container Chatroom_Container">
+    <div class="Chatroom__Title">
+      Stanza di Gioco: <strong>{{ chatroom ? chatroom.nome : '' }}</strong>
     </div>
-    <form class="row">
-      <div class="col-12 pl-0 pr-0 mt-2 Chatroom__NewMessage">
-        <textarea [(ngModel)]="newMessageText"></textarea>
+    <div class="Chatroom__MessagesArea">
+      <div *ngFor="let message of messages">
+        <div
+          class="Chatroom__Message"
+          [class.Chatroom__Message__Mine]="
+            (isMaster && message.idpersonaggio === 0) ||
+            (!isMaster && character && message.idpersonaggio === character.id)
+          "
+        >
+          <div class="Chatroom__Message__Title">
+            {{ message.nomepersonaggio }}
+          </div>
+          <div class="Chatroom__Message__Content">{{ message.messaggio }}</div>
+        </div>
       </div>
-      <div class="col-6 col-lg-9">
-        <div class="form-group">
-          <label for="writeAs">Scrivi come</label>
-          <input type="text" class="form-control" *ngIf="isMaster" />
+    </div>
+    <form
+      #messageForm="ngForm"
+      class="Chatroom__NewMessageArea"
+      (submit)="sendMessage()"
+    >
+      <div class="Chatroom__NewMessage_Container">
+        <textarea
+          name="newMessageText"
+          class="form-control"
+          [(ngModel)]="newMessageText"
+          required
+          maxlength="1000"
+        ></textarea>
+      </div>
+      <div>
+        <div class="input-group w-100">
+          <input
+            type="text"
+            name="pngName"
+            class="form-control"
+            placeholder="Scrivi come"
+            [(ngModel)]="pngName"
+            required
+            *ngIf="isMaster"
+          />
           <div class="form-control" *ngIf="!isMaster && !!character">
             {{ character.nome }}
           </div>
-        </div>
-      </div>
-      <div class="col-6 col-lg-3">
-        <div class="form-group">
-          <label>&nbsp;</label>
-          <button type="submit" class="btn btn-primary btn-block">Invia</button>
+          <div class="input-group-append">
+            <button type="button" class="btn Chatroom__NewMessage__Length">
+              {{ newMessageText ? newMessageText.length : 0 }} / 1000
+            </button>
+            <button
+              type="submit"
+              [disabled]="!messageForm.valid"
+              class="btn btn-primary btn-block"
+            >
+              Invia
+            </button>
+          </div>
         </div>
       </div>
     </form>

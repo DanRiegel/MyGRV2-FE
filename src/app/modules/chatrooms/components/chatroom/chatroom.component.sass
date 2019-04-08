@@ -1,10 +1,42 @@
-.Chatroom__MessagesArea
-  overflow-y: auto
-  min-height: 200px
-  max-height: 500px
-  background-color: rgba(0,0,0,0.1)
-
-.Chatroom__NewMessage
-  textarea
-    width: 100%
-    height: 150px
+.Chatroom__Overlay
+  position: fixed
+  top: 40px
+  left: 0
+  width: 100%
+  height: calc(100vh - 40px)
+  background-color: rgba(0,0,0,0.9)
+  z-index: 1000
+  color: #FFF
+.Chatroom_Container
+  height: 100%
+  .Chatroom__Title
+    padding-top: 5px
+    height: 30px
+  .Chatroom__MessagesArea
+    overflow-y: auto
+    height: calc(100vh - 280px)
+    background-color: rgba(0,0,0,0.1)
+    .Chatroom__Message
+      width: 100%
+      max-width: 450px
+      padding: 5px
+      background-color: #FFF
+      margin-top: 5px
+      &.Chatroom__Message__Mine
+        background-color: rgba(0,0,255,0.1)
+        margin-left: auto
+      .Chatroom__Message__Title
+        font-weight: bold
+      .Chatroom__Message__Content
+        font-size: 0.8rem
+  .Chatroom__NewMessageArea
+    height: 210px
+    .col-12
+      padding-left: 0
+      padding-right: 0
+      margin-top: 10px
+    .Chatroom__NewMessage_Container
+      textarea
+        width: 100%
+        height: 150px
+        font-size: 0.9rem

@@ -19,7 +19,9 @@ export class GuardService implements CanActivate {
     state: RouterStateSnapshot
   ): boolean | Observable<boolean> | Promise<boolean> {
     if (!this.userService.LoggedUserToken) {
-      this.router.navigateByUrl('/login');
+      this.router.navigate(['/login'], {
+        queryParams: { redir: state.url }
+      });
       return false;
     }
 

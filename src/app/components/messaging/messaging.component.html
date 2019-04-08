@@ -2,35 +2,53 @@
   <div class="container Messaging__Container">
     <div class="row mt-2 Messaging__Container__Row">
       <!-- Elenco conversazioni -->
-      <div class="col-md-3 border-right Messaging__Container__Col Conversations__Container">
-        <a href="" class="d-flex align-items-center Conversation__Box" (click)="openConversation($event, conv)" *ngFor="let conv of conversations">
+      <div
+        class="col-md-3 border-right Messaging__Container__Col Conversations__Container"
+      >
+        <a
+          href=""
+          class="d-flex align-items-center Conversation__Box"
+          (click)="openConversation($event, conv)"
+          *ngFor="let conv of conversations"
+        >
           <div class="Conversation__Box__Sender">
             <div class="Conversation__Box__Sender">{{ conv.sender }}</div>
-            <div class="Conversation__Box__Character" *ngIf="conv.character">{{ conv.character }}</div>
+            <div class="Conversation__Box__Character" *ngIf="conv.character">
+              {{ conv.character }}
+            </div>
           </div>
         </a>
         <!-- Pulsante nuovo messaggio -->
-        <button type="button" class="btn btn-primary btn-block mt-2" (click)="sendNewMessage()">
+        <button
+          type="button"
+          class="btn btn-primary btn-block mt-2"
+          (click)="sendNewMessage()"
+        >
           <i class="fa fa-plus"></i>
           Nuovo messaggio
         </button>
       </div>
       <!-- Elenco messaggi conversazione -->
       <div class="col-md-9 Messaging__Container__Col">
-        <div class="Conversation__Area">
-
-        </div>
+        <div class="Conversation__Area"></div>
         <form #newMessageForm="ngForm">
           <div class="Conversation__NewMessage__Container">
-            <textarea name="newMessageText" class="form-control" [(ngModel)]="newMessageText" [required]="true"></textarea>
+            <textarea
+              name="newMessageText"
+              class="form-control"
+              [(ngModel)]="newMessageText"
+              [required]="true"
+            ></textarea>
           </div>
           <div class="Conversation__NewMessage__Actions">
             <div class="row align-items-center">
-              <div class="col-md-9">
-                Stai scrivendo a <strong>xxx</strong>
-              </div>
+              <div class="col-md-9">Stai scrivendo a <strong>xxx</strong></div>
               <div class="col-md-3">
-                <button type="submit" class="btn btn-primary btn-block" [disabled]="newMessageForm.invalid">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block"
+                  [disabled]="newMessageForm.invalid"
+                >
                   <i class="fa fa-paper-plane"></i>
                   Invia
                 </button>

@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
   public username: string;
   public password: string;
 
+  private redirUrl: string;
+
   constructor(
     private userService: UserService,
     private playerService: PlayerService,
@@ -21,6 +23,12 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.activatedRoute.queryParamMap.subscribe(params => {
+      if (params.has('redir')) {
+        this.redirUrl = params.get('redir');
+      }
+    });
+
     this.activatedRoute.data.subscribe(params => {
       if (!params.preventAutoLogin) {
         this.userService.AutoLogin().subscribe(res => {
@@ -52,7 +60,12 @@ export class LoginComponent implements OnInit {
     this.playerService.GetCurrentPlayer().subscribe(playerRes => {
       if (!playerRes.error && !!playerRes.payload) {
         this.userService.PlayerData = playerRes.payload;
-        this.router.navigateByUrl('/');
+
+        if (this.redirUrl) {
+          this.router.navigateByUrl(this.redirUrl);
+        } else {
+          this.router.navigateByUrl('/');
+        }
       }
     });
   }

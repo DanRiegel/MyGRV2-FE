@@ -1,5 +1,5 @@
 <app-container-page>
-  <div class="container pt-4">
+  <div class="container mt-2">
     <div class="row">
       <div class="col-12">
         <h1>Gestione Giocatori</h1>
@@ -7,7 +7,6 @@
     </div>
     <div class="row mt-2">
       <div class="col-12">
-
         <div class="table-responsive">
           <table class="table table-striped">
             <thead>
@@ -23,16 +22,32 @@
               </tr>
               <tr>
                 <th>
-                  <input type="text" class="form-control form-control-sm" [(ngModel)]="filters.nome">
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    [(ngModel)]="filters.nome"
+                  />
                 </th>
                 <th>
-                  <input type="text" class="form-control form-control-sm" [(ngModel)]="filters.cognome">
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    [(ngModel)]="filters.cognome"
+                  />
                 </th>
                 <th>
-                  <input type="text" class="form-control form-control-sm" [(ngModel)]="filters.recapito">
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    [(ngModel)]="filters.recapito"
+                  />
                 </th>
                 <th>
-                  <input type="text" class="form-control form-control-sm" [(ngModel)]="filters.recapitomail">
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    [(ngModel)]="filters.recapitomail"
+                  />
                 </th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
@@ -41,20 +56,51 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let player of playersList | PlayerFilter :  filters.nome : filters.cognome : filters.recapito : filters.recapitomail">
+              <tr
+                *ngFor="
+                  let player of (playersList
+                    | PlayerFilter
+                      : filters.nome
+                      : filters.cognome
+                      : filters.recapito
+                      : filters.recapitomail)
+                "
+              >
                 <td>{{ player.nome }}</td>
                 <td>{{ player.cognome }}</td>
                 <td>{{ player.recapito }}</td>
                 <td>{{ player.recapitomail }}</td>
-                <td>{{ player.dataScaricoResponsabilita | date : 'dd/MM/yyyy' }}</td>
-                <td>{{ player.dataQuotaAssociativa | date : 'dd/MM/yyyy' }}</td>
                 <td>
-                  <i class="fa fa-user mr-1" container="body" [tooltip]="'Giocatore'" *ngIf="player.giocatore"></i>
-                  <i class="fa fa-money-bill-alt mr-1" container="body" [tooltip]="'Segreteria'" *ngIf="player.segreteria"></i>
-                  <i class="fa fa-book mr-1" container="body" [tooltip]="'Master'" *ngIf="player.master"></i>
+                  {{ player.dataScaricoResponsabilita | date: 'dd/MM/yyyy' }}
+                </td>
+                <td>{{ player.dataQuotaAssociativa | date: 'dd/MM/yyyy' }}</td>
+                <td>
+                  <i
+                    class="fa fa-user mr-1"
+                    container="body"
+                    [tooltip]="'Giocatore'"
+                    *ngIf="player.giocatore"
+                  ></i>
+                  <i
+                    class="fa fa-money-bill-alt mr-1"
+                    container="body"
+                    [tooltip]="'Segreteria'"
+                    *ngIf="player.segreteria"
+                  ></i>
+                  <i
+                    class="fa fa-book mr-1"
+                    container="body"
+                    [tooltip]="'Master'"
+                    *ngIf="player.master"
+                  ></i>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-primary btn-sm" [tooltip]="'Modifica giocatore'" (click)="openPlayer(player.id)">
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    [tooltip]="'Modifica giocatore'"
+                    (click)="openPlayer(player.id)"
+                  >
                     <i class="fa fa-edit"></i>
                   </button>
                 </td>
@@ -62,7 +108,6 @@
             </tbody>
           </table>
         </div>
-
       </div>
     </div>
   </div>

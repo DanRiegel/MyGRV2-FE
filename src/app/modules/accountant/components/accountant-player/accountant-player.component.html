@@ -1,5 +1,5 @@
 <app-container-page *ngIf="!!player">
-  <div class="container pt-4">
+  <div class="container mt-2">
     <div class="row">
       <div class="col-12">
         <h1>Il tuo profilo</h1>
@@ -7,7 +7,6 @@
     </div>
 
     <form name="playerForm" #playerForm="ngForm" (ngSubmit)="savePlayer()">
-
       <div class="row">
         <div class="col-md-4 mt-2">
           <div class="form-group">
@@ -20,13 +19,27 @@
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="player.nome" [required]="true">
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              class="form-control"
+              [(ngModel)]="player.nome"
+              [required]="true"
+            />
           </div>
         </div>
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="cognome">Cognome</label>
-            <input type="text" id="cognome" name="cognome" class="form-control" [(ngModel)]="player.cognome" [required]="true">
+            <input
+              type="text"
+              id="cognome"
+              name="cognome"
+              class="form-control"
+              [(ngModel)]="player.cognome"
+              [required]="true"
+            />
           </div>
         </div>
       </div>
@@ -35,15 +48,33 @@
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="recapito">Telefono</label>
-            <input type="text" id="recapito" name="recapito" class="form-control" [(ngModel)]="player.recapito"
-              [required]="!player.recapitomail || (!!player.recapitomail && player.recapitomail.trim() === '')">
+            <input
+              type="text"
+              id="recapito"
+              name="recapito"
+              class="form-control"
+              [(ngModel)]="player.recapito"
+              [required]="
+                !player.recapitomail ||
+                (!!player.recapitomail && player.recapitomail.trim() === '')
+              "
+            />
           </div>
         </div>
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="recapitomail">Email</label>
-            <input type="text" id="recapitomail" name="recapitomail" class="form-control" [(ngModel)]="player.recapitomail"
-              [required]="!player.recapito || (!!player.recapito && player.recapito.trim() === '')">
+            <input
+              type="text"
+              id="recapitomail"
+              name="recapitomail"
+              class="form-control"
+              [(ngModel)]="player.recapitomail"
+              [required]="
+                !player.recapito ||
+                (!!player.recapito && player.recapito.trim() === '')
+              "
+            />
           </div>
         </div>
       </div>
@@ -52,15 +83,27 @@
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="nome">Data Firma Scarico Responsabilità</label>
-            <input type="text" bsDatepicker id="dataScaricoResponsabilita" name="dataScaricoResponsabilita" class="form-control"
-              [(ngModel)]="dataScaricoResponsabilita">
+            <input
+              type="text"
+              bsDatepicker
+              id="dataScaricoResponsabilita"
+              name="dataScaricoResponsabilita"
+              class="form-control"
+              [(ngModel)]="dataScaricoResponsabilita"
+            />
           </div>
         </div>
         <div class="col-md-4 mt-2">
           <div class="form-group">
             <label for="nome">Data Pagamento Quota Associativa</label>
-            <input type="text" bsDatepicker id="dataQuotaAssociativa" name="dataQuotaAssociativa" class="form-control"
-              [(ngModel)]="dataQuotaAssociativa">
+            <input
+              type="text"
+              bsDatepicker
+              id="dataQuotaAssociativa"
+              name="dataQuotaAssociativa"
+              class="form-control"
+              [(ngModel)]="dataQuotaAssociativa"
+            />
           </div>
         </div>
         <div class="col-md-4 mt-2">
@@ -69,25 +112,48 @@
 
             <div class="row">
               <div class="col-md-4">
-                <button type="button" class="btn btn-link btn-block" (click)="player.giocatore = !player.giocatore">
-                  <i class="fa" [class.fa-square]="!player.giocatore" [class.fa-check-square]="player.giocatore"></i>
+                <button
+                  type="button"
+                  class="btn btn-link btn-block"
+                  (click)="player.giocatore = !player.giocatore"
+                >
+                  <i
+                    class="fa"
+                    [class.fa-square]="!player.giocatore"
+                    [class.fa-check-square]="player.giocatore"
+                  ></i>
                   Giocatore
                 </button>
               </div>
               <div class="col-md-4">
-                <button type="button" class="btn btn-link btn-block" (click)="player.segreteria = !player.segreteria">
-                  <i class="fa" [class.fa-square]="!player.segreteria" [class.fa-check-square]="player.segreteria"></i>
+                <button
+                  type="button"
+                  class="btn btn-link btn-block"
+                  (click)="player.segreteria = !player.segreteria"
+                >
+                  <i
+                    class="fa"
+                    [class.fa-square]="!player.segreteria"
+                    [class.fa-check-square]="player.segreteria"
+                  ></i>
                   Segreteria
                 </button>
               </div>
               <div class="col-md-4">
-                <button type="button" class="btn btn-link btn-block" (click)="player.master = !player.master">
-                  <i class="fa" [class.fa-square]="!player.master" [class.fa-check-square]="player.master"></i>
+                <button
+                  type="button"
+                  class="btn btn-link btn-block"
+                  (click)="player.master = !player.master"
+                >
+                  <i
+                    class="fa"
+                    [class.fa-square]="!player.master"
+                    [class.fa-check-square]="player.master"
+                  ></i>
                   Master
                 </button>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -95,18 +161,24 @@
       <!-- Operazioni -->
       <div class="row">
         <div class="col-md-3 offset-md-6 mt-2">
-          <button type="button" class="btn btn-default btn-block" (click)="goToList()">
+          <button
+            type="button"
+            class="btn btn-default btn-block"
+            (click)="goToList()"
+          >
             Indietro
           </button>
         </div>
         <div class="col-md-3 mt-2">
-          <button type="submit" class="btn btn-primary btn-block" [disabled]="!playerForm.valid">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="!playerForm.valid"
+          >
             Salva
           </button>
         </div>
       </div>
-
     </form>
-
   </div>
 </app-container-page>
