@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 // Servizi
@@ -13,7 +13,7 @@ import { Chatroom, Character, ChatroomMessaggio } from 'app/models';
   templateUrl: './chatroom.component.html',
   styleUrls: ['./chatroom.component.sass']
 })
-export class ChatroomComponent implements OnInit {
+export class ChatroomComponent implements OnInit, OnDestroy {
   public showOverlay = true;
 
   public chatroom: Chatroom;
@@ -28,6 +28,8 @@ export class ChatroomComponent implements OnInit {
 
   // Impostata a true quando l'ultima chiamata di recupero messaggi precedenti non restituisce risultati
   public stopLoadingPrevious = false;
+
+  private chatroomSubscription: any;
 
   constructor(
     private router: Router,
@@ -45,7 +47,10 @@ export class ChatroomComponent implements OnInit {
       }
     });
 
-    setInterval(() => this.loadNextMessages(), 10000);
+    this.chatroomSubscription = setInterval(
+      () => this.loadNextMessages(),
+      10000
+    );
   }
 
   public loadChatroom(chatroomId: number): void {
@@ -134,5 +139,11 @@ export class ChatroomComponent implements OnInit {
           alert(resp.message);
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    if (this.chatroomSubscription) {
+      clearInterval(this.chatroomSubscription);
+    }
   }
 }
