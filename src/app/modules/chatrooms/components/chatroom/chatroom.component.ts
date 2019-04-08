@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 // Servizi
 import { ChatroomsService } from '../../services/chatrooms.service';
@@ -29,7 +31,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   // Impostata a true quando l'ultima chiamata di recupero messaggi precedenti non restituisce risultati
   public stopLoadingPrevious = false;
 
-  private chatroomSubscription: any;
+  private chatroomSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -47,9 +49,8 @@ export class ChatroomComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.chatroomSubscription = setInterval(
-      () => this.loadNextMessages(),
-      10000
+    this.chatroomSubscription = IntervalObservable.create(10000).subscribe(() =>
+      this.loadNextMessages()
     );
   }
 
@@ -60,7 +61,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
 
         if (this.chatroom.idpersonaggio === 0) {
           this.isMaster = true;
-          this.loadPreviousMessages();
+          this.loadPreviousMessages(true);
         } else {
           this.loadChatroomCharacter();
         }
@@ -74,12 +75,12 @@ export class ChatroomComponent implements OnInit, OnDestroy {
       .subscribe(resp => {
         if (resp.payload) {
           this.character = resp.payload;
-          this.loadPreviousMessages();
+          this.loadPreviousMessages(true);
         }
       });
   }
 
-  private loadPreviousMessages(): void {
+  private loadPreviousMessages(scrollBottom: boolean): void {
     if (this.stopLoadingPrevious) {
       return;
     }
@@ -101,6 +102,10 @@ export class ChatroomComponent implements OnInit, OnDestroy {
 
           this.messages = resp.payload.concat(this.messages);
           this.lastCheck = Math.round(new Date().getTime() / 1000);
+
+          if (scrollBottom) {
+            this.scrollBottom();
+          }
         }
       });
   }
@@ -120,6 +125,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
           }
 
           this.messages = this.messages.concat(resp.payload);
+          this.scrollBottom();
         }
       });
   }
@@ -134,6 +140,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
       .subscribe(resp => {
         if (resp.payload) {
           this.newMessageText = null;
+          this.lastCheck = Math.round(new Date().getTime() / 1000);
           this.loadNextMessages();
         } else if (resp.error && resp.message) {
           alert(resp.message);
@@ -141,9 +148,16 @@ export class ChatroomComponent implements OnInit, OnDestroy {
       });
   }
 
+  private scrollBottom(): void {
+    setTimeout(() => {
+      const objDiv = document.getElementById('Chatroom__MessagesArea');
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }, 300);
+  }
+
   ngOnDestroy(): void {
     if (this.chatroomSubscription) {
-      clearInterval(this.chatroomSubscription);
+      this.chatroomSubscription.unsubscribe();
     }
   }
 }

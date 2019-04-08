@@ -46,7 +46,7 @@
     <div class="Chatroom__Title">
       Stanza di Gioco: <strong>{{ chatroom ? chatroom.nome : '' }}</strong>
     </div>
-    <div class="Chatroom__MessagesArea">
+    <div id="Chatroom__MessagesArea" class="Chatroom__MessagesArea">
       <div *ngFor="let message of messages">
         <div
           class="Chatroom__Message"

@@ -30,13 +30,20 @@ export class HttpInterceptorService implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const userToken = this.userService.LoggedUserToken;
+    const isChatroom =
+      req.url.indexOf('messages/next') > -1 ||
+      req.url.indexOf('messages/history') > -1;
 
-    this.loaderService.incrementaConteggio();
+    if (!isChatroom) {
+      this.loaderService.incrementaConteggio();
+    }
 
     if (!userToken) {
-      return next
-        .handle(req)
-        .finally(() => this.loaderService.decrementaConteggio());
+      return next.handle(req).finally(() => {
+        if (!isChatroom) {
+          this.loaderService.decrementaConteggio();
+        }
+      });
     } else {
       const changedReq = req.clone({
         headers: req.headers.set('Authorization', userToken)
@@ -49,7 +56,11 @@ export class HttpInterceptorService implements HttpInterceptor {
             return Observable.throw(err);
           }
         })
-        .finally(() => this.loaderService.decrementaConteggio());
+        .finally(() => {
+          if (!isChatroom) {
+            this.loaderService.decrementaConteggio();
+          }
+        });
     }
   }
 
