@@ -31,6 +31,8 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   // Impostata a true quando l'ultima chiamata di recupero messaggi precedenti non restituisce risultati
   public stopLoadingPrevious = false;
 
+  private loadingPending = false;
+
   private chatroomSubscription: Subscription;
 
   constructor(
@@ -80,7 +82,7 @@ export class ChatroomComponent implements OnInit, OnDestroy {
       });
   }
 
-  private loadPreviousMessages(scrollBottom: boolean): void {
+  public loadPreviousMessages(scrollBottom: boolean): void {
     if (this.stopLoadingPrevious) {
       return;
     }
@@ -111,41 +113,60 @@ export class ChatroomComponent implements OnInit, OnDestroy {
   }
 
   private loadNextMessages(): void {
+    if (this.loadingPending) {
+      return;
+    }
+
     if (this.messages && this.messages.length > 0) {
       this.lastCheck = this.messages[this.messages.length - 1].dataora;
     }
 
+    this.loadingPending = true;
+
     this.chatroomsService
       .GetChatroomNextMessages(this.chatroom.id, this.lastCheck)
-      .subscribe(resp => {
-        if (resp.payload) {
-          if (resp.payload.length === 0) {
-            this.stopLoadingPrevious = true;
-            return;
-          }
+      .subscribe(
+        resp => {
+          this.loadingPending = false;
 
-          this.messages = this.messages.concat(resp.payload);
-          this.scrollBottom();
-        }
-      });
+          if (resp.payload) {
+            this.messages = this.messages.concat(resp.payload);
+
+            const objDiv = document.getElementById('Chatroom__MessagesArea');
+            if (
+              objDiv.scrollHeight - objDiv.scrollTop - objDiv.offsetHeight <
+              20
+            ) {
+              this.scrollBottom();
+            }
+          }
+        },
+        () => (this.loadingPending = false)
+      );
   }
 
   public sendMessage(): void {
+    this.loadingPending = true;
+
     this.chatroomsService
       .SendChatroomMessage(this.chatroom.id, <ChatroomMessaggio>{
         idpersonaggio: this.character ? this.character.id : 0,
         nomepng: this.pngName ? this.pngName : null,
         messaggio: this.newMessageText
       })
-      .subscribe(resp => {
-        if (resp.payload) {
-          this.newMessageText = null;
-          this.lastCheck = Math.round(new Date().getTime() / 1000);
-          this.loadNextMessages();
-        } else if (resp.error && resp.message) {
-          alert(resp.message);
-        }
-      });
+      .subscribe(
+        resp => {
+          this.loadingPending = false;
+
+          if (resp.payload) {
+            this.newMessageText = null;
+            this.loadNextMessages();
+          } else if (resp.error && resp.message) {
+            alert(resp.message);
+          }
+        },
+        () => (this.loadingPending = true)
+      );
   }
 
   private scrollBottom(): void {

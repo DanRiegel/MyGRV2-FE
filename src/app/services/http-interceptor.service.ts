@@ -30,9 +30,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const userToken = this.userService.LoggedUserToken;
-    const isChatroom =
-      req.url.indexOf('messages/next') > -1 ||
-      req.url.indexOf('messages/history') > -1;
+    const isChatroom = req.url.indexOf('messages/next') > -1;
 
     if (!isChatroom) {
       this.loaderService.incrementaConteggio();

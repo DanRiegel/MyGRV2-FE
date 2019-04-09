@@ -1,12 +1,16 @@
 .Chatroom__Overlay
   position: fixed
-  top: 50px
+  top: 0
   left: 0
   width: 100%
-  height: calc(100vh - 50px)
+  height: calc(100vh)
   background-color: rgba(0,0,0,0.9)
   z-index: 1000
   color: #FFF
+  overflow-y: auto
+  p
+    font-size: 0.9rem
+    text-align: justify
 .Chatroom_Container
   height: 100%
   .Chatroom__Title
@@ -16,6 +20,10 @@
     overflow-y: auto
     height: calc(100vh - 300px)
     background-color: rgba(0,0,0,0.1)
+    .Chatroom__LoadPrevious
+      width: 100%
+      max-width: 450px
+      margin: 0 auto
     .Chatroom__Message
       width: 100%
       max-width: 450px

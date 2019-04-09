@@ -1,52 +1,61 @@
-<app-container-page>
-  <div class="Chatroom__Overlay" *ngIf="showOverlay">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <h1>Benvenuto!</h1>
-          <p>
-            Sei appena entrato in una stanza in-game. Questo significa che tutto
-            ciò che scriverai e leggerai qui sta avvenendo durante la tua
-            avventura su Enon.
-          </p>
-          <p>
-            Ricordati quindi che ciò che scriverai sarà di pubblico dominio e
-            tutti i giocatori che hanno accesso a questa stanza potranno
-            usufruirne durante i prossimi eventi.
-          </p>
-          <p>
-            Ricorda inoltre che questa non è una chat e le cose che puoi
-            scrivere sono limitate ad un messaggio di massimo 1000 caratteri
-            ogni 60 secondi.
-          </p>
-          <p>
-            Infine, la comunicazione in questa stanza non è in stile "Play By
-            Chat", non sarà quindi necessario descrivere le azioni che si fanno,
-            ma semplicemente dire quello che si vuole :-)
-          </p>
-          <p>
-            Buona giocata!
-          </p>
-        </div>
+<div class="Chatroom__Overlay" *ngIf="showOverlay">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>Benvenuto!</h1>
+        <p>
+          Sei appena entrato in una stanza in-game. Questo significa che tutto
+          ciò che scriverai e leggerai qui sta avvenendo durante la tua
+          avventura su Enon.
+        </p>
+        <p>
+          Ricordati quindi che ciò che scriverai sarà di pubblico dominio e
+          tutti i giocatori che hanno accesso a questa stanza potranno
+          usufruirne durante i prossimi eventi.
+        </p>
+        <p>
+          Ricorda inoltre che questa non è una chat e le cose che puoi scrivere
+          sono limitate ad un messaggio di massimo 1000 caratteri ogni 60
+          secondi.
+        </p>
+        <p>
+          Infine, la comunicazione in questa stanza non è in stile "Play By
+          Chat", non sarà quindi necessario descrivere le azioni che si fanno,
+          ma semplicemente dire quello che si vuole :-)
+        </p>
+        <p>
+          Buona giocata!
+        </p>
       </div>
-      <div class="row">
-        <div class="col-12">
-          <button
-            type="button"
-            class="btn btn-success btn-block"
-            (click)="showOverlay = false"
-          >
-            OK, HO CAPITO
-          </button>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <button
+          type="button"
+          class="btn btn-success btn-block"
+          (click)="showOverlay = false"
+        >
+          OK, HO CAPITO
+        </button>
       </div>
     </div>
   </div>
+</div>
+<app-container-page>
   <div class="container Chatroom_Container">
     <div class="Chatroom__Title">
       Stanza di Gioco: <strong>{{ chatroom ? chatroom.nome : '' }}</strong>
     </div>
     <div id="Chatroom__MessagesArea" class="Chatroom__MessagesArea">
+      <div class="Chatroom__LoadPrevious" *ngIf="!stopLoadingPrevious">
+        <button
+          type="button"
+          class="btn btn-success btn-block"
+          (click)="loadPreviousMessages(false)"
+        >
+          Carica precedenti...
+        </button>
+      </div>
       <div *ngFor="let message of messages">
         <div
           class="Chatroom__Message"
@@ -58,7 +67,10 @@
           <div class="Chatroom__Message__Title">
             {{ message.nomepersonaggio }}
           </div>
-          <div class="Chatroom__Message__Content">{{ message.messaggio }}</div>
+          <div
+            class="Chatroom__Message__Content"
+            [innerHTML]="message.messaggio"
+          ></div>
         </div>
       </div>
     </div>
