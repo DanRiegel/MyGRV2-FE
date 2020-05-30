@@ -3,21 +3,29 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 
 // Componenti
-import { SkillDetailComponent, ConfirmModalComponent } from '../../../../components';
+import { SkillDetailComponent } from '../../../../components';
 
 // Moduli Esterni
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 // Servizi
 import {
   CommonService,
   CharacterService,
-  PlayerService
+  PlayerService,
+  InventoryService
 } from '../../../../services';
 
 // Modelli
-import { Character, KeyValue, Skill, Player } from '../../../../models';
+import {
+  Character,
+  KeyValue,
+  Skill,
+  Player,
+  InventoryItem,
+  RestResponse
+} from '../../../../models';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-master-character',
@@ -40,11 +48,14 @@ export class MasterCharacterComponent implements OnInit {
   // Dati Personaggio
   public character: Character;
   public usedPx = 0;
+  public inventory: InventoryItem[] = [];
+  public newInventoryItem: InventoryItem;
 
   // Filtri
   public searchBaseSkillTerm: string;
   public searchUnlockedSkillTerm: string;
   public searchSelectedSkillTerm: string;
+  public searchInventoryTerm: string;
 
   constructor(
     private commonService: CommonService,
@@ -52,7 +63,8 @@ export class MasterCharacterComponent implements OnInit {
     private playerService: PlayerService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private bsModalService: BsModalService
+    private bsModalService: BsModalService,
+    private inventoryService: InventoryService
   ) {}
 
   ngOnInit() {
@@ -66,7 +78,7 @@ export class MasterCharacterComponent implements OnInit {
   }
 
   private loadTables(characterId: number): void {
-    const tablesCalls = [
+    const tablesCalls: Observable<RestResponse<any>>[] = [
       this.commonService.getRaces(),
       this.commonService.getDivinities(),
       this.commonService.getIndoles(),
@@ -75,6 +87,12 @@ export class MasterCharacterComponent implements OnInit {
       this.commonService.getSkills(),
       this.playerService.GetPlayers()
     ];
+
+    if (characterId > 0) {
+      tablesCalls.push(
+        this.inventoryService.GetCharacterInventory(characterId)
+      );
+    }
 
     forkJoin(tablesCalls).subscribe(resps => {
       // Races
@@ -112,6 +130,11 @@ export class MasterCharacterComponent implements OnInit {
         this.players = resps[6].payload;
       }
 
+      // Inventory
+      if (!!resps[7] && !!resps[7].payload) {
+        this.inventory = resps[7].payload;
+      }
+
       this.loadCharacter(characterId);
     });
   }
@@ -120,10 +143,19 @@ export class MasterCharacterComponent implements OnInit {
     this.characterService.GetCharacter(characterId).subscribe(res => {
       if (!!res.payload) {
         this.character = res.payload;
+
+        this.restoreNewInventoryItem();
         this.calcUsedPX();
         this.getUnlockedSkills();
       }
     });
+  }
+
+  private restoreNewInventoryItem(): void {
+    this.newInventoryItem = <InventoryItem>{
+      id: 0,
+      idpersonaggio: this.character.id
+    };
   }
 
   private getUnlockedSkills(): void {
@@ -246,7 +278,7 @@ export class MasterCharacterComponent implements OnInit {
     if (skill.validato) {
       return;
     }
-    
+
     const hasSkill = !!this.character.selectedSkills.find(
       item => item.id === skill.id
     );
@@ -303,6 +335,61 @@ export class MasterCharacterComponent implements OnInit {
         this.character = res.payload;
       }
     });
+  }
+
+  public inventoryItemValid(item: InventoryItem): boolean {
+    return (
+      !!item.nome &&
+      item.quantita !== null &&
+      item.quantita !== undefined &&
+      item.valore !== null &&
+      item.valore !== undefined
+    );
+  }
+
+  public saveInventoryItem(event: Event, item: InventoryItem): void {
+    if (!!event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    this.inventoryService.SaveInventoryItem(item).subscribe(res => {
+      if (!!res.payload) {
+        if (item.id === 0) {
+          this.restoreNewInventoryItem();
+        }
+
+        this.reloadInventory();
+      }
+    });
+  }
+
+  public deleteInventoryItem(event: Event, item: InventoryItem): void {
+    if (!!event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    if (item.id === 0) {
+      this.restoreNewInventoryItem();
+      return;
+    }
+
+    this.inventoryService.DeleteInventoryItem(item.id).subscribe(res => {
+      if (!!res.payload) {
+        this.reloadInventory();
+      }
+    });
+  }
+
+  private reloadInventory(): void {
+    this.inventoryService
+      .GetCharacterInventory(this.character.id)
+      .subscribe(res => {
+        if (!!res.payload) {
+          this.inventory = res.payload;
+        }
+      });
   }
 
   public goToList(): void {

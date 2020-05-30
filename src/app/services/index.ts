@@ -5,6 +5,7 @@ export * from './error-notification.service';
 export * from './event.service';
 export * from './guard.service';
 export * from './http-interceptor.service';
+export * from './inventory.service';
 export * from './loader.service';
 export * from './menu.service';
 export * from './messaging.service';

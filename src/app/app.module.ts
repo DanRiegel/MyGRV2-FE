@@ -32,6 +32,7 @@ import {
   GuardService,
   UserGuardService,
   HttpInterceptorService,
+  InventoryService,
   LoaderService,
   MenuService,
   UserService,
@@ -91,6 +92,7 @@ import { environment } from '../environments/environment';
     PaymentMethodsService,
     ErrorNotificationService,
     MessagingService,
+    InventoryService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,

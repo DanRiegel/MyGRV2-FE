@@ -12,10 +12,21 @@ import {
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 // Servizi
-import { CommonService, CharacterService } from '../../../../services';
+import {
+  CommonService,
+  CharacterService,
+  InventoryService
+} from '../../../../services';
 
 // Modelli
-import { Character, KeyValue, Skill } from '../../../../models';
+import {
+  Character,
+  KeyValue,
+  Skill,
+  InventoryItem,
+  RestResponse
+} from '../../../../models';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-character',
@@ -37,18 +48,22 @@ export class CharacterComponent implements OnInit {
   // Dati Personaggio
   public character: Character;
   public usedPx = 0;
+  public inventory: InventoryItem[] = [];
+  public newInventoryItem: InventoryItem;
 
   // Filtri
   public searchBaseSkillTerm: string;
   public searchUnlockedSkillTerm: string;
   public searchSelectedSkillTerm: string;
+  public searchInventoryTerm: string;
 
   constructor(
     private commonService: CommonService,
     private characterService: CharacterService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private bsModalService: BsModalService
+    private bsModalService: BsModalService,
+    private inventoryService: InventoryService
   ) {}
 
   ngOnInit() {
@@ -62,7 +77,7 @@ export class CharacterComponent implements OnInit {
   }
 
   private loadTables(characterId: number): void {
-    const tablesCalls = [
+    const tablesCalls: Observable<RestResponse<any>>[] = [
       this.commonService.getRaces(),
       this.commonService.getDivinities(),
       this.commonService.getIndoles(),
@@ -70,6 +85,12 @@ export class CharacterComponent implements OnInit {
       this.commonService.getFocuses(),
       this.commonService.getSkills()
     ];
+
+    if (characterId > 0) {
+      tablesCalls.push(
+        this.inventoryService.GetCharacterInventory(characterId)
+      );
+    }
 
     forkJoin(tablesCalls).subscribe(resps => {
       // Races
@@ -102,6 +123,11 @@ export class CharacterComponent implements OnInit {
         this.baseSkills = resps[5].payload;
       }
 
+      // Inventory
+      if (!!resps[6] && !!resps[6].payload) {
+        this.inventory = resps[6].payload;
+      }
+
       this.loadCharacter(characterId);
     });
   }
@@ -110,10 +136,19 @@ export class CharacterComponent implements OnInit {
     this.characterService.GetCharacter(characterId).subscribe(res => {
       if (!!res.payload) {
         this.character = res.payload;
+
+        this.restoreNewInventoryItem();
         this.calcUsedPX();
         this.getUnlockedSkills();
       }
     });
+  }
+
+  private restoreNewInventoryItem(): void {
+    this.newInventoryItem = <InventoryItem>{
+      id: 0,
+      idpersonaggio: this.character.id
+    };
   }
 
   private getUnlockedSkills(): void {
@@ -293,6 +328,61 @@ export class CharacterComponent implements OnInit {
         this.character = res.payload;
       }
     });
+  }
+
+  public inventoryItemValid(item: InventoryItem): boolean {
+    return (
+      !!item.nome &&
+      item.quantita !== null &&
+      item.quantita !== undefined &&
+      item.valore !== null &&
+      item.valore !== undefined
+    );
+  }
+
+  public saveInventoryItem(event: Event, item: InventoryItem): void {
+    if (!!event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    this.inventoryService.SaveInventoryItem(item).subscribe(res => {
+      if (!!res.payload) {
+        if (item.id === 0) {
+          this.restoreNewInventoryItem();
+        }
+
+        this.reloadInventory();
+      }
+    });
+  }
+
+  public deleteInventoryItem(event: Event, item: InventoryItem): void {
+    if (!!event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    if (item.id === 0) {
+      this.restoreNewInventoryItem();
+      return;
+    }
+
+    this.inventoryService.DeleteInventoryItem(item.id).subscribe(res => {
+      if (!!res.payload) {
+        this.reloadInventory();
+      }
+    });
+  }
+
+  private reloadInventory(): void {
+    this.inventoryService
+      .GetCharacterInventory(this.character.id)
+      .subscribe(res => {
+        if (!!res.payload) {
+          this.inventory = res.payload;
+        }
+      });
   }
 
   public goToList(): void {

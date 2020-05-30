@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: '/MyGRV2/services'
+  apiUrl: 'https://www.deusgrv.it/MyGRV2/services'
 };
