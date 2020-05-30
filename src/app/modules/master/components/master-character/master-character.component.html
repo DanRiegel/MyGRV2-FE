@@ -89,7 +89,7 @@
               type="button"
               class="btn "
               [class.btn-primary]="activeSection !== 'bg'"
-              [class.btn-default]="activeSection === 'bg'"
+              [class.btn-secondary]="activeSection === 'bg'"
               container="body"
               [tooltip]="'Background'"
               (click)="activeSection = 'bg'"
@@ -101,7 +101,7 @@
               type="button"
               class="btn "
               [class.btn-primary]="activeSection !== 'sc'"
-              [class.btn-default]="activeSection === 'sc'"
+              [class.btn-secondary]="activeSection === 'sc'"
               container="body"
               [tooltip]="'Informazioni generali'"
               (click)="activeSection = 'sc'"
@@ -113,7 +113,7 @@
               type="button"
               class="btn "
               [class.btn-primary]="activeSection !== 'ab'"
-              [class.btn-default]="
+              [class.btn-secondary]="
                 activeSection === 'ab' || !(character.id > 0)
               "
               container="body"
@@ -128,7 +128,7 @@
               type="button"
               class="btn"
               [class.btn-primary]="activeSection !== 'inv'"
-              [class.btn-default]="
+              [class.btn-secondary]="
                 activeSection === 'inv' || !(character.id > 0)
               "
               container="body"
@@ -421,7 +421,7 @@
                 [(ngModel)]="searchBaseSkillTerm"
               />
               <div class="intput-group-btn">
-                <button type="button" class="btn btn-default">
+                <button type="button" class="btn btn-secondary">
                   <i class="fa fa-search"></i>
                 </button>
               </div>
@@ -495,7 +495,7 @@
                 [(ngModel)]="searchUnlockedSkillTerm"
               />
               <div class="intput-group-btn">
-                <button type="button" class="btn btn-default">
+                <button type="button" class="btn btn-secondary">
                   <i class="fa fa-search"></i>
                 </button>
               </div>
@@ -569,7 +569,7 @@
                 [(ngModel)]="searchSelectedSkillTerm"
               />
               <div class="intput-group-btn">
-                <button type="button" class="btn btn-default">
+                <button type="button" class="btn btn-secondary">
                   <i class="fa fa-search"></i>
                 </button>
               </div>
@@ -757,7 +757,7 @@
         <div class="col-md-3 offset-md-6 mt-2">
           <button
             type="button"
-            class="btn btn-default btn-block"
+            class="btn btn-secondary btn-block"
             (click)="goToList()"
           >
             Indietro
