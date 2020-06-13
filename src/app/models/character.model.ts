@@ -21,4 +21,6 @@ export class Character {
   public usedPoints: number;
   public selectedSkills: Skill[];
   public active: boolean;
+  public obbiettiviBt: string;
+  public obbiettiviLt: string;
 }

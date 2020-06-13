@@ -67,6 +67,19 @@
               <i class="fa fa-user"></i>
               <span class="d-none d-md-inline">Background</span>
             </button>
+            <!-- Obbiettivi -->
+            <button
+              type="button"
+              class="btn"
+              [class.btn-primary]="activeSection !== 'ob'"
+              [class.btn-secondary]="activeSection === 'ob'"
+              container="body"
+              [tooltip]="'Obbiettivi'"
+              (click)="activeSection = 'ob'"
+            >
+              <i class="fa fa-trophy"></i>
+              <span class="d-none d-md-inline">Obbiettivi</span>
+            </button>
             <!-- Informazioni Generali -->
             <button
               type="button"
@@ -211,6 +224,43 @@
             ></div>
           </div>
         </div>
+      </div>
+
+      <!-- Sezione Obbiettivi -->
+      <div class="row" *ngIf="activeSection === 'ob'">
+        <div class="col-12 mt-2">
+          <p>
+            <small>
+              Scrivi qui e manienti aggiornati gli obbiettivi a breve e lungo termine del tuo personaggio.<br />
+              Una volta completati, ricordati di salvare
+            </small>
+          </p>
+        </div>
+        <div class="col-12 mt-2">
+          <div class="form-group">
+            <label for="obbiettiviBt">Obbiettivi a breve termine</label>
+            <quill-editor
+              id="obbiettiviBt"
+              name="obbiettiviBt"
+              [(ngModel)]="character.obbiettiviBt"
+              [style]="{ height: '300px' }"
+              [modules]="{ toolbar: [['bold', 'italic', 'underline']] }"
+            ></quill-editor>
+          </div>
+        </div>
+        <div class="col-12 mt-2">
+          <div class="form-group">
+            <label for="obbiettiviLt">Obbiettivi a lungo termine</label>
+            <quill-editor
+              id="obbiettiviLt"
+              name="obbiettiviLt"
+              [(ngModel)]="character.obbiettiviLt"
+              [style]="{ height: '300px' }"
+              [modules]="{ toolbar: [['bold', 'italic', 'underline']] }"
+            ></quill-editor>
+          </div>
+        </div>
+
       </div>
 
       <!-- Sezione Scheda -->
