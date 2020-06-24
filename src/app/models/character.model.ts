@@ -23,4 +23,5 @@ export class Character {
   public active: boolean;
   public obbiettiviBt: string;
   public obbiettiviLt: string;
+  public money: number;
 }

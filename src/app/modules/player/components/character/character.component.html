@@ -655,6 +655,16 @@
 
       <!-- Sezione Inventario -->
       <div class="row" *ngIf="activeSection === 'inv'">
+        <!-- Monete -->
+        <div class="col-12 col-md-4 mt-2">
+          <div class="form-group">
+            <label for="money">Monete</label>
+            <input type="number" step="1" min="0" id="money" name="money" class="form-control" [(ngModel)]="character.money" />
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="activeSection === 'inv'">
+        <!-- Inventario -->
         <div class="col-12 mt-2">
           <div class="table-responsive">
             <table class="table table-striped table-bordered table-sm">
